@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+<meta name="twitter:description">
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-CFBridge" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/12/17/CFBridge/" class="article-date">
+  <time datetime="2015-12-17T07:24:35.000Z" itemprop="datePublished">2015-12-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/12/17/CFBridge/">CFBridge和UUID</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <pre><code>+ (NSString *)deviceUUID {
+     NSString *appInfoAccount = @&quot;key_app_info_account&quot;;
+    NSString *keyDeviceID = @&quot;key_device_uuid&quot;;
+
+    NSString *resultString = [SSKeychain passwordForService:keyDeviceID account:appInfoAccount];
+    if (resultString == nil) {
+        CFUUIDRef puuid = CFUUIDCreate( nil );
+        CFStringRef uuidStringRef = CFUUIDCreateString( nil, puuid );
+        NSString *uuidString = CFBridgingRelease(uuidStringRef);
+        CFRelease(puuid);
+
+        if ([uuidString length] &gt; 0) {
+            [SSKeychain setPassword:uuidString forService:keyDeviceID account:appInfoAccount];
+            resultString = [SSKeychain passwordForService:keyDeviceID account:appInfoAccount];
+        }
+    }
+  return resultString;
+}  
+</code></pre><p>对比官方给出的一个获取UUID的例子:  </p>
+<pre><code>-(NSString*) uuid {  
+    CFUUIDRef puuid = CFUUIDCreate( nil );  
+    CFStringRef uuidString = CFUUIDCreateString( nil, puuid );  
+    NSString * result = (NSString *)CFStringCreateCopy( NULL, uuidString);  
+    CFRelease(puuid);  
+    CFRelease(uuidString); return [result autorelease];  
+}
+</code></pre><p>今天在iOS中获取设备UUID的时候，看到前辈写了上面一串代码，目的应该是用SSHKeyChain先加密获取到的UUID，再获取加密后的UUID字符串。决定花时间就这段代码里面的知识点做个总结。</p>
+<h2 id="UUID"><a href="#UUID" class="headerlink" title="UUID"></a>UUID</h2><p>在参考了<a href="https://developer.apple.com/library/ios/documentation/CoreFoundation/Reference/CFUUIDRef/index.html#//apple_ref/doc/uid/20001207" target="_blank" rel="external">苹果的官方文档</a>后，<br>按照自己理解来说，UUID是一种用来标识设备的唯一字符串，在做APP统计或者设备识别的时候可以用到，但是每次调用CFUUIDCreate的时候，创建出来的UUID都不用，因此需要使用keychain或者NSUserdefault来保存获取到得UUID。<br>在UUID之前，苹果一直使用UDID,在iOS 5.0之后被弃用，现在普遍采用官方给出的UUID进行替代。不同APP，UUID也不同。</p>
+<h3 id="CFUUIDCreate"><a href="#CFUUIDCreate" class="headerlink" title="CFUUIDCreate"></a>CFUUIDCreate</h3><pre><code>CFUUIDCreate ( CFAllocatorRef alloc );  
+</code></pre><p>以上代码可以获取一个uuid， 后面参数根据官方文档一般传NULL或者kCFAllocatorDefault。<br>文档中还有其他三个方法：<br><strong>CFUUIDCreateFromString</strong><br><strong>CFUUIDCreateFromUUIDBytes</strong><br><strong>CFUUIDCreateWithBytes</strong><br>前两个是给String对象和UUIDBytes对象生成UUID，后一个是用字节方式手动拼接UUID(个人理解)<br>一般我们应该使用<strong>CFUUIDCreate</strong>就足够了  </p>
+<pre><code>CFUUIDCreateFromString ( CFAllocatorRef alloc,     CFStringRef uuidStr );   
+</code></pre><p>以上代码则是将刚才生成的UUIDRef转换为CFStringRef类型的字符串。<br>第一个参数同上。<br>由于生成的字符串是CFStringRef类型的，需要转换成OC风格的字符串才能使用。简单来说以CF开头的对象都是Core Foundation的对象，与Objective-C还是有别。<br>百度了下CFStringRef收获不多，看了下<a href="https://developer.apple.com/library/ios/documentation/CoreFoundation/Reference/CFStringRef/index.html#//apple_ref/doc/uid/20001211" target="_blank" rel="external">官方文档</a>，大致是说CFString是一种连接Cocoa和C之间的字符类型，可以高效的对字符串进行操作。在CFString和NSString之间进行转换时，就要讲到<a href="https://developer.apple.com/library/ios/documentation/CoreFoundation/Conceptual/CFDesignConcepts/Articles/tollFreeBridgedTypes.html#//apple_ref/doc/uid/TP40010677" target="_blank" rel="external">Toll-Free Bridged Types</a><br>意思是说在CF和NS之间数据是可以进行交换的，CFString和NSString就是一种<strong>Toll-Free Bridged Type</strong>，但是其他比如NSRunLoop等就没有CFRunLoop与之对应。</p>
+<h2 id="CFBridge"><a href="#CFBridge" class="headerlink" title="CFBridge"></a>CFBridge</h2><p>以上所讲的NS和CF类型间的互相转换，会涉及到内存管理的问题。比如一个CF转换为NS，内存管理到底有ARC接管还是引用计数器来继续管理，是需要开发者来决定的，有以下三个内存管理交接方法：  </p>
+<h3 id="bridge"><a href="#bridge" class="headerlink" title="__bridge"></a>__bridge</h3><p>transfers a pointer between Objective-C and Core Foundation with no transfer of ownership.<br>直接翻译就是在OC和CF之间转换的时候，不变化指针所有者。<br>比如OC转成CF之后，还是ARC，CF转成OC后，还是需要Release。比如以下字符串的转换代码:  </p>
+<pre><code>//NSString 转 CFStringRef
+CFStringRef cfString = (CFStringRef) [[NSString alloc] initWithFormat:@&quot;%@&quot;, string];
+//...
+CFRelease(aCFString);
+
+
+//CFStringRef 转 NSString
+CFStringRef aCFString = CFStringCreateWithCString(kCFAllocatorDefault,
+                                                  bytes,
+                                                  NSUTF8StringEncoding);
+NSString *aNSString = (NSString *)aCFString;
+//...
+[aNSString release];  
+</code></pre><h3 id="bridge_retained_or_CFBridgingRetain"><a href="#bridge_retained_or_CFBridgingRetain" class="headerlink" title="__bridge_retained or CFBridgingRetain"></a>__bridge_retained or CFBridgingRetain</h3><p>casts an Objective-C pointer to a Core Foundation pointer and also transfers ownership to you.<br>You are responsible for calling CFRelease or a related function to relinquish ownership of the object.<br>当把一个OC对象转换成CF对象后，放弃ARC管理，移交手动管理内存，需要对对象进行Retain和Release操作<br>示例代码：  </p>
+<pre><code>NSString *aNSString = @&quot;sfsfdsf&quot;;    
+CFStringRef aCFString = (__bridge_retained CFStringRef) aNSString;  
+(CFRelease)aCFString;  
+</code></pre><h3 id="bridge_transfer_or_CFBridgingRelease"><a href="#bridge_transfer_or_CFBridgingRelease" class="headerlink" title="__bridge_transfer or CFBridgingRelease"></a>__bridge_transfer or CFBridgingRelease</h3><p>moves a non-Objective-C pointer to Objective-C and also transfers ownership to ARC.<br>ARC is responsible for relinquishing ownership of the object.<br>将非OC对象转换为OC对象，同时将对象的管理权交给ARC，开发者无需手动管理内存。如下，不需要手动释放内存。  </p>
+<pre><code>NSString *aNSString = @&quot;sfsfdsf&quot;;    
+CFStringRef aCFString = (__bridge_retained CFStringRef) aNSString;  
+//(CFRelease)aCFString;    
+</code></pre><h2 id="u6700_u540E"><a href="#u6700_u540E" class="headerlink" title="最后"></a>最后</h2><p>现在再回头看开头的代码，就会明白不少，首先生成一个UUID，由于是CF类型，需要通过__bridge来移交内存管理权，待成功取得UUID的字符串后，就可以释放CFUUIDRef。最后使用SSKeychain进行安全封装。有机会的话SSKeychain再进行单独介绍。 </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/12/17/CFBridge/" data-id="ciiadbfni0000q7olahz8bxn2" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/12/17/hello-world/" class="article-date">
+  <time datetime="2015-12-17T07:06:28.000Z" itemprop="datePublished">2015-12-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/12/17/hello-world/">Hello World</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
+<h2 id="Quick_Start"><a href="#Quick_Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create_a_new_post"><a href="#Create_a_new_post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="http://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
+<h3 id="Run_server"><a href="#Run_server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="http://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
+<h3 id="Generate_static_files"><a href="#Generate_static_files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="http://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
+<h3 id="Deploy_to_remote_sites"><a href="#Deploy_to_remote_sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/12/17/hello-world/" data-id="ciiadbfnu0001q7ol8znin0ax" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+  
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  
+    
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2015/12/17/CFBridge/">CFBridge和UUID</a>
+          </li>
+        
+          <li>
+            <a href="/2015/12/17/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2015 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>
