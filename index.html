@@ -61,6 +61,121 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-YYKit-Learning" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/12/30/YYKit-Learning/" class="article-date">
+  <time datetime="2015-12-30T02:49:07.000Z" itemprop="datePublished">2015-12-30</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/12/30/YYKit-Learning/">YYKit Learning(一)</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="YYCategories"><a href="#YYCategories" class="headerlink" title="YYCategories"></a>YYCategories</h1><p>##NSObject + YYAdd</p>
+<h3 id="28id_29performSelectorWithArgs_3A_28SEL_29sel_2C__u2026_3B"><a href="#28id_29performSelectorWithArgs_3A_28SEL_29sel_2C__u2026_3B" class="headerlink" title="- (id)performSelectorWithArgs:(SEL)sel, …;"></a>- (id)performSelectorWithArgs:(SEL)sel, …;</h3><p>实现OC中的可变参数传递的方法  </p>
+<pre><code>- (id)performSelectorWithArgs:(SEL)sel, ..
+{
+INIT_INV(sel, nil);
+ [inv invoke];
+ return [NSObject getReturnFromInv:inv withSig:sig];
+}   
+</code></pre><h4 id="INIT_INV_28sel_2Cnil_29"><a href="#INIT_INV_28sel_2Cnil_29" class="headerlink" title="INIT_INV(sel,nil)"></a>INIT_INV(sel,nil)</h4><p>一个宏函数，使用了C标准的stdarg.h库。<br>内容如下  </p>
+<pre><code>#define INIT_INV(_last_arg_, _return_) \
+NSMethodSignature * sig = [self methodSignatureForSelector:sel]; \
+if (!sig) { [self doesNotRecognizeSelector:sel]; return _return_; } \
+NSInvocation *inv = [NSInvocation invocationWithMethodSignature:sig]; \
+if (!inv) { [self doesNotRecognizeSelector:sel]; return _return_; } \
+[inv setTarget:self]; \
+[inv setSelector:sel]; \
+va_list args; \
+va_start(args, _last_arg_); \
+[NSObject setInv:inv withSig:sig andArgs:args]; \
+va_end(args); 
+</code></pre><h4 id="va_list__u7B49_u51FD_u6570"><a href="#va_list__u7B49_u51FD_u6570" class="headerlink" title="va_list 等函数"></a>va_list 等函数</h4><p>  一个C自带的可以用来遍历参数的函数，主要有以下几个：  </p>
+<pre><code>va_list,  
+va_arg(argp,type),  
+va_start,  
+va_end   
+</code></pre><p> va<em> list主要用于创建一个遍历参数的指针，取参都是通过移动指针来取。原理如下：如下：<br> <strong>void func(int x, float y, char z);<br>　那么，调用函数的时候，实参 char z 先进栈，然后是 float y，最后是 int x，因此在内存中变量的存放次序是 x-&gt;y-&gt;z，因此，从理论上说，我们只要探测到任意一个变量的地址，并且知道其他变量的类型，通过指针移位运算，则总可以顺藤摸瓜找到其他的输入变量。</strong><br>va</em> arg(argp,type) :<br>　可获取当前va<em>list创建的指针的内容，argp为刚才创建的指针，type为参数类型,每次调用会使指针移动？<br>va</em> start(argp,par) :<br>　argp指向传入的第一个可选参数，msg是最后一个确定的参数<br>va_ end :<br> 结束标记。  </p>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdarg.h&gt;
+
+void demo(int num,...)
+{
+    va_list pt;
+    va_start(pt, num);
+    if(num) //取第一个参数
+    {
+        printf(&quot;%d\n&quot;,num);
+    }
+    while (1) {
+        int number = va_arg(pt, int);
+        if (number != -1 ) {
+            printf(&quot;%d\n&quot;,number);
+        }
+        else{
+            va_end(pt);
+            break;
+        }
+    }
+}
+
+int main(int argc, const char * argv[]) {
+    // insert code here...
+    demo(4,5,6,7,8,-1);
+    return 0;
+}  
+</code></pre><p>以上是自己写的一个传多参数的C函数。<a href="http://www.cnblogs.com/hanyonglu/archive/2011/05/07/2039916.html" target="_blank" rel="external">参考地址</a></p>
+<h4 id="NSMethodSignature_u548CNSInvocation"><a href="#NSMethodSignature_u548CNSInvocation" class="headerlink" title="NSMethodSignature和NSInvocation"></a>NSMethodSignature和NSInvocation</h4><p>通常两者相结合使用。官方文档：<a href="https://developer.apple.com/library/ios/documentation/Cocoa/Reference/Foundation/Classes/NSMethodSignature_Class/index.html" target="_blank" rel="external">NSMethodSignature</a><br>大致意思表示NSMethodSignature对象能够记录方法的方法类型，参数，返回值信息。想让方法多次转发到多个分散对象中时，可以使用NSMehthodSignature，这种情况下，可以先使用methodSignatureForSelector:方法对方法做签名，然后再创建一个NSInvocation实例与方法签名进行关联。通过NSInvocation的实例对象来对方法的Target，Selector，Argument进行统一设置，最后通过invoke方法进行方法调用。<br>现在再回头看INIT_INV(sel,nil) 会容易理解很多：<br>首先传入方法，对方法进行签名和Invoke关联，关联失败进入系统的Error Handle 进行处理。成功则用var_list和Invoke实例进行参数设定。接下来便转入下一个的函数：  </p>
+<pre><code>+ (void)setInv:(NSInvocation *)inv withSig:(NSMethodSignature *)sig andArgs:(va_list)args   
+</code></pre><p>大致内容就是对参数类型进行分析，因为var_arg函数并不能自己判断类型，所以只能手动进行过滤和判断。对于不支持的参数类型（大型数组等），YY写了一套重试机制，主要是尝试获取更多的长度来确保参数完整性。  </p>
+<h3 id="+__28BOOL_29swizzleInstanceMethod_3A_28SEL_29originalSel_with_3A_28SEL_29newSel"><a href="#+__28BOOL_29swizzleInstanceMethod_3A_28SEL_29originalSel_with_3A_28SEL_29newSel" class="headerlink" title="+ (BOOL)swizzleInstanceMethod:(SEL)originalSel with:(SEL)newSel"></a>+ (BOOL)swizzleInstanceMethod:(SEL)originalSel with:(SEL)newSel</h3><p>利用ObjRunTime分装的方法交换器对两中方法进行交换。  </p>
+<pre><code>+ (BOOL)swizzleInstanceMethod:(SEL)originalSel with:(SEL)newSel {
+    Method originalMethod = class_getInstanceMethod(self, originalSel);
+    Method newMethod = class_getInstanceMethod(self, newSel);
+    if (!originalMethod || !newMethod) return NO;
+
+class_addMethod(self,
+                originalSel,
+                class_getMethodImplementation(self, originalSel),
+                method_getTypeEncoding(originalMethod));
+class_addMethod(self,
+                newSel,
+                class_getMethodImplementation(self, newSel),
+                method_getTypeEncoding(newMethod));
+
+method_exchangeImplementations(class_getInstanceMethod(self, originalSel),
+                               class_getInstanceMethod(self, newSel));
+return YES;
+</code></pre><p>}</p>
+<h4 id="class_getInstanceMethod"><a href="#class_getInstanceMethod" class="headerlink" title="class_getInstanceMethod"></a>class_getInstanceMethod</h4><p>获取一个Method对象，对象包括一个方法的返回值，SEL,参数等信息。  </p>
+<h4 id="class_addMethod"><a href="#class_addMethod" class="headerlink" title="class_addMethod"></a>class_addMethod</h4><p>这里需要重点说一下的一个方法，它先是添加原Selector,作用是做一层保护，当Class不含这个方法或者对这个方法无法处理的时候，不会进行消息转发，跑到父类去找方法，这是我们不想要的结果。<br><a href="http://tech.glowing.com/cn/method-swizzling-aop/" target="_blank" rel="external">Method Swizzling和AOP实践</a><br><a href="http://www.cnblogs.com/xwang/p/3542515.html" target="_blank" rel="external">objc语言的运行时处理</a> </p>
+<h3 id="28void_29setAssociateValue_3A_28id_29value_withKey_3A_28void_*_29key"><a href="#28void_29setAssociateValue_3A_28id_29value_withKey_3A_28void_*_29key" class="headerlink" title="- (void)setAssociateValue:(id)value withKey:(void *)key"></a>- (void)setAssociateValue:(id)value withKey:(void *)key</h3><h4 id="AssociateValue"><a href="#AssociateValue" class="headerlink" title="AssociateValue"></a>AssociateValue</h4>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/12/30/YYKit-Learning/" data-id="ciiyjeokh00025ooly1hb6xr7" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-MagicalRecord" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2015/12/29/MagicalRecord/" class="article-date">
@@ -83,13 +198,13 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>#MagicalRecord笔记<br>MegicalRecord是对苹果CoreData的二次封装，它大大简化了CoreData的使用代码。<br>抽空写一个MagicalRecord的Demo，顺便学习学习CoreData和MagicalRecord。</p>
+        <h1 id="MagicalRecord"><a href="#MagicalRecord" class="headerlink" title="MagicalRecord"></a>MagicalRecord</h1><p>MegicalRecord是对苹果CoreData的二次封装，它大大简化了CoreData的使用代码。<br>抽空写一个MagicalRecord的Demo，顺便学习学习CoreData和MagicalRecord。</p>
 <p><a href="https://github.com/magicalpanda/MagicalRecord" target="_blank" rel="external">MagicalRecord</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/12/29/MagicalRecord/" data-id="ciir3bfz10002kcolkuullymy" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/12/29/MagicalRecord/" data-id="ciiyjeokm00035oolp6tchue5" class="article-share-link">Share</a>
       
       
     </footer>
@@ -181,7 +296,7 @@ CFStringRef aCFString = (__bridge_retained CFStringRef) aNSString;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/12/17/CFBridge/" data-id="ciir3bfyl0000kcol0uzpa61i" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/12/17/CFBridge/" data-id="ciiyjeoj800005oold1r87clf" class="article-share-link">Share</a>
       
       
     </footer>
@@ -226,7 +341,7 @@ CFStringRef aCFString = (__bridge_retained CFStringRef) aNSString;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/12/17/hello-world/" data-id="ciir3bfyy0001kcol4lwn0x44" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/12/17/hello-world/" data-id="ciiyjeokc00015ool5g5jxj60" class="article-share-link">Share</a>
       
       
     </footer>
@@ -251,7 +366,7 @@ CFStringRef aCFString = (__bridge_retained CFStringRef) aNSString;
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a><span class="archive-list-count">3</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a><span class="archive-list-count">4</span></li></ul>
     </div>
   </div>
 
@@ -261,6 +376,10 @@ CFStringRef aCFString = (__bridge_retained CFStringRef) aNSString;
     <h3 class="widget-title">Recents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2015/12/30/YYKit-Learning/">YYKit Learning(一)</a>
+          </li>
         
           <li>
             <a href="/2015/12/29/MagicalRecord/">MagicalRecord</a>
@@ -286,7 +405,7 @@ CFStringRef aCFString = (__bridge_retained CFStringRef) aNSString;
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2015 John Doe<br>
+      &copy; 2016 John Doe<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
