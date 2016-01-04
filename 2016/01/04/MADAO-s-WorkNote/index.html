@@ -17,7 +17,7 @@
 <!--<![endif]-->
 
 <head>
-  <title>MagicalRecord | MADAO</title>
+  <title>MADAO&#39;s WorkNote | MADAO</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -226,36 +226,37 @@
         <div class="row col-md-offset-2">
             <div class="col-md-8">
     			<span class="post-meta">
-      <time datetime="2015-12-29T07:44:00.000Z" itemprop="datePublished">
-          2015-12-29
+      <time datetime="2016-01-04T13:09:05.000Z" itemprop="datePublished">
+          2016-01-04
       </time>
     
 </span>
-                <h1>MagicalRecord</h1>
+                <h1>MADAO's WorkNote</h1>
             </div>
         </div>
         <div class="col-md-8 col-md-offset-2">
-      		<h1 id="MagicalRecord"><a href="#MagicalRecord" class="headerlink" title="MagicalRecord"></a>MagicalRecord</h1><p>MegicalRecord是对苹果CoreData的二次封装，它大大简化了CoreData的使用代码。<br>抽空写一个MagicalRecord的Demo，顺便学习学习CoreData和MagicalRecord。</p>
-<p><a href="https://github.com/magicalpanda/MagicalRecord" target="_blank" rel="external">MagicalRecord</a></p>
+      		<h2 id="2016-01-04"><a href="#2016-01-04" class="headerlink" title="2016-01-04"></a>2016-01-04</h2><ul>
+<li>对于单例的获取，最好不好通成[DataManager sharedInstance]来获取单例。可以在单独写一个get方法:<br>   -(DataManager *)dataManager<br> {  <pre><code>return [DataManager shareInstance];  
+</code></pre> }   </li>
+<li>对于利用NSTimer进行轮播的Banner，可以将视图控制器ViewWillAppear和ViewWillDisapper中进行定时器的注册和销毁，防止内存泄露。  </li>
+<li>使用MJRefresh时需要注意一点，如果TableView初始化时，并没有Cell,则可能无法生成mj_footer  </li>
+<li></li>
+</ul>
 
             <div class="clearfix"></div>
             <hr class="nogutter">
         </div>
         <nav class="pagination" role="pagination">
     
-    <a class="pull-left" href="/2015/12/30/YYKit-Learning/" style="float: left;">
-        ← YYKit Learning(一)
-    </a>
     
-    
-    <a class="pull-right" href="/2015/12/17/CFBridge/">
-        CFBridge和UUID →
+    <a class="pull-right" href="/2015/12/30/YYKit-Learning/">
+        YYKit Learning(一) →
     </a>
     
 </nav>
 
         <div class="duoshuo">
-<div class="ds-thread" data-thread-key="2015/12/29/MagicalRecord/" data-title="MagicalRecord" data-url="http://yoursite.com/2015/12/29/MagicalRecord/"></div>
+<div class="ds-thread" data-thread-key="2016/01/04/MADAO-s-WorkNote/" data-title="MADAO&#39;s WorkNote" data-url="http://yoursite.com/2016/01/04/MADAO-s-WorkNote/"></div>
 <script type="text/javascript">
 var duoshuoQuery = {short_name:"duoshuo_name"};
 (function() {
