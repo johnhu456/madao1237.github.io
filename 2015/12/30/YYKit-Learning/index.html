@@ -314,7 +314,31 @@ return YES;
 </code></pre><p>}</p>
 <h4 id="class_getInstanceMethod"><a href="#class_getInstanceMethod" class="headerlink" title="class_getInstanceMethod"></a>class_getInstanceMethod</h4><p>获取一个Method对象，对象包括一个方法的返回值，SEL,参数等信息。  </p>
 <h4 id="class_addMethod"><a href="#class_addMethod" class="headerlink" title="class_addMethod"></a>class_addMethod</h4><p>这里需要重点说一下的一个方法，它先是添加原Selector,作用是做一层保护，当Class不含这个方法或者对这个方法无法处理的时候，不会进行消息转发，跑到父类去找方法，这是我们不想要的结果。<br><a href="http://tech.glowing.com/cn/method-swizzling-aop/" target="_blank" rel="external">Method Swizzling和AOP实践</a><br><a href="http://www.cnblogs.com/xwang/p/3542515.html" target="_blank" rel="external">objc语言的运行时处理</a> </p>
-<h3 id="28void_29setAssociateValue_3A_28id_29value_withKey_3A_28void_*_29key"><a href="#28void_29setAssociateValue_3A_28id_29value_withKey_3A_28void_*_29key" class="headerlink" title="- (void)setAssociateValue:(id)value withKey:(void *)key"></a>- (void)setAssociateValue:(id)value withKey:(void *)key</h3><h4 id="AssociateValue"><a href="#AssociateValue" class="headerlink" title="AssociateValue"></a>AssociateValue</h4>
+<h3 id="28void_29setAssociateValue_3A_28id_29value_withKey_3A_28void_*_29key"><a href="#28void_29setAssociateValue_3A_28id_29value_withKey_3A_28void_*_29key" class="headerlink" title="- (void)setAssociateValue:(id)value withKey:(void *)key"></a>- (void)setAssociateValue:(id)value withKey:(void *)key</h3><p>objcRuntime的一种使用方法，可以将两个值进行关联，某些地方还是比较有用的。比如   </p>
+<pre><code>- (void)buttonOnClicked:(UIButton *)sender;
+</code></pre><p>该方法只能传一个值Sender，通过对对象进行关联，就可以附加属性。</p>
+<h4 id="objc_setAssociatedObject"><a href="#objc_setAssociatedObject" class="headerlink" title="objc_setAssociatedObject"></a>objc_setAssociatedObject</h4><p>设置关联的runtime方法，四个参数：源对象，关键字，关联的对象和一个关联策略。关联的策略比较重要，有一下四个： </p>
+<pre><code>
+enum {
+    OBJC_ASSOCIATION_ASSIGN = 0,      弱引用/**&lt; Specifies a weak reference to the associated object. */  
+    OBJC_ASSOCIATION_RETAIN_NONATOMIC = 1, /**&lt; Specifies a strong reference to the associated object.
+                                            *   The association is not made atomically. */
+    OBJC_ASSOCIATION_COPY_NONATOMIC = 3,   /**&lt; Specifies that the associated object is copied.
+                                            *   The association is not made atomically. */
+    OBJC_ASSOCIATION_RETAIN = 01401,       /**&lt; Specifies a strong reference to the associated object.
+                                            *   The association is made atomically. */
+    OBJC_ASSOCIATION_COPY = 01403          /**&lt; Specifies that the associated object is copied.
+                                            *   The association is made atomically. */
+};
+</code></pre><p>主要是对关联对象的原子性及引用策略做设置。    </p>
+<h4 id="objc_getAssociatedObject"><a href="#objc_getAssociatedObject" class="headerlink" title="objc_getAssociatedObject"></a>objc_getAssociatedObject</h4><p>通过关键字获取关联的对象</p>
+<h4 id="objc_removeAssociatedObjects"><a href="#objc_removeAssociatedObjects" class="headerlink" title="objc_removeAssociatedObjects"></a>objc_removeAssociatedObjects</h4><p>解除所有关联对象，若想解除指定对象，可以重写一遍setAssociate方法，关键字不变，关联对象写为nil即可。<br>此块不难。封装也只是单条语句。<br>多重关联也是可以的：  </p>
+<pre><code>/**与Button进行关联*/
+objc_setAssociatedObject(sender, ASS_BUTTON_KEY, self.lblTextOne.text, OBJC_ASSOCIATION_ASSIGN);
+/**与Navi进行关联*/
+objc_setAssociatedObject(self.navigationController, ASS_NAVI_KEY, sender, OBJC_ASSOCIATION_ASSIGN);
+objc_setAssociatedObject(self.navigationController, ASS_MT_KEY, self.lblTextTwo.text, OBJC_ASSOCIATION_ASSIGN);
+</code></pre>
             <div class="clearfix"></div>
             <hr class="nogutter">
         </div>
