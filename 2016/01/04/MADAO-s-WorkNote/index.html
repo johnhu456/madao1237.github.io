@@ -239,9 +239,19 @@
 <li>对于单例的获取，最好不好通成[DataManager sharedInstance]来获取单例。可以在单独写一个get方法:<br>   -(DataManager *)dataManager<br> {  <pre><code>return [DataManager shareInstance];  
 </code></pre> }   </li>
 <li>对于利用NSTimer进行轮播的Banner，可以将视图控制器ViewWillAppear和ViewWillDisapper中进行定时器的注册和销毁，防止内存泄露。  </li>
-<li>使用MJRefresh时需要注意一点，如果TableView初始化时，并没有Cell,则可能无法生成mj_footer  <h2 id="2016-01-05"><a href="#2016-01-05" class="headerlink" title="2016-01-05"></a>2016-01-05</h2></li>
-<li>谨记MVC模式或者学习使用MVVM模式，不要因为控件和模型相对独立，就将M与V写在一起  <h2 id="2016-01-06"><a href="#2016-01-06" class="headerlink" title="2016-01-06"></a>2016-01-06</h2></li>
-<li>更正:MJRefresh之所以没有mj_footer生成,是因为新功能。需要设置<br>  self.mainTableView.mj_footer.automaticallyHidden = NO;<br>   即可解决。</li>
+<li>使用MJRefresh时需要注意一点，如果TableView初始化时，并没有Cell,则可能无法生成mj_footer    </li>
+</ul>
+<h2 id="2016-01-05"><a href="#2016-01-05" class="headerlink" title="2016-01-05"></a>2016-01-05</h2><ul>
+<li>谨记MVC模式或者学习使用MVVM模式，不要因为控件和模型相对独立，就将M与V写在一起  </li>
+</ul>
+<h2 id="2016-01-06"><a href="#2016-01-06" class="headerlink" title="2016-01-06"></a>2016-01-06</h2><ul>
+<li>更正:MJRefresh之所以没有mj_footer生成,是因为新功能。需要设置<br>  self.mainTableView.mj_footer.automaticallyHidden = NO;<br>   即可解决。   </li>
+</ul>
+<h2 id="2016-01-07"><a href="#2016-01-07" class="headerlink" title="2016-01-07"></a>2016-01-07</h2><ul>
+<li>请假一天……   </li>
+</ul>
+<h2 id="2016-01-08"><a href="#2016-01-08" class="headerlink" title="2016-01-08"></a>2016-01-08</h2><ul>
+<li>textField可以自定义LeftView及RightView,LeftView表现正常，但是对于RightView，如果要使用ClearButton，则显示有问题。猜测系统ClearButton也是通过RightView实现。</li>
 </ul>
 
             <div class="clearfix"></div>
