@@ -254,6 +254,25 @@
 <li>textField可以自定义LeftView及RightView,LeftView表现正常，但是对于RightView，如果要使用ClearButton，则显示有问题。猜测系统ClearButton也是通过RightView实现。  </li>
 <li>更改代码后一定要进行重新测试。</li>
 </ul>
+<h2 id="2016-01-11"><a href="#2016-01-11" class="headerlink" title="2016-01-11"></a>2016-01-11</h2><ul>
+<li>打酱油，对项目中的模拟投资视图进行了优化。</li>
+</ul>
+<h2 id="2016-01-12"><a href="#2016-01-12" class="headerlink" title="2016-01-12"></a>2016-01-12</h2><ul>
+<li>打酱油，感觉要学习的东西好多。学了点Swift，想想还是直接做项目来的好，遇坑填坑。</li>
+</ul>
+<h2 id="2016-01-13"><a href="#2016-01-13" class="headerlink" title="2016-01-13"></a>2016-01-13</h2><ul>
+<li>学习了一些加密的知识，项目中用了MD5做签名，DES加密。MD5一般式不可逆的，项目中使用的时候对所传的参数包括Key也都进行了一次MD5算法的签名。  而DES加密则是利用服务器配置的公钥，对部分参数进行加密处理，服务器再进行解密。 不同平台的DES算法差异性也大，主要是IV向量不同。  iOS中系统的SDK加密:    </li>
+</ul>
+<pre><code>CCCryptorStatus cryptStatus = CCCrypt(kCCEncrypt, kCCAlgorithmDES,
+                                          kCCOptionPKCS7Padding | kCCOptionECBMode,
+                                          keyPtr, kCCBlockSizeDES,
+                                          NULL,
+                                          [data bytes], dataLength,
+                                          buffer, bufferSize,
+                                          &amp;numBytesEncrypted);  
+</code></pre><h2 id="2016-01-14"><a href="#2016-01-14" class="headerlink" title="2016-01-14"></a>2016-01-14</h2><ul>
+<li>发现一个网络加载过长的第三方分类，UIScrollView+EmptyDataSet，适用于TableView和CollectionView，当Datasource没有数据的时候，会自动显示页面，有数据则不显示。因为与DataSource绑定过于紧密，而且不同网络或数据情况下，页面显示也不同。自己花了点时间写了一个分类，主要作用将EmptyDataSet和DataSource剥离，在分类中进行各种情况的高度定制，而真正负责数据展现的TableView却被盖了起来,只需要更改EmptyDataSet的loadState就可以了。</li>
+</ul>
 
             <div class="clearfix"></div>
             <hr class="nogutter">

@@ -17,7 +17,7 @@
 <!--<![endif]-->
 
 <head>
-  <title>Archives | MADAO</title>
+  <title>Swift Learning Note(1) | MADAO</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -84,7 +84,7 @@
 </head>
 
 <!--
-<body class="home-template">
+<body class="post-template">
 -->
 <body id="index" class="lightnav animsition">
 
@@ -221,94 +221,74 @@
 
         <!-- ============================ END Hero Image =========================== -->
       
-
-
-<section id="services">
+<section id="intro">
     <div class="container">
-        <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-                <div class="row boxes">
-                    
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2016/01/12/Swift-Learning-1/">Swift Learning Note(1)</a></h4>
-                            
-                            <p><time datetime="2016-01-12T02:25:22.000Z"><a href="/2016/01/12/Swift-Learning-1/">2016-01-12</a></time></p>
-                        </div>
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2016/01/08/YYKit-Learning-二/">YYKit Learning(二)</a></h4>
-                            
-                            <p><time datetime="2016-01-08T09:21:27.000Z"><a href="/2016/01/08/YYKit-Learning-二/">2016-01-08</a></time></p>
-                        </div>
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2016/01/04/MADAO-s-WorkNote/">MADAO&#39;s WorkNote</a></h4>
-                            
-                            <p><time datetime="2016-01-04T13:09:05.000Z"><a href="/2016/01/04/MADAO-s-WorkNote/">2016-01-04</a></time></p>
-                        </div>
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2015/12/30/YYKit-Learning/">YYKit Learning(一)</a></h4>
-                            
-                            <p><time datetime="2015-12-30T02:49:07.000Z"><a href="/2015/12/30/YYKit-Learning/">2015-12-30</a></time></p>
-                        </div>
-                    
-                        
-                            </div><div class="row boxes">
-                            
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2015/12/29/MagicalRecord/">MagicalRecord</a></h4>
-                            
-                            <p><time datetime="2015-12-29T07:44:00.000Z"><a href="/2015/12/29/MagicalRecord/">2015-12-29</a></time></p>
-                        </div>
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2015/12/17/CFBridge/">CFBridge和UUID</a></h4>
-                            
-                            <p><time datetime="2015-12-17T07:24:35.000Z"><a href="/2015/12/17/CFBridge/">2015-12-17</a></time></p>
-                        </div>
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2015/12/17/hello-world/">Hello World</a></h4>
-                            
-                            <p><time datetime="2015-12-17T07:06:28.000Z"><a href="/2015/12/17/hello-world/">2015-12-17</a></time></p>
-                        </div>
-                    
-                </div>
-            </div>    
+        <div class="row col-md-offset-2">
+            <div class="col-md-8">
+    			<span class="post-meta">
+      <time datetime="2016-01-12T02:25:22.000Z" itemprop="datePublished">
+          2016-01-12
+      </time>
+    
+</span>
+                <h1>Swift Learning Note(1)</h1>
+            </div>
         </div>
-    </div>
-</section> 
+        <div class="col-md-8 col-md-offset-2">
+      		<p>let 定义为常量<br>var 定义才为变量<br>当类型不明确时，可以在变量名后+冒号+类型<br>如下    </p>
+<pre><code>var count:Double = 70 或者 var count:Double  
+</code></pre><p>Swift 不会做隐式转换，显式转换类型如    </p>
+<pre><code>let width = 94
+let widthLabel = String(width)  
+</code></pre><p>针对数组，var声明的时候即生成一个可变数组，字典同样。<br>声明指定元素类型的数组或字典，格式如下    </p>
+<pre><code>let emptyArray = [String]()
+let emptyDictionary = [String: Float]()
+</code></pre><p>循环语句差别不大，语法稍微简洁了些，do-while语句改成了repeat—while。值得注意的是 if 后面必须为BOOL类型， 意味着if （int）等的形式将不再有用。<br>for语句可以用如此表示：   </p>
+<pre><code>for i in 0..&lt;4{
+    print(i)
+}
+for i in 0...4{
+    print(i)
+}
+</code></pre><p> 前者不包含上届，后者…表示包含上届。<br> 遍历字典的方式：   </p>
+<pre><code>var keys = [String]()
+var values = [String]()
+var dict1 = [&quot;name&quot;: &quot;mike&quot;, &quot;age&quot;: &quot;18&quot;];
+for (name, age) in dict1 {
+  keys.append(name)
+  values.append(age)
+}
+</code></pre>
+            <div class="clearfix"></div>
+            <hr class="nogutter">
+        </div>
+        <nav class="pagination" role="pagination">
+    
+    
+    <a class="pull-right" href="/2016/01/08/YYKit-Learning-二/">
+        YYKit Learning(二) →
+    </a>
+    
+</nav>
 
-<section id="statement">
-    <div class="container text-center wow fadeInUp" data-wow-delay="0.5s">
-        <div class="row">
-            <p>轻松的路是给下坡的人走的。</p>
-        </div>
+        <div class="duoshuo">
+<div class="ds-thread" data-thread-key="2016/01/12/Swift-Learning-1/" data-title="Swift Learning Note(1)" data-url="http://yoursite.com/2016/01/12/Swift-Learning-1/"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"duoshuo_name"};
+(function() {
+	var ds = document.createElement('script');
+	ds.type = 'text/javascript';ds.async = true;
+	ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+	ds.charset = 'UTF-8';
+	(document.getElementsByTagName('head')[0] 
+	 || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+</script>
+</div>
     </div>
 </section>
+
+
       
 <!-- ============================ Footer =========================== -->
 
