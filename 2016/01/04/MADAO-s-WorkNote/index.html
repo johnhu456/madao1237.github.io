@@ -271,8 +271,46 @@
                                           buffer, bufferSize,
                                           &amp;numBytesEncrypted);  
 </code></pre><h2 id="2016-01-14"><a href="#2016-01-14" class="headerlink" title="2016-01-14"></a>2016-01-14</h2><ul>
-<li>发现一个网络加载过长的第三方分类，UIScrollView+EmptyDataSet，适用于TableView和CollectionView，当Datasource没有数据的时候，会自动显示页面，有数据则不显示。因为与DataSource绑定过于紧密，而且不同网络或数据情况下，页面显示也不同。自己花了点时间写了一个分类，主要作用将EmptyDataSet和DataSource剥离，在分类中进行各种情况的高度定制，而真正负责数据展现的TableView却被盖了起来,只需要更改EmptyDataSet的loadState就可以了。</li>
+<li>发现一个网络加载过长的第三方分类，UIScrollView+EmptyDataSet，适用于TableView和CollectionView，当Datasource没有数据的时候，会自动显示页面，有数据则不显示。因为与DataSource绑定过于紧密，而且不同网络或数据情况下，页面显示也不同。自己花了点时间写了一个分类，主要作用将EmptyDataSet和DataSource剥离，在分类中进行各种情况的高度定制，而真正负责数据展现的TableView却被盖了起来,只需要更改EmptyDataSet的loadState就可以了。目前在项目上用起来了，有空要去Github上完善并上传一下。</li>
 </ul>
+<h2 id="2016-01-15"><a href="#2016-01-15" class="headerlink" title="2016-01-15"></a>2016-01-15</h2><ul>
+<li><p>在自己想做一个接口测试App的时候，发现HTTPS请求需要通过证书的时候，Status Code一直为0。下面为在iOS中发起https请求获得证书的一些方法：</p>
+<p>1、开发时候有自己有服务端证书，可以打在App的Bundle里：在Targets中选择Build Phases，在Copy Bundle Resouces中选择你要加入Bundle中的文件。已基于AFNetwork的YTKNetwork框架为例则代码如下：  </p>
+</li>
+</ul>
+<pre><code>YTKNetworkConfig *networkConfig = [YTKNetworkConfig sharedInstance];
+  [networkConfig setBaseUrl:@&quot;https://192.168.0.12:8443&quot;];
+  AFSecurityPolicy *securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModePublicKey];
+  securityPolicy.allowInvalidCertificates = YES;
+  securityPolicy.validatesDomainName = NO;
+  networkConfig.securityPolicy = securityPolicy;  
+</code></pre><p><a href="http://my.oschina.net/non6/blog/290175" target="_blank" rel="external">参考</a>   </p>
+<p>  2、一般来说，企业证书都不是付费的SSL证书，而是自己服务器的证书。iOS无法验证服务器自己签的证书，所以我们如果需要在应用内能够进行Https进行访问，就要进行自行处理。具体如下参考：<br>  <a href="http://blog.csdn.net/daiyelang/article/details/28427421" target="_blank" rel="external">参考</a>   </p>
+<ul>
+<li>真机报错：dyld: Symbol not found:OBJC<em>CLASS</em>$_CIKernel 的解决方案：<a href="http://www.07net01.com/2015/03/781815.html" target="_blank" rel="external">解决方案</a>  </li>
+<li>Core Data的多表关联：<a href="http://www.jianshu.com/p/e9f3b5e0cd19" target="_blank" rel="external">Core Data多表关联</a>  </li>
+</ul>
+<h2 id="2016-01-18"><a href="#2016-01-18" class="headerlink" title="2016-01-18"></a>2016-01-18</h2><ul>
+<li>今天折腾了一天的CoreData，主要问题集中在多表关联和数据的存储方面，目前不知道MR_saveWithBlock 和 MR_saveToPersistentStoreAndWait的区别，用下来发现后者要好用一点。完成了MADAOPost的基本功能。对于Core Data的掌握还需要加强。发现几个坑，对同一个数据操作的时候，要在同一个Context下，否则会报明显错误，所以CoreData的使用一定要注意Context。另外一点是表互连，用到Add或者Remove来关联的时候，需要写实现方法，例子如下：     </li>
+</ul>
+<pre><code>- (void)addRequest_argumentsObject:(Arguments *)value
+{
+    NSMutableSet *flowDetail = [self.request_arguments mutableCopy];
+    [flowDetail addObject:value];
+    self.request_arguments = [flowDetail copy];
+}
+- (void)removeRequest_argumentsObject:(Arguments *)value;
+{
+    NSMutableSet *flowDetail = [self.request_arguments mutableCopy];
+    [flowDetail removeObject:value];
+    self.request_arguments = [flowDetail copy];
+}
+</code></pre><p>关联的数据都是用的NSSet，如果要对数据进行有序的展示，可能还需要转换成NSOrderedSet或者普通数组进行处理。一个例子：    </p>
+<pre><code>/**排序*/
+    NSSortDescriptor *sortDes = [[NSSortDescriptor alloc] initWithKey:@&quot;argumentID&quot; ascending:YES];
+    NSArray *sortArray = [NSArray arrayWithObject:sortDes];
+    NSArray *argumentArray = [self.request.request_arguments sortedArrayUsingDescriptors:sortArray];    
+</code></pre><p>查找的话使用了一下NSPredicate，发现效果不太好，不是很会用，需要加强。目前使用的MagicalRecord的查找函数：MR_findFirstByAttribute 等函数。</p>
 
             <div class="clearfix"></div>
             <hr class="nogutter">
