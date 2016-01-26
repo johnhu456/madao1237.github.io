@@ -17,7 +17,7 @@
 <!--<![endif]-->
 
 <head>
-  <title>MADAO&#39;s WorkNote | MADAO</title>
+  <title>MADAO&#39;s WorkNote（2015.01） | MADAO</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -231,7 +231,7 @@
       </time>
     
 </span>
-                <h1>MADAO's WorkNote</h1>
+                <h1>MADAO's WorkNote（2015.01）</h1>
             </div>
         </div>
         <div class="col-md-8 col-md-offset-2">
@@ -310,8 +310,165 @@
     NSSortDescriptor *sortDes = [[NSSortDescriptor alloc] initWithKey:@&quot;argumentID&quot; ascending:YES];
     NSArray *sortArray = [NSArray arrayWithObject:sortDes];
     NSArray *argumentArray = [self.request.request_arguments sortedArrayUsingDescriptors:sortArray];    
-</code></pre><p>查找的话使用了一下NSPredicate，发现效果不太好，不是很会用，需要加强。目前使用的MagicalRecord的查找函数：MR_findFirstByAttribute 等函数。</p>
+</code></pre><p>查找的话使用了一下NSPredicate，发现效果不太好，不是很会用，需要加强。目前使用的MagicalRecord的查找函数：MR_findFirstByAttribute 等函数。  </p>
+<h2 id="2016-01-19"><a href="#2016-01-19" class="headerlink" title="2016-01-19"></a>2016-01-19</h2><ul>
+<li>主要研究了下TableView的点击分级扩展问题，借用一点SKSTableView的思想进行了实现。目前来哦说耦合度太高，还需要进行解耦优化。</li>
+<li>在项目测试中，如果涉及到通话时，页面因为通话栏的出现而出现偏移，通常是因为ScrollView的存在而导致，所以需要加强对ScrollView的约束，使其不移动。</li>
+<li>iOS7.0下，对图片使用Slice则必须有像素的切割，否则会导致崩溃。</li>
+</ul>
+<h2 id="2016-01-20"><a href="#2016-01-20" class="headerlink" title="2016-01-20"></a>2016-01-20</h2><ul>
+<li><p>一种从Storyboard中启动VC的方法：  </p>
+<pre><code>UIStoryboard *board = [UIStoryboard storyboardWithName:@&quot;Main&quot; bundle:nil];
 
+DetailRequestViewController *detailRequestVC = [board instantiateViewControllerWithIdentifier:@&quot;DetailRequestVC&quot;];
+
+[self.navigationController pushViewController:detailRequestVC animated:YES];  
+</code></pre></li>
+<li><p>MJRefresh的Header有些时候可能需要调整位置，目前可以通过写子类重写placeSubViews的方法来实现Header位置的调整。如下为改为白色，并且刷新位置下移20像素：</p>
+</li>
+</ul>
+<pre><code>
+- (UIImageView *)arrowView
+{
+    if (!_arrowView) {
+//        UIImage *image = [UIImage imageNamed:MJRefreshSrcName(@&quot;arrow.png&quot;)] ?: [UIImage imageNamed:MJRefreshFrameworkSrcName(@&quot;arrow.png&quot;)];
+        UIImage *image = [UIImage imageNamed:@&quot;refreshIndicator_img&quot;];
+        UIImageView *arrowView = [[UIImageView alloc] initWithImage:image];
+        [self addSubview:_arrowView = arrowView];
+    }
+    return _arrowView;
+}
+- (UIActivityIndicatorView *)loadingView
+{
+    if (!_loadingView) {
+        UIActivityIndicatorView *loadingView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+        loadingView.hidesWhenStopped = YES;
+        [self addSubview:_loadingView = loadingView];
+    }
+    return _loadingView;
+}
+
+#pragma makr - 重写父类的方法
+- (void)placeSubviews
+{
+    [super placeSubviews];
+    if (super.stateLabel.hidden) return;
+
+    BOOL noConstrainsOnStatusLabel = super.stateLabel.constraints.count == 0;
+
+    if (super.lastUpdatedTimeLabel.hidden) {
+        // 状态
+        if (noConstrainsOnStatusLabel) super.stateLabel.frame = self.bounds;
+    } else {
+        CGFloat stateLabelH = super.mj_h * 0.3;
+        // 状态
+        if (noConstrainsOnStatusLabel) {
+            super.stateLabel.mj_x = 0;
+            super.stateLabel.mj_y = 20; //由0改为20
+            super.stateLabel.mj_w = super.mj_w;
+            super.stateLabel.mj_h = stateLabelH;
+        }
+
+        // 更新时间
+        if (super.lastUpdatedTimeLabel.constraints.count == 0) {
+            super.lastUpdatedTimeLabel.mj_x = 0;
+            super.lastUpdatedTimeLabel.mj_y = stateLabelH + 20;  
+            //由stateLabelH改为stateLabelH + 20
+            super.lastUpdatedTimeLabel.mj_w = super.mj_w;
+            super.lastUpdatedTimeLabel.mj_h = super.mj_h - super.lastUpdatedTimeLabel.mj_y;
+        }
+        self.stateLabel.textColor = [UIColor whiteColor];
+        self.lastUpdatedTimeLabel.textColor = [UIColor whiteColor];
+        //这里修改自体颜色
+    }
+    // 箭头的中心点
+    CGFloat arrowCenterX = super.mj_w * 0.5;
+    if (!super.stateLabel.hidden) {
+        arrowCenterX -= 100;
+    }
+    CGFloat arrowCenterY = super.mj_h * 0.3 + 20;  
+    //系数原来为0.5，现改为0.3 + 20,实践而来
+    CGPoint arrowCenter = CGPointMake(arrowCenterX, arrowCenterY);
+
+    // 箭头
+    if (self.arrowView.constraints.count == 0) {
+        self.arrowView.mj_size = self.arrowView.image.size;
+        self.arrowView.center = arrowCenter;
+    }
+
+    // 圈圈
+    if (self.loadingView.constraints.count == 0) {
+        self.loadingView.center = arrowCenter;
+    }
+}
+//子类必须重写，否则刷新状态不会改变
+- (void)setState:(MJRefreshState)state
+{
+    MJRefreshCheckState
+
+    // 根据状态做事情
+    if (state == MJRefreshStateIdle) {
+        if (oldState == MJRefreshStateRefreshing) {
+            self.arrowView.transform = CGAffineTransformIdentity;
+
+            [UIView animateWithDuration:MJRefreshSlowAnimationDuration animations:^{
+                self.loadingView.alpha = 0.0;
+            } completion:^(BOOL finished) {
+                // 如果执行完动画发现不是idle状态，就直接返回，进入其他状态
+                if (self.state != MJRefreshStateIdle) return;
+
+                self.loadingView.alpha = 1.0;
+                [self.loadingView stopAnimating];
+                self.arrowView.hidden = NO;
+            }];
+        } else {
+            [self.loadingView stopAnimating];
+            self.arrowView.hidden = NO;
+            [UIView animateWithDuration:MJRefreshFastAnimationDuration animations:^{
+                self.arrowView.transform = CGAffineTransformIdentity;
+            }];
+        }
+    } else if (state == MJRefreshStatePulling) {
+        [self.loadingView stopAnimating];
+        self.arrowView.hidden = NO;
+        [UIView animateWithDuration:MJRefreshFastAnimationDuration animations:^{
+            self.arrowView.transform = CGAffineTransformMakeRotation(0.000001 - M_PI);
+        }];
+    } else if (state == MJRefreshStateRefreshing) {
+        self.loadingView.alpha = 1.0; // 防止refreshing -&gt; idle的动画完毕动作没有被执行
+        [self.loadingView startAnimating];
+        self.arrowView.hidden = YES;
+    }
+}
+@end
+</code></pre><h2 id="2016-01-21"><a href="#2016-01-21" class="headerlink" title="2016-01-21"></a>2016-01-21</h2><ul>
+<li>如果一个页面存在两个或两个以上刷新请求，而两个请求没有先后顺序或者需要统一回调的时候，可以使用YTKBatchRequest一起进行处理，缺点是在项目中如果Request需要自动登录等特殊需求Request就不能用这个类了。   </li>
+</ul>
+<h2 id="2016-01-22"><a href="#2016-01-22" class="headerlink" title="2016-01-22"></a>2016-01-22</h2><ul>
+<li>在系统涉及到时间参数需要高度统一时候，如果使用NSDate Date获取当前时间，需要注意市区和用户的时间设置问题。</li>
+</ul>
+<h2 id="2016-01-23"><a href="#2016-01-23" class="headerlink" title="2016-01-23"></a>2016-01-23</h2><ul>
+<li><p>使用如下语句的时候：   </p>
+<pre><code>[self.mainTableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:self.requestsMutaArray.count - 1
+                                                                    inSection:0]]
+                              withRowAnimation:UITableViewRowAnimationFade];   
+</code></pre></li>
+</ul>
+<p>务必确保DataSource和修改的一致性，如果发现报错：1.检查DataSource是否设置 2.检查数据是否被插入在合适位置。</p>
+<p>目前正在使用的顺序：1. 插入Cell 2.插入数据，顺序可以调换，DataSource统一即可。如下：    </p>
+<pre><code>[self.mainTableView beginUpdates];
+   [self.mainTableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:self.argumentsMutaArray.count
+                                                                   inSection:0]]
+                             withRowAnimation:UITableViewRowAnimationFade];
+   /**改变模型*/
+   NSMutableDictionary *newDic = [[NSMutableDictionary alloc] init];
+   [self.argumentsMutaArray addObject:newDic];
+
+   [self.mainTableView endUpdates];
+   [self.mainTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.argumentsMutaArray.count - 1
+                                                                 inSection:0]
+                             atScrollPosition:UITableViewScrollPositionBottom animated:YES];   
+</code></pre><h2 id="2016-01-24"><a href="#2016-01-24" class="headerlink" title="2016-01-24"></a>2016-01-24</h2>
             <div class="clearfix"></div>
             <hr class="nogutter">
         </div>
@@ -329,7 +486,7 @@
 </nav>
 
         <div class="duoshuo">
-<div class="ds-thread" data-thread-key="2016/01/04/MADAO-s-WorkNote/" data-title="MADAO&#39;s WorkNote" data-url="http://yoursite.com/2016/01/04/MADAO-s-WorkNote/"></div>
+<div class="ds-thread" data-thread-key="2016/01/04/MADAO-s-WorkNote/" data-title="MADAO&#39;s WorkNote（2015.01）" data-url="http://yoursite.com/2016/01/04/MADAO-s-WorkNote/"></div>
 <script type="text/javascript">
 var duoshuoQuery = {short_name:"duoshuo_name"};
 (function() {
