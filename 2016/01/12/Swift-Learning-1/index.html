@@ -250,15 +250,19 @@ let emptyDictionary = [String: Float]()
 for i in 0...4{
     print(i)
 }
-</code></pre><p> 前者不包含上届，后者…表示包含上届。<br> 遍历字典的方式：   </p>
+</code></pre><p> 前者不包含上届，后者…表示包含上界。<br> 遍历字典的方式：   </p>
 <pre><code>var keys = [String]()
 var values = [String]()
 var dict1 = [&quot;name&quot;: &quot;mike&quot;, &quot;age&quot;: &quot;18&quot;];
 for (name, age) in dict1 {
   keys.append(name)
   values.append(age)
-}
-</code></pre>
+}    
+</code></pre><ul>
+<li>Swift中的结构体和类基本相同，结构体也可以有自己的方法，变量。<br>但是结构体不能继承，并且在值传递过程中，结构体传递的是值，而类传递的是引用。  </li>
+<li>switch语句中，比如 case webtype:(let type）{},代表type此时相当于switch变量。</li>
+</ul>
+
             <div class="clearfix"></div>
             <hr class="nogutter">
         </div>

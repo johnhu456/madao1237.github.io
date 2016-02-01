@@ -327,148 +327,106 @@ DetailRequestViewController *detailRequestVC = [board instantiateViewControllerW
 <li><p>MJRefresh的Header有些时候可能需要调整位置，目前可以通过写子类重写placeSubViews的方法来实现Header位置的调整。如下为改为白色，并且刷新位置下移20像素：</p>
 </li>
 </ul>
-<pre><code>
-- (UIImageView *)arrowView
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br></pre></td><td class="code"><pre><span class="line">	</span><br><span class="line">	- (<span class="built_in">UIImageView</span> *)arrowView</span><br><span class="line">	&#123;</span><br><span class="line">	    <span class="keyword">if</span> (!_arrowView) &#123;</span><br><span class="line">	<span class="comment">//        UIImage *image = [UIImage imageNamed:MJRefreshSrcName(@"arrow.png")] ?: [UIImage imageNamed:MJRefreshFrameworkSrcName(@"arrow.png")];</span></span><br><span class="line">	        <span class="built_in">UIImage</span> *image = [<span class="built_in">UIImage</span> imageNamed:<span class="string">@"refreshIndicator_img"</span>];</span><br><span class="line">	        <span class="built_in">UIImageView</span> *arrowView = [[<span class="built_in">UIImageView</span> alloc] initWithImage:image];</span><br><span class="line">	        [<span class="keyword">self</span> addSubview:_arrowView = arrowView];</span><br><span class="line">	    &#125;</span><br><span class="line">	    <span class="keyword">return</span> _arrowView;</span><br><span class="line">	&#125;</span><br><span class="line">	- (<span class="built_in">UIActivityIndicatorView</span> *)loadingView</span><br><span class="line">	&#123;</span><br><span class="line">	    <span class="keyword">if</span> (!_loadingView) &#123;</span><br><span class="line">	        <span class="built_in">UIActivityIndicatorView</span> *loadingView = [[<span class="built_in">UIActivityIndicatorView</span> alloc] initWithActivityIndicatorStyle:<span class="built_in">UIActivityIndicatorViewStyleWhite</span>];</span><br><span class="line">	        loadingView<span class="variable">.hidesWhenStopped</span> = <span class="literal">YES</span>;</span><br><span class="line">	        [<span class="keyword">self</span> addSubview:_loadingView = loadingView];</span><br><span class="line">	    &#125;</span><br><span class="line">	    <span class="keyword">return</span> _loadingView;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="preprocessor">#pragma makr - 重写父类的方法</span></span><br><span class="line">	- (<span class="keyword">void</span>)placeSubviews</span><br><span class="line">	&#123;</span><br><span class="line">	    [<span class="keyword">super</span> placeSubviews];</span><br><span class="line">	    <span class="keyword">if</span> (<span class="keyword">super</span><span class="variable">.stateLabel</span><span class="variable">.hidden</span>) <span class="keyword">return</span>;</span><br><span class="line">	    </span><br><span class="line">	    <span class="built_in">BOOL</span> noConstrainsOnStatusLabel = <span class="keyword">super</span><span class="variable">.stateLabel</span><span class="variable">.constraints</span><span class="variable">.count</span> == <span class="number">0</span>;</span><br><span class="line">	    </span><br><span class="line">	    <span class="keyword">if</span> (<span class="keyword">super</span><span class="variable">.lastUpdatedTimeLabel</span><span class="variable">.hidden</span>) &#123;</span><br><span class="line">	        <span class="comment">// 状态</span></span><br><span class="line">	        <span class="keyword">if</span> (noConstrainsOnStatusLabel) <span class="keyword">super</span><span class="variable">.stateLabel</span><span class="variable">.frame</span> = <span class="keyword">self</span><span class="variable">.bounds</span>;</span><br><span class="line">	    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">	        <span class="built_in">CGFloat</span> stateLabelH = <span class="keyword">super</span><span class="variable">.mj_h</span> * <span class="number">0.3</span>;</span><br><span class="line">	        <span class="comment">// 状态</span></span><br><span class="line">	        <span class="keyword">if</span> (noConstrainsOnStatusLabel) &#123;</span><br><span class="line">	            <span class="keyword">super</span><span class="variable">.stateLabel</span><span class="variable">.mj_x</span> = <span class="number">0</span>;</span><br><span class="line">	            <span class="keyword">super</span><span class="variable">.stateLabel</span><span class="variable">.mj_y</span> = <span class="number">20</span>; <span class="comment">//由0改为20</span></span><br><span class="line">	            <span class="keyword">super</span><span class="variable">.stateLabel</span><span class="variable">.mj_w</span> = <span class="keyword">super</span><span class="variable">.mj_w</span>;</span><br><span class="line">	            <span class="keyword">super</span><span class="variable">.stateLabel</span><span class="variable">.mj_h</span> = stateLabelH;</span><br><span class="line">	        &#125;</span><br><span class="line">	        </span><br><span class="line">	        <span class="comment">// 更新时间</span></span><br><span class="line">	        <span class="keyword">if</span> (<span class="keyword">super</span><span class="variable">.lastUpdatedTimeLabel</span><span class="variable">.constraints</span><span class="variable">.count</span> == <span class="number">0</span>) &#123;</span><br><span class="line">	            <span class="keyword">super</span><span class="variable">.lastUpdatedTimeLabel</span><span class="variable">.mj_x</span> = <span class="number">0</span>;</span><br><span class="line">	            <span class="keyword">super</span><span class="variable">.lastUpdatedTimeLabel</span><span class="variable">.mj_y</span> = stateLabelH + <span class="number">20</span>;  </span><br><span class="line">	            <span class="comment">//由stateLabelH改为stateLabelH + 20</span></span><br><span class="line">	            <span class="keyword">super</span><span class="variable">.lastUpdatedTimeLabel</span><span class="variable">.mj_w</span> = <span class="keyword">super</span><span class="variable">.mj_w</span>;</span><br><span class="line">	            <span class="keyword">super</span><span class="variable">.lastUpdatedTimeLabel</span><span class="variable">.mj_h</span> = <span class="keyword">super</span><span class="variable">.mj_h</span> - <span class="keyword">super</span><span class="variable">.lastUpdatedTimeLabel</span><span class="variable">.mj_y</span>;</span><br><span class="line">	        &#125;</span><br><span class="line">	        <span class="keyword">self</span><span class="variable">.stateLabel</span><span class="variable">.textColor</span> = [<span class="built_in">UIColor</span> whiteColor];</span><br><span class="line">	        <span class="keyword">self</span><span class="variable">.lastUpdatedTimeLabel</span><span class="variable">.textColor</span> = [<span class="built_in">UIColor</span> whiteColor];</span><br><span class="line">	        <span class="comment">//这里修改自体颜色</span></span><br><span class="line">	    &#125;</span><br><span class="line">	    <span class="comment">// 箭头的中心点</span></span><br><span class="line">	    <span class="built_in">CGFloat</span> arrowCenterX = <span class="keyword">super</span><span class="variable">.mj_w</span> * <span class="number">0.5</span>;</span><br><span class="line">	    <span class="keyword">if</span> (!<span class="keyword">super</span><span class="variable">.stateLabel</span><span class="variable">.hidden</span>) &#123;</span><br><span class="line">	        arrowCenterX -= <span class="number">100</span>;</span><br><span class="line">	    &#125;</span><br><span class="line">	    <span class="built_in">CGFloat</span> arrowCenterY = <span class="keyword">super</span><span class="variable">.mj_h</span> * <span class="number">0.3</span> + <span class="number">20</span>;  </span><br><span class="line">	    <span class="comment">//系数原来为0.5，现改为0.3 + 20,实践而来</span></span><br><span class="line">	    <span class="built_in">CGPoint</span> arrowCenter = <span class="built_in">CGPointMake</span>(arrowCenterX, arrowCenterY);</span><br><span class="line">	    </span><br><span class="line">	    <span class="comment">// 箭头</span></span><br><span class="line">	    <span class="keyword">if</span> (<span class="keyword">self</span><span class="variable">.arrowView</span><span class="variable">.constraints</span><span class="variable">.count</span> == <span class="number">0</span>) &#123;</span><br><span class="line">	        <span class="keyword">self</span><span class="variable">.arrowView</span><span class="variable">.mj_size</span> = <span class="keyword">self</span><span class="variable">.arrowView</span><span class="variable">.image</span><span class="variable">.size</span>;</span><br><span class="line">	        <span class="keyword">self</span><span class="variable">.arrowView</span><span class="variable">.center</span> = arrowCenter;</span><br><span class="line">	    &#125;</span><br><span class="line">	    </span><br><span class="line">	    <span class="comment">// 圈圈</span></span><br><span class="line">	    <span class="keyword">if</span> (<span class="keyword">self</span><span class="variable">.loadingView</span><span class="variable">.constraints</span><span class="variable">.count</span> == <span class="number">0</span>) &#123;</span><br><span class="line">	        <span class="keyword">self</span><span class="variable">.loadingView</span><span class="variable">.center</span> = arrowCenter;</span><br><span class="line">	    &#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//子类必须重写，否则刷新状态不会改变</span></span><br><span class="line">	- (<span class="keyword">void</span>)setState:(MJRefreshState)state</span><br><span class="line">	&#123;</span><br><span class="line">	    MJRefreshCheckState</span><br><span class="line">	    </span><br><span class="line">	    <span class="comment">// 根据状态做事情</span></span><br><span class="line">	    <span class="keyword">if</span> (state == MJRefreshStateIdle) &#123;</span><br><span class="line">	        <span class="keyword">if</span> (oldState == MJRefreshStateRefreshing) &#123;</span><br><span class="line">	            <span class="keyword">self</span><span class="variable">.arrowView</span><span class="variable">.transform</span> = <span class="built_in">CGAffineTransformIdentity</span>;</span><br><span class="line">	            </span><br><span class="line">	            [<span class="built_in">UIView</span> animateWithDuration:MJRefreshSlowAnimationDuration animations:^&#123;</span><br><span class="line">	                <span class="keyword">self</span><span class="variable">.loadingView</span><span class="variable">.alpha</span> = <span class="number">0.0</span>;</span><br><span class="line">	            &#125; completion:^(<span class="built_in">BOOL</span> finished) &#123;</span><br><span class="line">	                <span class="comment">// 如果执行完动画发现不是idle状态，就直接返回，进入其他状态</span></span><br><span class="line">	                <span class="keyword">if</span> (<span class="keyword">self</span><span class="variable">.state</span> != MJRefreshStateIdle) <span class="keyword">return</span>;</span><br><span class="line">	                </span><br><span class="line">	                <span class="keyword">self</span><span class="variable">.loadingView</span><span class="variable">.alpha</span> = <span class="number">1.0</span>;</span><br><span class="line">	                [<span class="keyword">self</span><span class="variable">.loadingView</span> stopAnimating];</span><br><span class="line">	                <span class="keyword">self</span><span class="variable">.arrowView</span><span class="variable">.hidden</span> = <span class="literal">NO</span>;</span><br><span class="line">	            &#125;];</span><br><span class="line">	        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">	            [<span class="keyword">self</span><span class="variable">.loadingView</span> stopAnimating];</span><br><span class="line">	            <span class="keyword">self</span><span class="variable">.arrowView</span><span class="variable">.hidden</span> = <span class="literal">NO</span>;</span><br><span class="line">	            [<span class="built_in">UIView</span> animateWithDuration:MJRefreshFastAnimationDuration animations:^&#123;</span><br><span class="line">	                <span class="keyword">self</span><span class="variable">.arrowView</span><span class="variable">.transform</span> = <span class="built_in">CGAffineTransformIdentity</span>;</span><br><span class="line">	            &#125;];</span><br><span class="line">	        &#125;</span><br><span class="line">	    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (state == MJRefreshStatePulling) &#123;</span><br><span class="line">	        [<span class="keyword">self</span><span class="variable">.loadingView</span> stopAnimating];</span><br><span class="line">	        <span class="keyword">self</span><span class="variable">.arrowView</span><span class="variable">.hidden</span> = <span class="literal">NO</span>;</span><br><span class="line">	        [<span class="built_in">UIView</span> animateWithDuration:MJRefreshFastAnimationDuration animations:^&#123;</span><br><span class="line">	            <span class="keyword">self</span><span class="variable">.arrowView</span><span class="variable">.transform</span> = <span class="built_in">CGAffineTransformMakeRotation</span>(<span class="number">0.000001</span> - M_PI);</span><br><span class="line">	        &#125;];</span><br><span class="line">	    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (state == MJRefreshStateRefreshing) &#123;</span><br><span class="line">	        <span class="keyword">self</span><span class="variable">.loadingView</span><span class="variable">.alpha</span> = <span class="number">1.0</span>; <span class="comment">// 防止refreshing -&gt; idle的动画完毕动作没有被执行</span></span><br><span class="line">	        [<span class="keyword">self</span><span class="variable">.loadingView</span> startAnimating];</span><br><span class="line">	        <span class="keyword">self</span><span class="variable">.arrowView</span><span class="variable">.hidden</span> = <span class="literal">YES</span>;</span><br><span class="line">	    &#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">@end</span>  </span><br><span class="line">````  </span><br><span class="line"><span class="preprocessor">## 2016-01-21  </span></span><br><span class="line">* 如果一个页面存在两个或两个以上刷新请求，而两个请求没有先后顺序或者需要统一回调的时候，可以使用YTKBatchRequest一起进行处理，缺点是在项目中如果Request需要自动登录等特殊需求Request就不能用这个类了。   </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">## 2016-01-22   </span></span><br><span class="line">* 在系统涉及到时间参数需要高度统一时候，如果使用<span class="built_in">NSDate</span> Date获取当前时间，需要注意市区和用户的时间设置问题。</span><br><span class="line"></span><br><span class="line"><span class="preprocessor">## 2016-01-25</span></span><br><span class="line">* 使用如下语句的时候：   </span><br><span class="line"></span><br><span class="line">		[<span class="keyword">self</span><span class="variable">.mainTableView</span> insertRowsAtIndexPaths:@[[<span class="built_in">NSIndexPath</span> indexPathForRow:<span class="keyword">self</span><span class="variable">.requestsMutaArray</span><span class="variable">.count</span> - <span class="number">1</span></span><br><span class="line">		                                                                    inSection:<span class="number">0</span>]]</span><br><span class="line">		                              withRowAnimation:<span class="built_in">UITableViewRowAnimationFade</span>];   </span><br><span class="line">		                              </span><br><span class="line">		                              </span><br><span class="line">务必确保DataSource和修改的一致性，如果发现报错：<span class="number">1.</span>检查DataSource是否设置 <span class="number">2.</span>检查数据是否被插入在合适位置。</span><br><span class="line"></span><br><span class="line">目前正在使用的顺序：<span class="number">1.</span> 插入Cell <span class="number">2.</span>插入数据，顺序可以调换，DataSource统一即可。如下：    </span><br><span class="line"></span><br><span class="line">	 [<span class="keyword">self</span><span class="variable">.mainTableView</span> beginUpdates];</span><br><span class="line">	    [<span class="keyword">self</span><span class="variable">.mainTableView</span> insertRowsAtIndexPaths:@[[<span class="built_in">NSIndexPath</span> indexPathForRow:<span class="keyword">self</span><span class="variable">.argumentsMutaArray</span><span class="variable">.count</span></span><br><span class="line">	                                                                    inSection:<span class="number">0</span>]]</span><br><span class="line">	                              withRowAnimation:<span class="built_in">UITableViewRowAnimationFade</span>];</span><br><span class="line">	    <span class="comment">/**改变模型*/</span></span><br><span class="line">	    <span class="built_in">NSMutableDictionary</span> *newDic = [[<span class="built_in">NSMutableDictionary</span> alloc] init];</span><br><span class="line">	    [<span class="keyword">self</span><span class="variable">.argumentsMutaArray</span> addObject:newDic];</span><br><span class="line">	</span><br><span class="line">	    [<span class="keyword">self</span><span class="variable">.mainTableView</span> endUpdates];</span><br><span class="line">	    [<span class="keyword">self</span><span class="variable">.mainTableView</span> scrollToRowAtIndexPath:[<span class="built_in">NSIndexPath</span> indexPathForRow:<span class="keyword">self</span><span class="variable">.argumentsMutaArray</span><span class="variable">.count</span> - <span class="number">1</span></span><br><span class="line">	                                                                  inSection:<span class="number">0</span>]</span><br><span class="line">	                              atScrollPosition:<span class="built_in">UITableViewScrollPositionBottom</span> animated:<span class="literal">YES</span>];   </span><br><span class="line"></span><br><span class="line"><span class="preprocessor">## 2016-01-26  </span></span><br><span class="line">* iOS里面四个主要层次: Core OS, Core Services, Media, Cocoa Touch   </span><br><span class="line">主要如图：![iOS框架图](http:<span class="comment">//img.blog.csdn.net/20140606191657656?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvR29vSG9uZw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center)  </span></span><br><span class="line"></span><br><span class="line">[IOS框架和服务](http:<span class="comment">//www.jianshu.com/p/113028faae5c)介绍的不错，可以参考   </span></span><br><span class="line">* Masonry使用中主要在TableView上碰到了一个较大问题：   </span><br><span class="line">ViewController的automaticallyAdjustsScrollViewInsets的属性会严重影响make下面代码make<span class="variable">.top</span>的运行，导致布局混乱  </span><br><span class="line"></span><br><span class="line">	 [<span class="keyword">self</span><span class="variable">.tableView</span> mas_makeConstraints:^(MASConstraintMaker *make) &#123;</span><br><span class="line">	        make<span class="variable">.left</span><span class="variable">.right</span><span class="variable">.equalTo</span>(<span class="keyword">self</span><span class="variable">.view</span>);</span><br><span class="line">	        make<span class="variable">.top</span><span class="variable">.equalTo</span>(<span class="keyword">self</span><span class="variable">.mas_topLayoutGuide</span>);</span><br><span class="line">	        make<span class="variable">.height</span><span class="variable">.mas_equalTo</span>(<span class="keyword">self</span><span class="variable">.view</span>);</span><br><span class="line">	    &#125;];</span><br><span class="line">下端代码始终无法使tableview上端对其NavigationBar下端  </span><br><span class="line"><span class="preprocessor">## 2016-01-27  </span></span><br><span class="line">* 今天主要解决了昨天发现的布局问题，还有值得注意的地方是代码可读性，完成功能后记得Review一下，整理代码。  </span><br><span class="line">* Strong和Weak的使用，某些控件，直接被控制器持有的时候，或者被<span class="keyword">self</span><span class="variable">.view</span>持有的时候，其实并不要使用Strong属性，<span class="keyword">weak</span>即可，但使用<span class="keyword">strong</span>或<span class="keyword">weak</span>没有界面上区别。  </span><br><span class="line"></span><br><span class="line">  </span><br><span class="line"><span class="preprocessor">## 2016-01-28  </span></span><br><span class="line">* 试图想一个类似网易有钱首页表头的解决办法。 </span><br><span class="line">* <span class="built_in">NSArray</span> 倒序 输出:</span><br></pre></td></tr></table></figure>
+<pre><code>NSArray* reversedArray = [[array reverseObjectEnumerator] allObjects];
+</code></pre>   <figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">* </span>图像压缩处理  </span><br><span class="line"><span class="bullet">* </span>图片压缩到指定大小</span><br></pre></td></tr></table></figure>
+<pre><code>- (UIImage*)imageByScalingAndCroppingForSize:(CGSize)targetSize
 {
-    if (!_arrowView) {
-//        UIImage *image = [UIImage imageNamed:MJRefreshSrcName(@&quot;arrow.png&quot;)] ?: [UIImage imageNamed:MJRefreshFrameworkSrcName(@&quot;arrow.png&quot;)];
-        UIImage *image = [UIImage imageNamed:@&quot;refreshIndicator_img&quot;];
-        UIImageView *arrowView = [[UIImageView alloc] initWithImage:image];
-        [self addSubview:_arrowView = arrowView];
-    }
-    return _arrowView;
-}
-- (UIActivityIndicatorView *)loadingView
-{
-    if (!_loadingView) {
-        UIActivityIndicatorView *loadingView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
-        loadingView.hidesWhenStopped = YES;
-        [self addSubview:_loadingView = loadingView];
-    }
-    return _loadingView;
-}
+    UIImage *sourceImage = self;
+    UIImage *newImage = nil;
+    CGSize imageSize = sourceImage.size;
+    CGFloat width = imageSize.width;
+    CGFloat height = imageSize.height;
+    CGFloat targetWidth = targetSize.width;
+    CGFloat targetHeight = targetSize.height;
+    CGFloat scaleFactor = 0.0;
+    CGFloat scaledWidth = targetWidth;
+    CGFloat scaledHeight = targetHeight;
+    CGPoint thumbnailPoint = CGPointMake(0.0,0.0);
 
-#pragma makr - 重写父类的方法
-- (void)placeSubviews
-{
-    [super placeSubviews];
-    if (super.stateLabel.hidden) return;
+    if (CGSizeEqualToSize(imageSize, targetSize) == NO)
+    {
+        CGFloat widthFactor = targetWidth / width;
+        CGFloat heightFactor = targetHeight / height;
 
-    BOOL noConstrainsOnStatusLabel = super.stateLabel.constraints.count == 0;
+        if (widthFactor &gt; heightFactor)
+        scaleFactor = widthFactor; // scale to fit height
+        else
+        scaleFactor = heightFactor; // scale to fit width
+        scaledWidth= width * scaleFactor;
+        scaledHeight = height * scaleFactor;
 
-    if (super.lastUpdatedTimeLabel.hidden) {
-        // 状态
-        if (noConstrainsOnStatusLabel) super.stateLabel.frame = self.bounds;
-    } else {
-        CGFloat stateLabelH = super.mj_h * 0.3;
-        // 状态
-        if (noConstrainsOnStatusLabel) {
-            super.stateLabel.mj_x = 0;
-            super.stateLabel.mj_y = 20; //由0改为20
-            super.stateLabel.mj_w = super.mj_w;
-            super.stateLabel.mj_h = stateLabelH;
+        // center the image
+        if (widthFactor &gt; heightFactor)
+        {
+            thumbnailPoint.y = (targetHeight - scaledHeight) * 0.5;
         }
-
-        // 更新时间
-        if (super.lastUpdatedTimeLabel.constraints.count == 0) {
-            super.lastUpdatedTimeLabel.mj_x = 0;
-            super.lastUpdatedTimeLabel.mj_y = stateLabelH + 20;  
-            //由stateLabelH改为stateLabelH + 20
-            super.lastUpdatedTimeLabel.mj_w = super.mj_w;
-            super.lastUpdatedTimeLabel.mj_h = super.mj_h - super.lastUpdatedTimeLabel.mj_y;
+        else if (widthFactor &lt; heightFactor)
+        {
+            thumbnailPoint.x = (targetWidth - scaledWidth) * 0.5;
         }
-        self.stateLabel.textColor = [UIColor whiteColor];
-        self.lastUpdatedTimeLabel.textColor = [UIColor whiteColor];
-        //这里修改自体颜色
-    }
-    // 箭头的中心点
-    CGFloat arrowCenterX = super.mj_w * 0.5;
-    if (!super.stateLabel.hidden) {
-        arrowCenterX -= 100;
-    }
-    CGFloat arrowCenterY = super.mj_h * 0.3 + 20;  
-    //系数原来为0.5，现改为0.3 + 20,实践而来
-    CGPoint arrowCenter = CGPointMake(arrowCenterX, arrowCenterY);
-
-    // 箭头
-    if (self.arrowView.constraints.count == 0) {
-        self.arrowView.mj_size = self.arrowView.image.size;
-        self.arrowView.center = arrowCenter;
     }
 
-    // 圈圈
-    if (self.loadingView.constraints.count == 0) {
-        self.loadingView.center = arrowCenter;
-    }
-}
-//子类必须重写，否则刷新状态不会改变
-- (void)setState:(MJRefreshState)state
+    UIGraphicsBeginImageContext(targetSize); // this will crop
+
+    CGRect thumbnailRect = CGRectZero;
+    thumbnailRect.origin = thumbnailPoint;
+    thumbnailRect.size.width= scaledWidth;
+    thumbnailRect.size.height = scaledHeight;
+
+    [sourceImage drawInRect:thumbnailRect];
+
+    newImage = UIGraphicsGetImageFromCurrentImageContext();
+    if(newImage == nil)
+    NSLog(@&quot;could not scale image&quot;);
+
+    //pop the context to get back to the default
+    UIGraphicsEndImageContext();
+    return newImage;
+}  
+````
+</code></pre><h2 id="2016-01-29"><a href="#2016-01-29" class="headerlink" title="2016-01-29"></a>2016-01-29</h2><p>*实现3D Touch Peek andPop的简单步骤(例子为在TableView中的使用)：<br>1、控制视图器遵守<uiviewcontrollerpreviewingdelegate>协议<br>2、一般如下代码设置delegate     </uiviewcontrollerpreviewingdelegate></p>
+<pre><code>[self registerForPreviewingWithDelegate:self sourceView:self.view];   
+</code></pre><p>   如果是针对cell：   </p>
+<pre><code>[self registerForPreviewingWithDelegate:self sourceView:cell];
+</code></pre><p>3、实现两个协议方法,例子如下：    </p>
+<pre><code>#pragma mark - UIViewControllerPreviewingDelegate
+- (UIViewController *)previewingContext:(id&lt;UIViewControllerPreviewing&gt;)previewingContext viewControllerForLocation:(CGPoint)location
 {
-    MJRefreshCheckState
-
-    // 根据状态做事情
-    if (state == MJRefreshStateIdle) {
-        if (oldState == MJRefreshStateRefreshing) {
-            self.arrowView.transform = CGAffineTransformIdentity;
-
-            [UIView animateWithDuration:MJRefreshSlowAnimationDuration animations:^{
-                self.loadingView.alpha = 0.0;
-            } completion:^(BOOL finished) {
-                // 如果执行完动画发现不是idle状态，就直接返回，进入其他状态
-                if (self.state != MJRefreshStateIdle) return;
-
-                self.loadingView.alpha = 1.0;
-                [self.loadingView stopAnimating];
-                self.arrowView.hidden = NO;
-            }];
-        } else {
-            [self.loadingView stopAnimating];
-            self.arrowView.hidden = NO;
-            [UIView animateWithDuration:MJRefreshFastAnimationDuration animations:^{
-                self.arrowView.transform = CGAffineTransformIdentity;
-            }];
-        }
-    } else if (state == MJRefreshStatePulling) {
-        [self.loadingView stopAnimating];
-        self.arrowView.hidden = NO;
-        [UIView animateWithDuration:MJRefreshFastAnimationDuration animations:^{
-            self.arrowView.transform = CGAffineTransformMakeRotation(0.000001 - M_PI);
-        }];
-    } else if (state == MJRefreshStateRefreshing) {
-        self.loadingView.alpha = 1.0; // 防止refreshing -&gt; idle的动画完毕动作没有被执行
-        [self.loadingView startAnimating];
-        self.arrowView.hidden = YES;
-    }
+    NSIndexPath *indexPath = [self.mainTableView indexPathForCell:(UITableViewCell* )[previewingContext sourceView]];
+MessageDetailController *messageDetailVC = [[MessageDetailController alloc] init];
+messageDetailVC.messageCell = [self.mainTableView cellForRowAtIndexPath:indexPath];
+messageDetailVC.delegate = self;
+messageDetailVC.title = @&quot;消息详情&quot;;
+messageDetailVC.preferredContentSize = CGSizeMake(0, 350);
+CGRect rect = CGRectMake(10, 0, self.view.frame.size.width - 20,70);
+previewingContext.sourceRect = rect;
+NSLog(@&quot;=====%@&quot;,previewingContext);
+return messageDetailVC;}  
+- (void)previewingContext:(id&lt;UIViewControllerPreviewing&gt;)previewingContext commitViewController:(UIViewController *)viewControllerToCommit
+{
+    [self showViewController:viewControllerToCommit sender:self];
 }
-@end
-</code></pre><h2 id="2016-01-21"><a href="#2016-01-21" class="headerlink" title="2016-01-21"></a>2016-01-21</h2><ul>
-<li>如果一个页面存在两个或两个以上刷新请求，而两个请求没有先后顺序或者需要统一回调的时候，可以使用YTKBatchRequest一起进行处理，缺点是在项目中如果Request需要自动登录等特殊需求Request就不能用这个类了。   </li>
+</code></pre><p>4、增加预览按钮previewActionItems：<br> <strong>在需要预览的VC下</strong>实现如下方法：     </p>
+<pre><code> - (NSArray&lt;id&lt;UIPreviewActionItem&gt;&gt; *)previewActionItems
+{
+    UIPreviewAction *action1 = [UIPreviewAction actionWithTitle:@&quot;标题1&quot; style:UIPreviewActionStyleDefault handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
+        NSLog(@&quot;标题1&quot;);
+    }];
+    UIPreviewAction *action2 = [UIPreviewAction actionWithTitle:@&quot;标题2&quot; style:UIPreviewActionStyleDestructive handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
+        NSLog(@&quot;标题2&quot;);
+    }];
+    UIPreviewAction *action3 = [UIPreviewAction actionWithTitle:@&quot;标题3&quot; style:UIPreviewActionStyleSelected handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
+        NSLog(@&quot;标题3&quot;);
+    }];
+    NSArray * actions = @[action1,action2,action3];
+    return actions;
+}   
+</code></pre><p>注意事项：<br>     messageDetailVC.preferredContentSize = CGSizeMake(0, 350);<br>    CGRect rect = CGRectMake(10, 0, self.view.frame.size.width - 20,70);<br>    previewingContext.sourceRect = rect;   </p>
+<ul>
+<li>cell.accessoryView = self.aSwitch 这种写法会造成内存引用循环。</li>
 </ul>
-<h2 id="2016-01-22"><a href="#2016-01-22" class="headerlink" title="2016-01-22"></a>2016-01-22</h2><ul>
-<li>在系统涉及到时间参数需要高度统一时候，如果使用NSDate Date获取当前时间，需要注意市区和用户的时间设置问题。</li>
-</ul>
-<h2 id="2016-01-23"><a href="#2016-01-23" class="headerlink" title="2016-01-23"></a>2016-01-23</h2><ul>
-<li><p>使用如下语句的时候：   </p>
-<pre><code>[self.mainTableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:self.requestsMutaArray.count - 1
-                                                                    inSection:0]]
-                              withRowAnimation:UITableViewRowAnimationFade];   
-</code></pre></li>
-</ul>
-<p>务必确保DataSource和修改的一致性，如果发现报错：1.检查DataSource是否设置 2.检查数据是否被插入在合适位置。</p>
-<p>目前正在使用的顺序：1. 插入Cell 2.插入数据，顺序可以调换，DataSource统一即可。如下：    </p>
-<pre><code>[self.mainTableView beginUpdates];
-   [self.mainTableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:self.argumentsMutaArray.count
-                                                                   inSection:0]]
-                             withRowAnimation:UITableViewRowAnimationFade];
-   /**改变模型*/
-   NSMutableDictionary *newDic = [[NSMutableDictionary alloc] init];
-   [self.argumentsMutaArray addObject:newDic];
 
-   [self.mainTableView endUpdates];
-   [self.mainTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.argumentsMutaArray.count - 1
-                                                                 inSection:0]
-                             atScrollPosition:UITableViewScrollPositionBottom animated:YES];   
-</code></pre><h2 id="2016-01-24"><a href="#2016-01-24" class="headerlink" title="2016-01-24"></a>2016-01-24</h2>
             <div class="clearfix"></div>
             <hr class="nogutter">
         </div>
