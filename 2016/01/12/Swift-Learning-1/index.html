@@ -261,12 +261,31 @@ for (name, age) in dict1 {
 </code></pre><ul>
 <li>Swift中的结构体和类基本相同，结构体也可以有自己的方法，变量。<br>但是结构体不能继承，并且在值传递过程中，结构体传递的是值，而类传递的是引用。  </li>
 <li>switch语句中，比如 case webtype:(let type）{},代表type此时相当于switch变量。</li>
+<li><p>Swfit中 传递selector参数时，不需要像OC那样@Selector()  ,直接传函数名字符串即可：  </p>
+<pre><code>myTimer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector:&quot;updateTime&quot;, userInfo: nil, repeats: true)
+</code></pre></li>
+<li><p>Swift中数字转换成字符串的几种方法：  </p>
+<ul>
+<li><p>直接转换 ： </p>
+<pre><code>var f = 123
+var s:String = &quot;\(f)&quot; //123  或者var s = String(f)
+</code></pre></li>
+<li><p>保留小数的转换<br>  var s = String(format: “%.2f”, f)</p>
+</li>
+<li><p>16进制<br>  var s:String = String(format: “%x”, i)</p>
+</li>
+</ul>
+</li>
 </ul>
 
             <div class="clearfix"></div>
             <hr class="nogutter">
         </div>
         <nav class="pagination" role="pagination">
+    
+    <a class="pull-left" href="/2016/02/01/MADAO-s-WorkNote-2016-02/" style="float: left;">
+        ← MADAO's WorkNote(2016.02)
+    </a>
     
     
     <a class="pull-right" href="/2016/01/08/YYKit-Learning-二/">

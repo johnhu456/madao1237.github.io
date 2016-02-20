@@ -17,7 +17,7 @@
 <!--<![endif]-->
 
 <head>
-  <title>Archives | MADAO</title>
+  <title>MADAO&#39;s WorkNote(2016.02) | MADAO</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -84,7 +84,7 @@
 </head>
 
 <!--
-<body class="home-template">
+<body class="post-template">
 -->
 <body id="index" class="lightnav animsition">
 
@@ -221,103 +221,171 @@
 
         <!-- ============================ END Hero Image =========================== -->
       
-
-
-<section id="services">
+<section id="intro">
     <div class="container">
-        <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-                <div class="row boxes">
-                    
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2016/02/01/MADAO-s-WorkNote-2016-02/">MADAO&#39;s WorkNote(2016.02)</a></h4>
-                            
-                            <p><time datetime="2016-02-01T02:04:58.000Z"><a href="/2016/02/01/MADAO-s-WorkNote-2016-02/">2016-02-01</a></time></p>
-                        </div>
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2016/01/12/Swift-Learning-1/">Swift Learning Note(1)</a></h4>
-                            
-                            <p><time datetime="2016-01-12T02:25:22.000Z"><a href="/2016/01/12/Swift-Learning-1/">2016-01-12</a></time></p>
-                        </div>
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2016/01/08/YYKit-Learning-二/">YYKit Learning(二)</a></h4>
-                            
-                            <p><time datetime="2016-01-08T09:21:27.000Z"><a href="/2016/01/08/YYKit-Learning-二/">2016-01-08</a></time></p>
-                        </div>
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2016/01/04/MADAO-s-WorkNote201601/">MADAO&#39;s WorkNote（2016.01）</a></h4>
-                            
-                            <p><time datetime="2016-01-04T13:09:05.000Z"><a href="/2016/01/04/MADAO-s-WorkNote201601/">2016-01-04</a></time></p>
-                        </div>
-                    
-                        
-                            </div><div class="row boxes">
-                            
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2015/12/30/YYKit-Learning/">YYKit Learning(一)</a></h4>
-                            
-                            <p><time datetime="2015-12-30T02:49:07.000Z"><a href="/2015/12/30/YYKit-Learning/">2015-12-30</a></time></p>
-                        </div>
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2015/12/29/MagicalRecord/">MagicalRecord</a></h4>
-                            
-                            <p><time datetime="2015-12-29T07:44:00.000Z"><a href="/2015/12/29/MagicalRecord/">2015-12-29</a></time></p>
-                        </div>
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2015/12/17/CFBridge/">CFBridge和UUID</a></h4>
-                            
-                            <p><time datetime="2015-12-17T07:24:35.000Z"><a href="/2015/12/17/CFBridge/">2015-12-17</a></time></p>
-                        </div>
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2015/12/17/hello-world/">Hello World</a></h4>
-                            
-                            <p><time datetime="2015-12-17T07:06:28.000Z"><a href="/2015/12/17/hello-world/">2015-12-17</a></time></p>
-                        </div>
-                    
-                </div>
-            </div>    
+        <div class="row col-md-offset-2">
+            <div class="col-md-8">
+    			<span class="post-meta">
+      <time datetime="2016-02-01T02:04:58.000Z" itemprop="datePublished">
+          2016-02-01
+      </time>
+    
+</span>
+                <h1>MADAO's WorkNote(2016.02)</h1>
+            </div>
         </div>
-    </div>
-</section> 
+        <div class="col-md-8 col-md-offset-2">
+      		<p>##2016-02-01</p>
+<ul>
+<li>clipToBounds属性，可以控制子View是否可以超出自己的Bounds范围  </li>
+</ul>
+<p>##2016-02-02</p>
+<ul>
+<li><p>关于模拟网易有钱Tableview的表头效果的实现:<br>思路：在self.view上先添加tableView，在添加想要的背景View，底部紧挨着tableview顶部，当滑动时，在Scrollviewdelegate中对背景View的Frame实现动态调整。<br>例子(添加view)：    </p>
+<pre><code>_backOrangeView  = [[UIView alloc]init];
+ _backOrangeView.frame = CGRectMake(0,0,WIDTH ,0);
+ UIImageView *imageView = [[UIImageView alloc]initWithImage:nil];
+ imageView.backgroundColor = SH_COLOR_ORANGE;
+ imageView.contentMode =  UIViewContentModeTop;
+ [_backOrangeView addSubview:imageView];
+ [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+     make.left.right.top.bottom.equalTo(_backOrangeView);
+ }];  
+ //    [self.mainTableView insertSubview:_backOrangeView belowSubview:self.mainTableView.tableHeaderView];
+     [self.view addSubview:_backOrangeView];
+     _backOrangeView.clipsToBounds = YES;  
+</code></pre></li>
+</ul>
+<p>在有mj_header等刷新控件时，可以用insertSubView方法将View加在Header下面。  </p>
+<p>scrollviewDelegate：    </p>
+<pre><code>_backOrangeView.frame = CGRectMake(0, 0, WIDTH, - scrollView.contentOffset.y);  
+</code></pre><ul>
+<li><p>dispatch after函数<br>想要在指定时间后执行处理，可使用 dispatch_after。<br>一个三秒后在主队列追加操作的例子：   </p>
+<pre><code>dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, 33ull * NSEC_PER_SEC);  
+    dispatch_after(time, dispatch_get_main_queue(), ^{ NSLog(@“waited at least three seconds.”); });   
+</code></pre><p>  注意:  dispatch_after 函数并不是在指定时间后执行处理，而是在指定时间后追加处理到Dispatch Queue。例如Main Dispatch Queue在主线程的RunLoop中执行。所以在比如每隔1/60秒执行的RunLoop，Block最快在3秒后执行，最慢在 3+1/60秒后执行<br><a href="http://blog.csdn.net/mad2man/article/details/21786251" target="_blank" rel="external">GCD用法详解</a>  </p>
+<h2 id="2016-02-03"><a href="#2016-02-03" class="headerlink" title="2016-02-03"></a>2016-02-03</h2></li>
+<li>reloadSections:WithAnimation 容易引起很多错误，建议使用insertCell 或者deleteCell。<h2 id="2016-02-15"><a href="#2016-02-15" class="headerlink" title="2016-02-15"></a>2016-02-15</h2></li>
+<li><p>在iOS8之后，可以使用      </p>
+<pre><code>tableView:editActionsForRowAtIndex Path: 
+// 设置滑动删除时表现多个按钮    
+</code></pre></li>
+</ul>
+<pre><code>// 示例代码
+- (NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // 添加一个删除按钮
+    UITableViewRowAction *deleteRowAction = [UITableViewRowActionrowActionWithStyle:UITableViewRowActionStyleDestructive title:@&quot;删除&quot;handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
+        NSLog(@&quot;点击了删除&quot;);
 
-<section id="statement">
-    <div class="container text-center wow fadeInUp" data-wow-delay="0.5s">
-        <div class="row">
-            <p>轻松的路是给下坡的人走的。</p>
+        // 1. 更新数据
+        [_allDataArray removeObjectAtIndex:indexPath.row];
+        // 2. 更新UI
+        [tableView deleteRowsAtIndexPaths:@[indexPath]withRowAnimation:UITableViewRowAnimationAutomatic];
+    }];
+
+    // 删除一个置顶按钮
+    UITableViewRowAction *topRowAction = [UITableViewRowActionrowActionWithStyle:UITableViewRowActionStyleDefault title:@&quot;置顶&quot;handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
+        NSLog(@&quot;点击了置顶&quot;);
+        // 1. 更新数据
+        [_allDataArray exchangeObjectAtIndex:indexPath.row withObjectAtIndex:0];
+
+        // 2. 更新UI
+        NSIndexPath *firstIndexPath = [NSIndexPath indexPathForRow:0inSection:indexPath.section];
+        [tableView moveRowAtIndexPath:indexPathtoIndexPath:firstIndexPath];
+    }];
+    topRowAction.backgroundColor = [UIColor blueColor];
+
+    // 添加一个更多按钮
+    UITableViewRowAction *moreRowAction = [UITableViewRowActionrowActionWithStyle:UITableViewRowActionStyleNormal title:@&quot;更多&quot;handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
+        NSLog(@&quot;点击了更多&quot;);
+
+        [tableView reloadRowsAtIndexPaths:@[indexPath]withRowAnimation:UITableViewRowAnimationMiddle];
+    }];
+    moreRowAction.backgroundEffect = [UIBlurEffecteffectWithStyle:UIBlurEffectStyleDark];
+
+    // 将设置好的按钮放到数组中返回
+    return @[deleteRowAction, topRowAction, moreRowAction];
+}
+</code></pre><h2 id="2016-02-16"><a href="#2016-02-16" class="headerlink" title="2016-02-16"></a>2016-02-16</h2><pre><code>#ifndef __OPTIMIZE__
+# define NSLog(…) NSLog(__VA_ARGS__)
+#else
+# define NSLog(…) {}
+#endif  
+</code></pre><p><a href="http://blog.csdn.net/ch_soft/article/details/7182015" target="_blank" rel="external">详细介绍</a>  </p>
+<h2 id="2016-02-17"><a href="#2016-02-17" class="headerlink" title="2016-02-17"></a>2016-02-17</h2><ul>
+<li><p>在MBProgressHUD中看到的一种根据不同系统版本做不同宏定义的方法：</p>
+<pre><code> #if __IPHONE_OS_VERSION_MIN_REQUIRED &gt;= 70000
+    #define MB_TEXTSIZE(text, font) [text length] &gt; 0 ? [text 
+        sizeWithAttributes:@{NSFontAttributeName:font}] : CGSizeZero;
+#else
+    #define MB_TEXTSIZE(text, font) [text length] &gt; 0 ? [text sizeWithFont:font] : CGSizeZero;
+#endif   
+</code></pre></li>
+</ul>
+<p>类似的还有 #if __IPHONE_OS_VERSION_MAX_ALLOWED &gt;= 90000   </p>
+<p>以上部分都是在编译时做的处理</p>
+<p>如果需要在运行时也进行版本判断  ：  </p>
+<pre><code>#ifndef kCFCoreFoundationVersionNumber_iPhoneOS_4_0  
+#define kCFCoreFoundationVersionNumber_iPhoneOS_4_0 550.32   
+#endif  
+#if __IPHONE_OS_VERSION_MAX_ALLOWED &gt;= 40000  
+#define IF_IOS4_OR_GREATER(...) \  
+  if (kCFCoreFoundationVersionNumber &gt;= kCFCoreFoundationVersionNumber_iPhoneOS_4_0) \   
+  { \  
+      __VA_ARGS__ \  
+  }  
+#else  
+#define IF_IOS4_OR_GREATER(...)  
+#endif   
+</code></pre><p><a href="http://blog.csdn.net/mad2man/article/details/12371139" target="_blank" rel="external">判断老版本iOS SDK</a></p>
+<p>#2016-02-18</p>
+<ul>
+<li>一种监听键盘删除的操作： 设置UITextField的delegte 一种投机式的实现方法：   </li>
+</ul>
+<pre><code> - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+if ([text isEqualToString:@&quot;&quot;]) {
+    }
+}
+</code></pre><p>如果要真正实现删除键的监听，可以选择写一个子类，重写以下三个方法中最后一个：</p>
+<pre><code>- (BOOL)hasText;
+- (void)insertText:(NSString *)text;
+- (void)deleteBackward;         
+</code></pre><p>#2016-02-20</p>
+<ul>
+<li>Swift下pragma mark不再适用   采用//MARK: 进行代替</li>
+</ul>
+
+            <div class="clearfix"></div>
+            <hr class="nogutter">
         </div>
+        <nav class="pagination" role="pagination">
+    
+    
+    <a class="pull-right" href="/2016/01/12/Swift-Learning-1/">
+        Swift Learning Note(1) →
+    </a>
+    
+</nav>
+
+        <div class="duoshuo">
+<div class="ds-thread" data-thread-key="2016/02/01/MADAO-s-WorkNote-2016-02/" data-title="MADAO&#39;s WorkNote(2016.02)" data-url="http://yoursite.com/2016/02/01/MADAO-s-WorkNote-2016-02/"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"duoshuo_name"};
+(function() {
+	var ds = document.createElement('script');
+	ds.type = 'text/javascript';ds.async = true;
+	ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+	ds.charset = 'UTF-8';
+	(document.getElementsByTagName('head')[0] 
+	 || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+</script>
+</div>
     </div>
 </section>
+
+
       
 <!-- ============================ Footer =========================== -->
 
