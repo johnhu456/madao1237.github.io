@@ -353,7 +353,103 @@ if ([text isEqualToString:@&quot;&quot;]) {
 - (void)deleteBackward;         
 </code></pre><p>#2016-02-20</p>
 <ul>
-<li>Swift下pragma mark不再适用   采用//MARK: 进行代替</li>
+<li>Swift下pragma mark不再适用   采用//MARK: 进行代替 </li>
+</ul>
+<p>#2016-02-22</p>
+<ul>
+<li>学习Swift<br>#2016-02-23</li>
+<li>学习Swift 修复产品Bug  </li>
+</ul>
+<p>#2016-02-24</p>
+<ul>
+<li>处理统一的Error Code：可以新建一个扩展文件：xxxxxxxx.strings文件 在文件中定义如下  “0000” = “网络错误”; </li>
+<li><p>如何调用：  可以定义如下的宏   </p>
+<pre><code>#define NSLocalizedErrorMessage(errorCode) \
+[[NSBundle mainBundle] localizedStringForKey:errorCode value:@&quot;未知错误&quot; table:@&quot;ErrorMessage&quot;]
+</code></pre><p>当找不到Key的时候返回未知错误</p>
+</li>
+</ul>
+<p>##2016-02-25</p>
+<ul>
+<li>使用新的类库MLeaksFinder 可以查找项目中的内存泄露处，使用简单，文件夹拖入项目即可。内存泄露会中断言。<br>原理：在NSObject中重写了-(void)willDealloc方法，如下：    </li>
+</ul>
+<pre><code>- (BOOL)willDealloc {
+    __weak id weakSelf = self;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [weakSelf assertNotDealloc];
+    });
+    return YES;
+}
+- (void)assertNotDealloc {
+     NSAssert(NO, @“”);
+}
+</code></pre><p>三秒后如果对象释放，则weakSelf也为nil， 不触发断言操作，否则就说触发断言，说明对象没有释放。</p>
+<h2 id="2016-02-29"><a href="#2016-02-29" class="headerlink" title="2016-02-29"></a>2016-02-29</h2><h3 id="u5173_u4E8EUIImagePicker_u548CAVFoundation__u62CD_u7167"><a href="#u5173_u4E8EUIImagePicker_u548CAVFoundation__u62CD_u7167" class="headerlink" title="关于UIImagePicker和AVFoundation 拍照"></a>关于UIImagePicker和AVFoundation 拍照</h3><p>UIImagePicker拍照方法非常简单,支持所有基本功能，基本不需要进行自行的配置。<br>相比之下AVFoundation相关类功能更多，可自主更改硬件参数或者修改预览图等。</p>
+<h3 id="AVFoundation_u76F8_u5173_u7C7B"><a href="#AVFoundation_u76F8_u5173_u7C7B" class="headerlink" title="AVFoundation相关类"></a>AVFoundation相关类</h3><ul>
+<li>AVCaptureDevice 关于硬件的接口，用于控制硬件。</li>
+<li>AVCaptureDeviceInput 提供来自设备的数据</li>
+<li>AVCaptureSession 管理输入与输出之间的数据，以及可能出现的问题</li>
+<li><p>AVCaptureVideoPreviewLayer 提供相机预览<br>进行拍照的一般流程：   通过camera来获取一张静态图片（简单来说就是拍照），那么流程就应该是：<br>device（获取设备，这里为camera）–&gt;capture input[图片捕捉器]（用device初始化一个capture input）;capture（初始化一个capture output）[output到一个自定义的View中]–&gt;session（把input和output加入到session，然后startrunning）–&gt;image（用out生成一个图片）   </p>
+<p>  自己写的代码例子：    </p>
+<pre><code>#import &quot;ViewController.h&quot;
+#import &lt;AVFoundation/AVFoundation.h&gt;
+
+@interface ViewController ()
+/**session: 数据传递Session*/
+@property (nonatomic, strong) AVCaptureSession *session;
+/**输入流*/
+@property (nonatomic, strong) AVCaptureDeviceInput *input;
+/**输出流*/
+@property (nonatomic, strong) AVCaptureStillImageOutput *output;
+/**预览*/
+@property (nonatomic, strong) AVCaptureVideoPreviewLayer *previewLayer;
+
+@end
+
+@implementation ViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    [self setupCamera];
+    [self setupPreViewLayer];
+
+}
+- (void)setupCamera
+{
+    NSError *error = nil;
+    self.session = [[AVCaptureSession alloc] init];
+    self.input = [[AVCaptureDeviceInput alloc] initWithDevice:[self getBackCamera] error:&amp;error];
+    self.session.sessionPreset = AVCaptureSessionPreset1920x1080;
+    [self.session addInput:self.input];
+}
+
+/**获取摄像头*/
+- (AVCaptureDevice *)cameraPosition:(AVCaptureDevicePosition)position
+{
+    for (AVCaptureDevice *device in [AVCaptureDevice devices]) {
+        if (device.position == position) {
+            return device;
+        }
+    }
+    return nil;
+}
+- (AVCaptureDevice *)getBackCamera
+{
+    return [self cameraPosition:AVCaptureDevicePositionBack];
+}
+
+/**设置图层*/
+- (void)setupPreViewLayer
+{
+    if (self.previewLayer == nil) {
+        self.previewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:self.session];
+        [self.previewLayer setBounds:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+        [self.previewLayer setFrame:self.view.frame];
+        [self.previewLayer setVideoGravity:AVLayerVideoGravityResizeAspectFill];
+        [self.view.layer addSublayer:self.previewLayer];
+    }
+}
+</code></pre></li>
 </ul>
 
             <div class="clearfix"></div>

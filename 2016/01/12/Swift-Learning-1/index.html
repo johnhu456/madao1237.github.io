@@ -235,7 +235,7 @@
             </div>
         </div>
         <div class="col-md-8 col-md-offset-2">
-      		<p>let 定义为常量<br>var 定义才为变量<br>当类型不明确时，可以在变量名后+冒号+类型<br>如下    </p>
+      		<h2 id="u7C7B_u578B_u53D8_u91CF"><a href="#u7C7B_u578B_u53D8_u91CF" class="headerlink" title="类型变量"></a>类型变量</h2><p>let 定义为常量<br>var 定义才为变量<br>当类型不明确时，可以在变量名后+冒号+类型<br>如下    </p>
 <pre><code>var count:Double = 70 或者 var count:Double  
 </code></pre><p>Swift 不会做隐式转换，显式转换类型如    </p>
 <pre><code>let width = 94
@@ -243,7 +243,15 @@ let widthLabel = String(width)
 </code></pre><p>针对数组，var声明的时候即生成一个可变数组，字典同样。<br>声明指定元素类型的数组或字典，格式如下    </p>
 <pre><code>let emptyArray = [String]()
 let emptyDictionary = [String: Float]()
-</code></pre><p>循环语句差别不大，语法稍微简洁了些，do-while语句改成了repeat—while。值得注意的是 if 后面必须为BOOL类型， 意味着if （int）等的形式将不再有用。<br>for语句可以用如此表示：   </p>
+</code></pre><p>“如果我们同时需要每个数据项的值和索引值，可以使用enumerate()方法来进行数组遍历。enumerate()返回一个由每一个数据项索引值和数据值组成的元组。我们可以把这个元组分解成临时常量或者变量来进行遍历：</p>
+<pre><code>for (index, value) in shoppingList.enumerate() {
+    print(&quot;Item \(String(index + 1)): \(value)&quot;)
+}”
+</code></pre><p>对于可变集合，可以用var someSet = Set<string>() 或者 var someSet：Set = [“1”,”2”,”3”]来创建  </string></p>
+<p><img src="http://i12.tietuku.com/4886219153f3fc53.png" alt="Set的一些用法"></p>
+<p><img src="http://i12.tietuku.com/80fe157260cf9220.png" alt="Set的一些用法2"></p>
+<h2 id="u63A7_u5236_u8BED_u53E5"><a href="#u63A7_u5236_u8BED_u53E5" class="headerlink" title="控制语句"></a>控制语句</h2><pre><code>循环语句差别不大，语法稍微简洁了些，do-while语句改成了repeat—while。值得注意的是 if 后面必须为BOOL类型， 意味着if （int）等的形式将不再有用。  
+</code></pre><p>for语句可以用如此表示：   </p>
 <pre><code>for i in 0..&lt;4{
     print(i)
 }
@@ -258,9 +266,21 @@ for (name, age) in dict1 {
   keys.append(name)
   values.append(age)
 }    
-</code></pre><ul>
+</code></pre><p>字符串中的字符也可以遍历   </p>
+<pre><code>for character in &quot;Hello&quot; {
+      println(character)
+  }
+  // H
+  // e
+  // l
+  // l
+  // o  
+</code></pre><p>Switch语句的区间匹配：<br><img src="http://i13.tietuku.com/e6d822002abd56ee.png" alt="Switch语句的区间匹配"><br>元组匹配：<br><img src="http://i13.tietuku.com/d421f290ebac4b37.png" alt="元组匹配"></p>
+<h2 id="Tips"><a href="#Tips" class="headerlink" title="Tips"></a>Tips</h2><ul>
 <li>Swift中的结构体和类基本相同，结构体也可以有自己的方法，变量。<br>但是结构体不能继承，并且在值传递过程中，结构体传递的是值，而类传递的是引用。  </li>
 <li>switch语句中，比如 case webtype:(let type）{},代表type此时相当于switch变量。</li>
+</ul>
+<ul>
 <li><p>Swfit中 传递selector参数时，不需要像OC那样@Selector()  ,直接传函数名字符串即可：  </p>
 <pre><code>myTimer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector:&quot;updateTime&quot;, userInfo: nil, repeats: true)
 </code></pre></li>
@@ -272,10 +292,67 @@ var s:String = &quot;\(f)&quot; //123  或者var s = String(f)
 </code></pre></li>
 <li><p>保留小数的转换<br>  var s = String(format: “%.2f”, f)</p>
 </li>
-<li><p>16进制<br>  var s:String = String(format: “%x”, i)</p>
+<li><p>16进制<br>  var s:String = String(format: “%x”, i)   </p>
 </li>
 </ul>
 </li>
+<li><p>func多用外部参数名！:    </p>
+<pre><code>func containsCharacter(#string: String, #characterToFind: Character) -&gt; Bool {
+       for character in string {
+           if character == characterToFind {
+               return true
+           }
+       }
+       return false
+   }
+</code></pre></li>
+<li><p>更改导航栏字体方式：  </p>
+<ul>
+<li><p>1 ：   </p>
+<pre><code>UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor(), NSFontAttributeName: UIFont(name: &quot;Heiti SC&quot;, size: 24.0)!]  
+</code></pre></li>
+</ul>
+</li>
+<li><p>2 ：      </p>
+<pre><code>self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor(), NSFontAttributeName: UIFont(name: &quot;Heiti SC&quot;, size: 24.0)!]
+</code></pre><p>方法一可能不起作用</p>
+</li>
+<li><p>根据自定义Cell的高度返回TableView下Cell高度的方法，与OC类似：  </p>
+<pre><code>let currentCell = self.tableView(tableView, cellForRowAtIndexPath: indexPath)
+return currentCell.frame.size.height
+</code></pre><p>错误写法：  </p>
+<p>   <del>let currentCell = tableView(tableView, cellForRowAtIndexPath: indexPath)</del>    </p>
+</li>
+<li><p>MPMoivePlayer: 在iOS8之后被弃用，使用AVPlayer。使用MPMoivePlayer的步骤：   </p>
+</li>
+</ul>
+<pre><code>func setupVideoPlayer(){
+        let videoFilePath = NSBundle.mainBundle().pathForResource(&quot;emojizone&quot;, ofType: &quot;mp4&quot;)
+        self.videoPlayer = MPMoviePlayerController(contentURL: NSURL.fileURLWithPath(videoFilePath!))
+        self.videoPlayer!.controlStyle = MPMovieControlStyle.Fullscreen
+        self.videoPlayer!.view.frame = self.view.frame
+
+        self.view.addSubview(self.videoPlayer!.view)
+          self.videoPlayer!.play()  
+    }  
+</code></pre><p>注意几种样式ControlStyle:<br> Embedded:<br> <img src="http://www.hangge.com/blog_uploads/201506/2015062414262429046.png" alt=""><br> FullScreen:<br> <img src="http://www.hangge.com/blog_uploads/201506/2015062414263557219.png" alt=""><br> None就是没有播放控件</p>
+<p>MPMoviePlayer在iOS9之后被弃用，推荐使用AVPlayer,与MPMoviewController类似， 需要创建两个变量：         </p>
+<pre><code>var videoPlayer = AVPlayer()
+ var videoPlayVC = AVPlayerViewController()
+</code></pre><p>设置：       </p>
+<pre><code>let videoFilePath = NSBundle.mainBundle().pathForResource(&quot;emojizone&quot;, ofType: &quot;mp4&quot;)
+        videoPlayer = AVPlayer(URL: NSURL(fileURLWithPath: videoFilePath!))
+        videoPlayVC.player = videoPlayer  
+</code></pre><p>调用:     </p>
+<pre><code>self.presentViewController(videoPlayVC, animated: true) { () -&gt; Void in
+          self.videoPlayVC.player?.play()   
+</code></pre><ul>
+<li>AddChildViewController:添加完后调用didMoveToParentViewController方法  </li>
+<li><p>隐藏状态栏：         </p>
+<pre><code>override func prefersStatusBarHidden() -&gt; Bool {
+       return true;
+   }
+</code></pre></li>
 </ul>
 
             <div class="clearfix"></div>
