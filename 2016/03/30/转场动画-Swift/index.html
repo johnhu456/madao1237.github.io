@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<!--[if lte IE 8 ]>
+<html class="ie" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+<![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<!--
+***************  *      *     *
+      8          *    *       *
+      8          *  *         *
+      8          **           *
+      8          *  *         *
+      8          *    *       *
+      8          *      *     *
+      8          *        *   ***********    -----Theme By Kieran(http://go.kieran.top)
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+<!--<![endif]-->
+
+<head>
+  <title>转场动画-Swift | MADAO</title>
+  <!-- Meta data -->
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content="MADAO">
+    <meta name="author" content="MADAO">
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+
+    <!-- Favicon, (keep icon in root folder) -->
+    <link rel="Shortcut Icon" href="/img/favicon.ico" type="image/ico">
+
+    <link rel="alternate" href="/atom.xml" title="MADAO" type="application/atom+xml">
+    <link rel="stylesheet" href="/css/all.css" media="screen" type="text/css">
+	
+    <link rel="stylesheet" href="/highlightjs/vs.css" type="text/css">
+    
+    
+
+    <!-- Custom stylesheet, (add custom styles here, always load last) -->
+    <!-- Load our stylesheet for IE8 -->
+    <!--[if IE 8]>
+    <link rel="stylesheet" type="text/css" href="/css/ie8.css" />
+    <![endif]-->
+
+    <!-- Google Webfonts (Monserrat 400/700, Open Sans 400/600) -->
+    <link href='//fonts.useso.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <link href='//fonts.useso.com/css?family=Open+Sans:400,600' rel='stylesheet' type='text/css'>
+
+    <!-- Load our fonts individually if IE8+, to avoid faux bold & italic rendering -->
+    <!--[if IE]>
+    <link href='http://fonts.useso.com/css?family=Montserrat:400' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.useso.com/css?family=Montserrat:700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.useso.com/css?family=Open+Sans:400' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.useso.com/css?family=Open+Sans:600' rel='stylesheet' type='text/css'>
+    <![endif]-->
+
+    <!-- jQuery | Load our jQuery, with an alternative source fallback to a local version if request is unavailable -->
+    <script src="/js/jquery-1.11.1.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/jquery-1.11.1.min.js"><\/script>')</script>
+
+    <!-- Load these in the <head> for quicker IE8+ load times -->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="/js/html5shiv.min.js"></script>
+    <script src="/js/respond.min.js"></script>
+    <![endif]-->
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+  
+  <style>.col-md-8.col-md-offset-2.opening-statement img{display:none;}</style>
+</head>
+
+<!--
+<body class="post-template">
+-->
+<body id="index" class="lightnav animsition">
+
+      <!-- ============================ Off-canvas navigation =========================== -->
+
+    <div class="sb-slidebar sb-right sb-style-overlay sb-momentum-scrolling">
+        <div class="sb-close" aria-label="Close Menu" aria-hidden="true">
+            <img src="/img/close.png" alt="Close"/>
+        </div>
+        <!-- Lists in Slidebars -->
+        <ul class="sb-menu">
+            <li><a href="/" class="animsition-link" title="Home">Home</a></li>
+            <li><a href="/archives" class="animsition-link" title="archive">archives</a></li>
+            <!-- Dropdown Menu -->
+			 
+            <li>
+                <a class="sb-toggle-submenu">Works<span class="sb-caret"></span></a>
+                <ul class="sb-submenu">
+                    
+                        <li><a href="/" target="_BLANK" class="animsition-link">AAA</a></li>
+                    
+                        <li><a href="/atom.xml" target="_BLANK" class="animsition-link">BBB</a></li>
+                    
+                </ul>
+            </li>
+            
+            
+            
+            <li>
+                <a class="sb-toggle-submenu">Links<span class="sb-caret"></span></a>
+                <ul class="sb-submenu">
+                    
+                    <li><a href="http://go.kieran.top/" class="animsition-link">Kieran</a></li>
+                    
+                    <li><a href="http://domain.com/" class="animsition-link">Name</a></li>
+                    
+                </ul>
+            </li>
+            
+        </ul>
+        <!-- Lists in Slidebars -->
+        <ul class="sb-menu secondary">
+            <li><a href="/about.html" class="animsition-link" title="about">About</a></li>
+            <li><a href="/atom.xml" class="animsition-link" title="rss">RSS</a></li>
+        </ul>
+    </div>
+    
+    <!-- ============================ END Off-canvas navigation =========================== -->
+
+    <!-- ============================ #sb-site Main Page Wrapper =========================== -->
+
+    <div id="sb-site">
+        <!-- #sb-site - All page content should be contained within this id, except the off-canvas navigation itself -->
+
+        <!-- ============================ Header & Logo bar =========================== -->
+
+        <div id="navigation" class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <!-- Nav logo -->
+                    <div class="logo">
+                        <a href="/" title="Logo" class="animsition-link">
+                         <img src="/img/logo.png" alt="Logo" width="35px;"/> 
+                        </a>
+                    </div>
+                    <!-- // Nav logo -->
+                    <!-- Info-bar -->
+                    <nav>
+                        <ul class="nav">
+                            <li><a href="/" class="animsition-link">MADAO</a></li>
+                            <li class="nolink"><span>Always </span>Creative.</li>
+                            
+                            <li><a href="https://github.com/" title="Github" target="_blank"><i class="icon-github"></i></a></li>
+                            
+                            
+                            <li><a href="https://twitter.com/" title="Twitter" target="_blank"><i class="icon-twitter"></i></a></li>
+                            
+                            
+                            <li><a href="https://www.facebook.com/" title="Facebook" target="_blank"><i class="icon-facebook"></i></a></li>
+                            
+                            
+                            <li><a href="https://google.com/" title="Google-Plus" target="_blank"><i class="icon-google-plus"></i></a></li>
+                            
+                            
+                            <li><a href="http://weibo.com/" title="Sina-Weibo" target="_blank"><i class="icon-sina-weibo"></i></a></li>
+                            
+                            <li class="nolink"><span>Welcome!</span></li>
+                        </ul>
+                    </nav>
+                    <!--// Info-bar -->
+                </div>
+                <!-- // .container -->
+                <div class="learnmore sb-toggle-right">More</div>
+                <button type="button" class="navbar-toggle menu-icon sb-toggle-right" title="More">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar before"></span>
+                <span class="icon-bar main"></span>
+                <span class="icon-bar after"></span>
+                </button>
+            </div>
+            <!-- // .navbar-inner -->
+        </div>
+
+        <!-- ============================ Header & Logo bar =========================== -->
+
+        <!-- ============================ Hero Image =========================== -->
+
+        <section id="hero" class="scrollme">
+            <div class="container-fluid element-img" style="background: url(/img/bg_img.jpg) no-repeat center center fixed;background-size: cover">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 vertical-align cover boost text-center">
+                        <div class="center-me animateme" data-when="exit" data-from="0" data-to="0.6" data-opacity="0" data-translatey="100">
+                            <div>
+                            	
+                                <h2>YOU'VE MADE A <span>BRAVE</span> DECISION, WELCOME.</h2>
+                                <p></p>
+				    			
+                                <h2></h2>
+                                <p>每一个不曾起舞的日子都是对生命的辜负。</p>
+				    			
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- // .col-md-12 -->
+                </div>
+                <div class="herofade beige-dk"></div>
+            </div>
+        </section>
+
+        <!-- Height spacing helper -->
+        <div class="heightblock"></div>
+        <!-- // End height spacing helper -->
+
+        <!-- ============================ END Hero Image =========================== -->
+      
+<section id="intro">
+    <div class="container">
+        <div class="row col-md-offset-2">
+            <div class="col-md-8">
+    			<span class="post-meta">
+      <time datetime="2016-03-30T04:29:22.000Z" itemprop="datePublished">
+          2016-03-30
+      </time>
+    
+</span>
+                <h1>转场动画-Swift</h1>
+            </div>
+        </div>
+        <div class="col-md-8 col-md-offset-2">
+      		<h2 id="u6548_u679C_u56FE"><a href="#u6548_u679C_u56FE" class="headerlink" title="效果图"></a>效果图</h2><p><img src="http://upload-images.jianshu.io/upload_images/1683504-da9eebd1829621b9.gif?imageMogr2/auto-orient/strip" alt=""></p>
+<p>以上是一个关于CollectionViewCell点击展开为一个二级页面的转场动画，支持手势过渡及完成度展现。<br>主要参考<a href="http://kittenyang.com/magicmove/" target="_blank" rel="external">Kitten-Yang</a>的文章做的效果。</p>
+<h2 id="UIViewControllerAnimatedTransitioning"><a href="#UIViewControllerAnimatedTransitioning" class="headerlink" title="UIViewControllerAnimatedTransitioning"></a>UIViewControllerAnimatedTransitioning</h2><p><a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIViewControllerAnimatedTransitioning_Protocol/index.html#//apple_ref/doc/uid/TP40013387" target="_blank" rel="external">官方开发文档</a><br>简单来说，这是一个协议。通过创建遵守该协议的对象，可以创建一个动画制作者对象，从而高度定制ViewController的转场动画。不过这个转场必须是不能互动的，如果需要创建支持互动的动画，则必须将你的动画制作者对象与另一个能够控制动画的对象关联起来。</p>
+<h5 id="u4E92_u52A8_u652F_u6301"><a href="#u4E92_u52A8_u652F_u6301" class="headerlink" title="互动支持"></a>互动支持</h5><p>为了让转场动画对手势等有互动支持，需要与另一个遵守<strong><em>UIViewControllerInteractiveTransitioning</em></strong>协议的对象进行关联。<br>一般来说,我们不需要自己去专门写一个类来遵守这个<strong><em> UIViewControllerInteractiveTransitioning</em></strong>协议，系统中有一个类名为<strong><em>UIPercentDrivenInteractiveTransition</em></strong>已经帮我们写好了。</p>
+<h5 id="UIPercentDrivenInteractiveTransition"><a href="#UIPercentDrivenInteractiveTransition" class="headerlink" title="UIPercentDrivenInteractiveTransition"></a>UIPercentDrivenInteractiveTransition</h5><p>该类基于UIViewControllerInteractiveTransitioning协议创建，为我们提供了三个主要方法：<br><figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-<span class="ruby"> <span class="symbol">updateInteractiveTransition:</span></span><br><span class="line"></span>-<span class="ruby"> cancelInteractiveTransition</span><br><span class="line"></span>-<span class="ruby"> finishInteractiveTransition</span></span><br></pre></td></tr></table></figure></p>
+<p>第一个方法可以根据我们传入的progress参数来调整动画的完成度，后两个方法就顾名思义了，一个取消互动动画，一个结束互动动画。</p>
+<h2 id="u52A8_u753B_u601D_u8DEF"><a href="#u52A8_u753B_u601D_u8DEF" class="headerlink" title="动画思路"></a>动画思路</h2><p>基本的类都介绍完了，接下来谈一下动画的思路。思路是最重要的一部分。<br>从效果图可以看到，从第一个ViewController(以下称FirstViewController)推到第二个ViewController(以下称SecondViewController)的过程中，Cell中的图片变换到了第二个ViewController中图片的位置。其次是一些界面上透明度的变化。<br>可以总结一句就是说<br>Cell.imageView.frame -&gt; SecondViewController.imageView.frame<br>FirstViewController.view.alpha = 0   SecondViewController.alpha = 1<br>的一个过程。<br>动画执行的关键就是我们缺少一个容器去处理这样视图位置及透明度的变化。</p>
+<p>好在<strong><em>func animateTransition(_ transitionContext: UIViewControllerContextTransitioning)</em></strong>中的transitionContext中有一个ContainView可以在我们进行转场的时候做容器使用。</p>
+<p>截取了一部分代码：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"> </span><br><span class="line"><span class="func"><span class="keyword">func</span> <span class="title">animateTransition</span><span class="params">(transitionContext: UIViewControllerContextTransitioning)</span></span> &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">let</span> toViewController = transitionContext.viewControllerForKey(<span class="type">UITransitionContextToViewControllerKey</span>) <span class="keyword">as</span>! <span class="type">DetailViewController</span></span><br><span class="line">    <span class="keyword">let</span> fromViewController = transitionContext.viewControllerForKey(<span class="type">UITransitionContextFromViewControllerKey</span>) <span class="keyword">as</span>! <span class="type">ViewController</span></span><br><span class="line">    <span class="keyword">let</span> containView = transitionContext.containerView()</span><br></pre></td></tr></table></figure></p>
+<p>按上述可以拿到容器View及转场中的两个视图控制器。剩下要做的就是在ContainView中进行Frame等关键属性的变化。<br>但是需要注意的一点是，我们怎么把Cell中的ImageView提出来然后移到下一个ViewController中？<br>这时就需要动画中的一点障眼法，我们不需要移动Cell中的ImageView，移动会造成很多不必要的麻烦(还得移回去)，但是我们可以给他做一个截图，通过移动截图来营造移动了Cell的ImageView的假象。</p>
+<p>下面是截图及初始化的主要部分代码,思路参考注释。<br><figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">//获取当前点击的Cell</span></span><br><span class="line">let indexPath = fromViewController.collectionView.indexPathsForSelectedItems()![<span class="number">0</span>]</span><br><span class="line">let cell = fromViewController.collectionView.cellForItemAtIndexPath(indexPath) as! CustomCollectionViewCell</span><br><span class="line"><span class="comment">//制作截图</span></span><br><span class="line">let snapShotView = cell.imageView .snapshotViewAfterScreenUpdates(<span class="keyword">false</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//注意添加的先后顺序，否则会被遮挡。</span></span><br><span class="line">containView?.addSubview((toViewController.view)!)</span><br><span class="line">containView?.addSubview(snapShotView)</span><br><span class="line"></span><br><span class="line"><span class="comment">//截图在ContainView中的初始位置调整</span></span><br><span class="line">snapShotView.frame = (cell.convertRect(cell.imageView.frame, toView: cell.superview!.superview))</span><br><span class="line">snapShotView.frame = CGRectMake(snapShotView.frame.origin.x, snapShotView.frame.origin.y + <span class="number">64</span>, snapShotView.frame.<span class="built_in">size</span>.<span class="variable">width</span>, snapShotView.frame.<span class="built_in">size</span>.<span class="variable">height</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//对变换前后的原视图进行隐藏</span></span><br><span class="line">cell.imageView.hidden = <span class="keyword">true</span></span><br><span class="line">toViewController.detailImageView.hidden = <span class="keyword">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//设置第二个控制器位置，透明度</span></span><br><span class="line">toViewController.view.frame = transitionContext .finalFrameForViewController(toViewController)</span><br><span class="line">toViewController.view.<span class="built_in">alpha</span> = <span class="number">0</span></span><br></pre></td></tr></table></figure></p>
+<p>动画的变化思路前面已经提过，下面贴上真正的动画部分代码：<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">//动画</span></span><br><span class="line">UIView.animateWithDuration(self.transitionDuration(transitionContext), <span class="string">delay:</span> <span class="number">0</span>, <span class="string">usingSpringWithDamping:</span> <span class="number">0.8</span>, <span class="string">initialSpringVelocity:</span> <span class="number">5</span>, <span class="string">options:</span> UIViewAnimationOptions.CurveLinear, <span class="string">animations:</span> &#123;</span><br><span class="line">    toViewController.view.alpha = <span class="number">1</span></span><br><span class="line">    <span class="comment">//假装把Cell的ImageView移动到第二个VC中的ImageView的位置。</span></span><br><span class="line">    snapShotView.frame = (toViewController.view?.convertRect(toViewController.detailImageView.frame, toView: toViewController.view.superview))!</span><br><span class="line">    </span><br><span class="line">    &#125;) &#123; (success) <span class="keyword">in</span></span><br><span class="line">        toViewController.detailImageView.hidden = <span class="literal">false</span>;</span><br><span class="line">        cell.imageView.hidden = <span class="literal">false</span>;</span><br><span class="line">        <span class="comment">//删除截图</span></span><br><span class="line">        snapShotView.removeFromSuperview()</span><br><span class="line">        <span class="comment">//完成动画</span></span><br><span class="line">        transitionContext.completeTransition(!transitionContext.transitionWasCancelled())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>还有一个必须实现的方法是：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="func"><span class="keyword">func</span> <span class="title">transitionDuration</span><span class="params">(transitionContext: UIViewControllerContextTransitioning?)</span></span> -&gt; <span class="type">NSTimeInterval</span></span><br></pre></td></tr></table></figure></p>
+<p>用来决定动画的执行时间</p>
+<h2 id="u52A8_u753B_u7684_u4F7F_u7528"><a href="#u52A8_u753B_u7684_u4F7F_u7528" class="headerlink" title="动画的使用"></a>动画的使用</h2><p>转场代码都可以保持不变，该Push地方Push，该Pop的地方Pop<br>在FirstViewController中执行<br><figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">self</span>.navigationController?.<span class="keyword">delegate</span> = <span class="keyword">self</span></span><br></pre></td></tr></table></figure></p>
+<p>当然FirstViewController需要遵守UINavigationControllerDelegate协议。<br>然后实现<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">optional</span> <span class="keyword">public</span> <span class="func"><span class="keyword">func</span> <span class="title">navigationController</span><span class="params">(navigationController: UINavigationController, animationControllerForOperation operation: UINavigationControllerOperation, fromViewController fromVC: UIViewController, toViewController toVC: UIViewController)</span></span> -&gt; <span class="type">UIViewControllerAnimatedTransitioning</span>?</span><br></pre></td></tr></table></figure></p>
+<p>具体如下：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">   <span class="comment">//MARK: - Translation</span></span><br><span class="line">    <span class="func"><span class="keyword">func</span> <span class="title">navigationController</span><span class="params">(navigationController: UINavigationController, animationControllerForOperation operation: UINavigationControllerOperation, fromViewController fromVC: UIViewController, toViewController toVC: UIViewController)</span></span> -&gt; <span class="type">UIViewControllerAnimatedTransitioning</span>? &#123;</span><br><span class="line">        <span class="keyword">if</span> toVC.isKindOfClass(<span class="type">DetailViewController</span>)</span><br><span class="line">            <span class="comment">//建议对第二个ViewController进行判断，否则pop回来动画混乱，如果有必要还可以对operation进行判断（push or pop）</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">//创建一个你刚写的类的对象即可。</span></span><br><span class="line">            <span class="keyword">let</span> transition = <span class="type">MoveAnimation</span>()</span><br><span class="line">            <span class="keyword">return</span> transition</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>以上就是Push部分动画，Pop回来的时候原理是一样的，只是ImageView的Frame变化反过来，alpha的变化也要反过来，所以可以另写一个Pop的动画类。<br>贴一个完成的与上对应的Pop动画部分:<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> UIKit</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MoveInverseTransition</span>: <span class="title">NSObject</span>,<span class="title">UIViewControllerAnimatedTransitioning</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="func"><span class="keyword">func</span> <span class="title">transitionDuration</span><span class="params">(transitionContext: UIViewControllerContextTransitioning?)</span></span> -&gt; <span class="type">NSTimeInterval</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0.6</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="func"><span class="keyword">func</span> <span class="title">animateTransition</span><span class="params">(transitionContext: UIViewControllerContextTransitioning)</span></span> &#123;</span><br><span class="line">        <span class="keyword">let</span> fromViewController = transitionContext.viewControllerForKey(<span class="type">UITransitionContextFromViewControllerKey</span>) <span class="keyword">as</span>! <span class="type">DetailViewController</span></span><br><span class="line">        <span class="keyword">let</span> toViewController = transitionContext.viewControllerForKey(<span class="type">UITransitionContextToViewControllerKey</span>) <span class="keyword">as</span>! <span class="type">ViewController</span></span><br><span class="line">        <span class="keyword">let</span> containView = transitionContext.containerView()</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//获取当前点击的Cell</span></span><br><span class="line">        <span class="keyword">let</span> indexPath = toViewController.collectionView.indexPathsForSelectedItems()![<span class="number">0</span>]</span><br><span class="line">        <span class="keyword">let</span> cell = toViewController.collectionView.cellForItemAtIndexPath(indexPath) <span class="keyword">as</span>! <span class="type">CustomCollectionViewCell</span></span><br><span class="line">        <span class="keyword">let</span> snapShotView = fromViewController.detailImageView .snapshotViewAfterScreenUpdates(<span class="literal">false</span>)</span><br><span class="line">        containView?.addSubview((toViewController.view)!)</span><br><span class="line">        containView?.addSubview(snapShotView)</span><br><span class="line">        </span><br><span class="line">        snapShotView.frame = (fromViewController.view.convertRect(fromViewController.detailImageView.frame, toView:fromViewController.view.superview))</span><br><span class="line">        cell.imageView.hidden = <span class="literal">true</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment">//设置第二个控制器位置，透明度</span></span><br><span class="line">        toViewController.view.frame = transitionContext .finalFrameForViewController(toViewController)</span><br><span class="line">        toViewController.view.alpha = <span class="number">0</span></span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">        <span class="comment">//动画</span></span><br><span class="line">        <span class="type">UIView</span>.animateWithDuration(<span class="keyword">self</span>.transitionDuration(transitionContext), delay: <span class="number">0</span>, usingSpringWithDamping: <span class="number">0.8</span>, initialSpringVelocity: <span class="number">5</span>, options: <span class="type">UIViewAnimationOptions</span>.<span class="type">CurveLinear</span>, animations: &#123;</span><br><span class="line">            toViewController.view.alpha = <span class="number">1</span></span><br><span class="line">            snapShotView.frame = (cell.convertRect(cell.imageView.frame, toView:cell.superview?.superview))</span><br><span class="line">            snapShotView.frame = <span class="type">CGRectMake</span>(snapShotView.frame.origin.x, snapShotView.frame.origin.y + <span class="number">64</span>, snapShotView.frame.size.width, snapShotView.frame.size.height)</span><br><span class="line"></span><br><span class="line">        &#125;)&#123; (success) <span class="keyword">in</span></span><br><span class="line">            fromViewController.detailImageView.hidden = <span class="literal">false</span>;</span><br><span class="line">            cell.imageView.hidden = <span class="literal">false</span>;</span><br><span class="line">            snapShotView.removeFromSuperview()</span><br><span class="line">            transitionContext.completeTransition(!transitionContext.transitionWasCancelled())</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>动画的使用方式也与上相同。</p>
+<h2 id="u624B_u52BF_u4EA4_u4E92"><a href="#u624B_u52BF_u4EA4_u4E92" class="headerlink" title="手势交互"></a>手势交互</h2><p>之前介绍过<strong><em>UIPercentDrivenInteractiveTransition</em></strong>，我们的手势交互就是主要建立在它所含的三个方法上。<br>思路:在动画过渡过程中，通过手势的滑动来计算出一个完成度的Progress(比较常见，比如手势计算缩放比例)，执行updateInteractiveTransition：progress 即可完成动画按百分比显示。</p>
+<h5 id="u624B_u52BF_u7684_u8BBE_u5B9A"><a href="#u624B_u52BF_u7684_u8BBE_u5B9A" class="headerlink" title="手势的设定"></a>手势的设定</h5><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="func"><span class="keyword">func</span> <span class="title">setupGestureRecognizer</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="comment">//设置边缘触控手势及其方位</span></span><br><span class="line">    <span class="keyword">let</span> edgeGestureRecognizer = <span class="type">UIScreenEdgePanGestureRecognizer</span>(target: <span class="keyword">self</span>,action: #selector(<span class="type">DetailViewController</span>.edgePanGesture(<span class="number">_</span>:)))</span><br><span class="line">    edgeGestureRecognizer.edges = <span class="type">UIRectEdge</span>.<span class="type">Left</span></span><br><span class="line">    <span class="keyword">self</span>.view.addGestureRecognizer(edgeGestureRecognizer)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="func"><span class="keyword">func</span> <span class="title">edgePanGesture</span><span class="params">(gestureRecognizer:UIScreenEdgePanGestureRecognizer)</span></span> &#123;</span><br><span class="line">    <span class="comment">//计算动画完成度Progress</span></span><br><span class="line">    <span class="keyword">var</span> progress = gestureRecognizer.translationInView(<span class="keyword">self</span>.view).x/<span class="keyword">self</span>.view.frame.size.width</span><br><span class="line">    progress = <span class="built_in">min</span>(<span class="number">1.0</span>, <span class="built_in">max</span>(<span class="number">0.0</span>, progress))</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> gestureRecognizer.state == <span class="type">UIGestureRecognizerState</span>.<span class="type">Began</span>&#123;</span><br><span class="line">        <span class="comment">//手势开始，执行Pop动作，触发动画</span></span><br><span class="line">        percentTransition = <span class="type">UIPercentDrivenInteractiveTransition</span>()</span><br><span class="line">        <span class="keyword">self</span>.navigationController?.popViewControllerAnimated(<span class="literal">true</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> gestureRecognizer.state == <span class="type">UIGestureRecognizerState</span>.<span class="type">Changed</span>&#123;</span><br><span class="line">        <span class="comment">//手势执行过程中，不停通过progress去更新动画状态</span></span><br><span class="line">        percentTransition?.updateInteractiveTransition(progress)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> gestureRecognizer.state == <span class="type">UIGestureRecognizerState</span>.<span class="type">Cancelled</span> || gestureRecognizer.state == <span class="type">UIGestureRecognizerState</span>.<span class="type">Ended</span> &#123;</span><br><span class="line">        <span class="comment">//手势取消或者结束，判断是否完成动画或者取消。</span></span><br><span class="line">        <span class="keyword">if</span> progress &gt; <span class="number">0.1</span></span><br><span class="line">        &#123;</span><br><span class="line">            percentTransition?.finishInteractiveTransition()</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            percentTransition?.cancelInteractiveTransition()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>交互动画的使用(实现两个NavigationController的代理方法)：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="func"><span class="keyword">func</span> <span class="title">navigationController</span><span class="params">(navigationController: UINavigationController, animationControllerForOperation operation: UINavigationControllerOperation, fromViewController fromVC: UIViewController, toViewController toVC: UIViewController)</span></span> -&gt; <span class="type">UIViewControllerAnimatedTransitioning</span>? &#123;</span><br><span class="line">    <span class="keyword">if</span> toVC.isKindOfClass(<span class="type">ViewController</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="type">MoveInverseTransition</span>()</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="func"><span class="keyword">func</span> <span class="title">navigationController</span><span class="params">(navigationController: UINavigationController, interactionControllerForAnimationController animationController: UIViewControllerAnimatedTransitioning)</span></span> -&gt; <span class="type">UIViewControllerInteractiveTransitioning</span>? &#123;</span><br><span class="line">    <span class="keyword">if</span> animationController.isKindOfClass(<span class="type">MoveInverseTransition</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> percentTransition</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><a href="https://github.com/madao1237/TransitionAnimation" target="_blank" rel="external">完整Demo</a></p>
+<p>以上内容都是在<a href="http://kittenyang.com/magicmove/" target="_blank" rel="external">Kitten-Yang</a>的文章基础上作了一些自己的理解，这是一篇学习笔记。</p>
+<p><a href="http://www.jianshu.com/p/fee11cea5c77" target="_blank" rel="external">简书链接</a></p>
+
+            <div class="clearfix"></div>
+            <hr class="nogutter">
+        </div>
+        <nav class="pagination" role="pagination">
+    
+    
+    <a class="pull-right" href="/2016/03/01/MADAO-s-WorkNote-2016-03/">
+        MADAO's WorkNote(2016.03) →
+    </a>
+    
+</nav>
+
+        <div class="duoshuo">
+<div class="ds-thread" data-thread-key="2016/03/30/转场动画-Swift/" data-title="转场动画-Swift" data-url="http://yoursite.com/2016/03/30/转场动画-Swift/"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"duoshuo_name"};
+(function() {
+	var ds = document.createElement('script');
+	ds.type = 'text/javascript';ds.async = true;
+	ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+	ds.charset = 'UTF-8';
+	(document.getElementsByTagName('head')[0] 
+	 || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+</script>
+</div>
+    </div>
+</section>
+
+
+      
+<!-- ============================ Footer =========================== -->
+
+<footer>
+    <div class="container">
+            <div class="copy">
+                <p>
+                    &copy; 2014<script>new Date().getFullYear()>2010&&document.write("-"+new Date().getFullYear());</script>, Content By MADAO. All Rights Reserved.
+                </p>
+                <p>Theme By <a href="//go.kieran.top" style="color: #767D84">Kieran</a></p>
+            </div>
+            <div class="social">
+                <ul>
+                    
+                    <li><a href="https://github.com/" title="Github" target="_blank"><i class="icon-github"></i></a>&nbsp;</li>
+                    
+                    
+                    <li><a href="https://twitter.com/" title="Twitter" target="_blank"><i class="icon-twitter"></i></a>&nbsp;</li>
+                    
+                    
+                    <li><a href="https://www.facebook.com/" title="Facebook" target="_blank"><i class="icon-facebook"></i></a>&nbsp;</li>
+                    
+                    
+                    <li><a href="https://google.com/" title="Google-Plus" target="_blank"><i class="icon-google-plus"></i></a>&nbsp;</li>
+                    
+                    
+                    <li><a href="http://weibo.com/" title="Sina-Weibo" target="_blank"><i class="icon-sina-weibo"></i></a>&nbsp;</li>
+                    
+                </ul>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+</footer>
+
+<!-- ============================ END Footer =========================== -->
+      <!-- Load our scripts -->
+        
+<!-- Resizable 'on-demand' full-height hero -->
+<script type="text/javascript">
+    
+    var resizeHero = function () {
+        var hero = $(".cover,.heightblock"),
+            window1 = $(window);
+        hero.css({
+            "height": window1.height()
+        });
+    };
+    
+    resizeHero();
+    
+    $(window).resize(function () {
+        resizeHero();
+    });
+</script>
+<script src="/js/plugins.min.js"></script><!-- Bootstrap core and concatenated plugins always load here -->
+<script src="/js/jquery.flexslider-min.js"></script><!-- Flexslider plugin -->
+<script src="/js/scripts.js"></script><!-- Theme scripts -->
+
+<!-- Initiate flexslider plugin -->
+<script type="text/javascript">
+    $(document).ready(function($) {
+      $('.flexslider').flexslider({
+        animation: "fade",
+        prevText: "",
+        nextText: "",
+        directionNav: true
+      });
+    });
+</script>
+
+</body>
+</html>

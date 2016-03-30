@@ -305,11 +305,36 @@ audioPlayer.play()
     [self.player play];
 }
 </code></pre><p>playItem不使用也可以，关于playItem和AVAssets的使用：<a href="http://www.tuicool.com/articles/JfQBzyI" target="_blank" rel="external">AVFoundation编程指南2-用AVPlayer播放视频</a></p>
+<ul>
+<li><p>弹簧动画：    </p>
+<pre><code>+ (void)animateWithDuration:(NSTimeInterval)duration
+                     delay:(NSTimeInterval)delay
+    usingSpringWithDamping:(CGFloat)dampingRatio
+     initialSpringVelocity:(CGFloat)velocity
+                   options:(UIViewAnimationOptions)options
+                animations:(void (^)(void))animations
+                completion:(void (^)(BOOL finished))completion    
+</code></pre></li>
+</ul>
+<p>dampingRatio（0-1）：弹簧阻尼系数,数值越小，弹簧效果越明显<br>velocity：初始速度</p>
+<h2 id="2016-03-15"><a href="#2016-03-15" class="headerlink" title="2016-03-15"></a>2016-03-15</h2><ul>
+<li>一直在忙于弄毕设翻译的事情</li>
+<li><p>对于输入框的secureTextEntry属性，对于密码单纯的进行显示切换可能造成切换前后字体不一致，甚至多出一个空格的情况 目前没找到什么好的解决办法 ，现采用方法如下：</p>
+<pre><code>NSString *tempStr = textView.textField.text;
+       textView.textField.secureTextEntry = !textView.textField.secureTextEntry;
+       textView.textField.text = @&quot;&quot;;
+       textView.textField.text = tempStr;
+</code></pre></li>
+</ul>
 
             <div class="clearfix"></div>
             <hr class="nogutter">
         </div>
         <nav class="pagination" role="pagination">
+    
+    <a class="pull-left" href="/2016/03/30/转场动画-Swift/" style="float: left;">
+        ← 转场动画-Swift
+    </a>
     
     
     <a class="pull-right" href="/2016/02/01/MADAO-s-WorkNote-2016-02/">

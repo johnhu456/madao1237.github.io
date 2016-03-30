@@ -483,7 +483,30 @@ class ViewController: UIViewController {
 
 
     }
-</code></pre>
+</code></pre><ul>
+<li>Swift 中的代理写法：      </li>
+</ul>
+<pre><code>protocol MenuDelegate:NSObjectProtocol{
+    func didUnload()
+}
+class MenuViewController: UIViewController {
+
+    weak var delegate : MenuDelegate?
+</code></pre><ul>
+<li><p>Swift下一种限制字数输入长度的方法： </p>
+<pre><code>输入框必须做委托，VC实现代理如下（140字）：    
+
+    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -&gt; Bool {
+       lblCount.text = &quot;\(140 - range.location)&quot;
+       return range.location &lt; 140
+   }
+</code></pre></li>
+<li><p>Swift下的键盘监控:<a href="http://www.jianshu.com/p/ee5b392abedd" target="_blank" rel="external">Swift下的键盘监控</a></p>
+</li>
+<li><p>当自己创建一个方法用来返回数组或者字典类型的时候，可能会出现类型检查错误，因为Swift是一种强类型语言，所以我们在方法名的书写上，也要明确类型，如下写法比较标准：   </p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">static</span> func getDemoData() -&gt; [CustomModel]&#123;</span><br><span class="line">    <span class="keyword">return</span> [CustomModel(<span class="string">image:</span> <span class="string">"1"</span>, <span class="string">title:</span> <span class="string">"DIVE"</span>, <span class="string">brief:</span><span class="string">"sdfjkhkjfdhfjkshfklsjflkdshfklsdfklsdjfklsdjfklsjfkl"</span>),</span><br><span class="line">    </span><br><span class="line">            CustomModel(<span class="string">image:</span> <span class="string">"2"</span>, <span class="string">title:</span> <span class="string">"WATER"</span>, <span class="string">brief:</span><span class="string">"sdfjkhkjfdhfjkshfklsjflkdshfklsdfklsdjfklsdjfklsjfkl"</span>),</span><br><span class="line">    </span><br><span class="line">           CustomModel(<span class="string">image:</span> <span class="string">"3"</span>, <span class="string">title:</span> <span class="string">"BEACH"</span>, <span class="string">brief:</span><span class="string">"sdfjkhkjfdhfjkshfklsjflkdshfklsdfklsdjfklsdjfklsjfkl"</span>),</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+
             <div class="clearfix"></div>
             <hr class="nogutter">
         </div>
