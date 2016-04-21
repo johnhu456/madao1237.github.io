@@ -17,7 +17,7 @@
 <!--<![endif]-->
 
 <head>
-  <title>Archives | MADAO</title>
+  <title>高效编写代码的方法（二）：常量的定义 | MADAO</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -84,7 +84,7 @@
 </head>
 
 <!--
-<body class="home-template">
+<body class="post-template">
 -->
 <body id="index" class="lightnav animsition">
 
@@ -221,55 +221,67 @@
 
         <!-- ============================ END Hero Image =========================== -->
       
-
-
-<section id="services">
+<section id="intro">
     <div class="container">
-        <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-                <div class="row boxes">
-                    
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2015/12/29/MagicalRecord/">MagicalRecord</a></h4>
-                            
-                            <p><time datetime="2015-12-29T07:44:00.000Z"><a href="/2015/12/29/MagicalRecord/">2015-12-29</a></time></p>
-                        </div>
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2015/12/17/CFBridge/">CFBridge和UUID</a></h4>
-                            
-                            <p><time datetime="2015-12-17T07:24:35.000Z"><a href="/2015/12/17/CFBridge/">2015-12-17</a></time></p>
-                        </div>
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2015/12/17/hello-world/">Hello World</a></h4>
-                            
-                            <p><time datetime="2015-12-17T07:06:28.000Z"><a href="/2015/12/17/hello-world/">2015-12-17</a></time></p>
-                        </div>
-                    
-                </div>
-            </div>    
+        <div class="row col-md-offset-2">
+            <div class="col-md-8">
+    			<span class="post-meta">
+      <time datetime="2016-04-21T03:01:08.000Z" itemprop="datePublished">
+          2016-04-21
+      </time>
+    
+</span>
+                <h1>高效编写代码的方法（二）：常量的定义</h1>
+            </div>
         </div>
-    </div>
-</section> 
+        <div class="col-md-8 col-md-offset-2">
+      		<p>####简洁语法<br>正式介绍常量定义前，先介绍一下Objective-C的一些语法糖，完全与常量定义无关，知道的可以跳过。<br>一般来说，我们定义NSString，NSArray，NSDictionary时，都会直接像下面这样书写:<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">    <span class="built_in">NSString</span> *aStr = <span class="string">@"AAAAA"</span>;</span><br><span class="line">    <span class="built_in">NSArray</span> *array = @[<span class="string">@"a"</span>,<span class="string">@"b"</span>,<span class="string">@"c"</span>];</span><br><span class="line">    <span class="built_in">NSDictionary</span> *dic = @&#123;</span><br><span class="line">        <span class="string">@"a"</span>:<span class="string">@"A"</span>,</span><br><span class="line">        <span class="string">@"b"</span>:<span class="string">@"B"</span>,</span><br><span class="line">        <span class="string">@"c"</span>:<span class="string">@"c"</span></span><br><span class="line">    &#125;;</span><br></pre></td></tr></table></figure></p>
+<p>以上就是OC对于这三个类的简洁语法，包括数组的访问，字典的方位都可以使用方括号形式，不再多说。<br>值得注意的一点是要知道这样的好处在哪里？为什么要这么书写？<br>1、简洁，可读性高。<br>2、安全性较高。举个例子：<br>比如NSArray 的创建，不使用简洁语法情况下我们通常这样来写:<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSArray</span> *bArray = [<span class="built_in">NSArray</span> arrayWithObjects:aObj,bObj,cObj, <span class="literal">nil</span>];</span><br></pre></td></tr></table></figure></p>
+<p>以此创建一个包含三个对象的数组，但是当bObj为nil时，上面那种方式就会带来一个错误：bArray只包含一个元素aObj。因为上面这种方式创建数组，会在遇到空对象(nil)时就结束了对后面元素的获取。<br>你希望自己的数组元素不可控，还是希望能在有隐患时能够有个明显报错？<br>如果希望后者，建议使用简洁语法。这样bObj为空时，编译期间就会报错。<br>这点对于字典也是相同的。</p>
+<p>####正题：常量的定义<br>通常为了提高维护性或者阅读方便，我们会引入常量。<br>通常，常量的方式有两种：<br>一种是使用#define 预处理宏，第二种是使用static const。</p>
+<p>有两个问题：<br>那么到底哪种方式比较适合？<br>常量怎么书写？</p>
+<p>#####问题一<br>通常来说，static const定义的方式会比#define要好一些。<br>举个例子：<br>比如在定义动画时间时我们会使用<strong>#define ANIMATION_DURATION 0.3f</strong>这样的预处理命令，但是这样：<br>1、丢失了类型信息<br>2、如果在头文件中#define，容易造成重名，更严重造成“常量”被修改。<br>比如我在ViewControllerA中<strong>#define DURATION 0.3f</strong>,<br>ViewControllerB中又重新<strong>#define DURATION 0.5f</strong>,<br>VIewControllerB中又<strong>#import</strong>了ViewControllerA.h，<br>此时编译器虽然会警告你DURATION redifined，但是实际上DURATION已经被修改了。</p>
+<p>因此建议使用如下方式：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> NSTimeInterval <span class="keyword">const</span> kAnimationDuration = <span class="number">0.3</span>;</span><br></pre></td></tr></table></figure></p>
+<p>这样我们即明确了常量的类型，也不会造成会重名修改的问题，因为以上方式的作用域只在该类的.h 和.m下,并且修改就会出现编译期间的错误。</p>
+<p>####问题二<br>首先是位置问题，基本所有常量(除全局)，我们都应该写在.m文件中。<br>第一，为了防止重命名，即使是添加了static const关键字的常量，也不能写在.h中。<br>第二，除了全局变量，我们的常量在.h中存在几乎是没有任何作用的。考虑到封装，我们应该写在.m文件中。</p>
+<p>#####命名问题:<br>在常量前添加小写字母“k”可以提高代码可读性。如果实在是需要写在头文件中对外界暴露，那么通常我们还需要在常量名前添加一个类名前缀。</p>
+<p>#####static 和const<br>在声明时，这两个缺一不可，const表示后面的东西是固定的，不可修改的(包括指针)。  因此在声明的时候我们应该把const 放到变量名的前面:比如<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="built_in">NSSting</span> *<span class="keyword">const</span> aStr = <span class="string">@"someString"</span>;</span><br></pre></td></tr></table></figure></p>
+<p>static表示静态，意味着只有在定义的作用域中才可以使用，在类中声明，该类都可以使用，在方法内部定义，只有在方法内部才能使用。<br>如果没有static，并且有其他作用域也定义了相同名称常量，编译器会报错，linker类的错误，XCode报错很不明显，需要注意。</p>
+<p>#####全局变量<br>有些时候我们需要定义全局变量，比如我们的通知名称，在所有注册通知的类中，我们只希望知道通知常量名，而不真正关心常量具体内容。声明可以如下：<br>在.h中：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">extern</span> <span class="built_in">NSString</span> *<span class="keyword">const</span> FHKeyboardNotification;</span><br></pre></td></tr></table></figure></p>
+<p>在.m中：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSString</span> *<span class="keyword">const</span> FHKeyboardNotification = <span class="string">@"keyboardDidChange"</span>;</span><br></pre></td></tr></table></figure></p>
+<p>extern关键字作用是用来告诉编译器，记住存在FHKeyboardNotification字符串常量即可，并不需要关心它的具体值。<br>常量应该只被声明一次，编译器会在碰到FHKeyboardNotification进行正确的处理。</p>
+<p>###总结<br>1、尽量避免使用#define预处理命令定义常量，因为它有时候不包含类型信息，并且容易被修改。<br>2、尽量在.m中书写常量。<br>3、注意全局变量的命名，需要添加类名前缀。</p>
 
-<section id="statement">
-    <div class="container text-center wow fadeInUp" data-wow-delay="0.5s">
-        <div class="row">
-            <p>轻松的路是给下坡的人走的。</p>
+            <div class="clearfix"></div>
+            <hr class="nogutter">
         </div>
+        <nav class="pagination" role="pagination">
+    
+    
+    <a class="pull-right" href="/2016/04/20/高效编写代码的方法（一）：import之道/">
+        高效编写代码的方法（一）：import之道 →
+    </a>
+    
+</nav>
+
+        <div class="duoshuo">
+<div class="ds-thread" data-thread-key="2016/04/21/高效编写代码的方法（二）：常量的定义/" data-title="高效编写代码的方法（二）：常量的定义" data-url="http://yoursite.com/2016/04/21/高效编写代码的方法（二）：常量的定义/"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"duoshuo_name"};
+(function() {
+	var ds = document.createElement('script');
+	ds.type = 'text/javascript';ds.async = true;
+	ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+	ds.charset = 'UTF-8';
+	(document.getElementsByTagName('head')[0] 
+	 || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+</script>
+</div>
     </div>
 </section>
+
+
       
 <!-- ============================ Footer =========================== -->
 
