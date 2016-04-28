@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<!--[if lte IE 8 ]>
+<html class="ie" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+<![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<!--
+***************  *      *     *
+      8          *    *       *
+      8          *  *         *
+      8          **           *
+      8          *  *         *
+      8          *    *       *
+      8          *      *     *
+      8          *        *   ***********    -----Theme By Kieran(http://go.kieran.top)
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+<!--<![endif]-->
+
+<head>
+  <title>高效编写代码的方法（六）：判断对象相等 | MADAO</title>
+  <!-- Meta data -->
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content="MADAO">
+    <meta name="author" content="MADAO">
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+
+    <!-- Favicon, (keep icon in root folder) -->
+    <link rel="Shortcut Icon" href="/img/favicon.ico" type="image/ico">
+
+    <link rel="alternate" href="/atom.xml" title="MADAO" type="application/atom+xml">
+    <link rel="stylesheet" href="/css/all.css" media="screen" type="text/css">
+	
+    <link rel="stylesheet" href="/highlightjs/vs.css" type="text/css">
+    
+    
+
+    <!-- Custom stylesheet, (add custom styles here, always load last) -->
+    <!-- Load our stylesheet for IE8 -->
+    <!--[if IE 8]>
+    <link rel="stylesheet" type="text/css" href="/css/ie8.css" />
+    <![endif]-->
+
+    <!-- Google Webfonts (Monserrat 400/700, Open Sans 400/600) -->
+    <link href='//fonts.useso.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <link href='//fonts.useso.com/css?family=Open+Sans:400,600' rel='stylesheet' type='text/css'>
+
+    <!-- Load our fonts individually if IE8+, to avoid faux bold & italic rendering -->
+    <!--[if IE]>
+    <link href='http://fonts.useso.com/css?family=Montserrat:400' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.useso.com/css?family=Montserrat:700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.useso.com/css?family=Open+Sans:400' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.useso.com/css?family=Open+Sans:600' rel='stylesheet' type='text/css'>
+    <![endif]-->
+
+    <!-- jQuery | Load our jQuery, with an alternative source fallback to a local version if request is unavailable -->
+    <script src="/js/jquery-1.11.1.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/jquery-1.11.1.min.js"><\/script>')</script>
+
+    <!-- Load these in the <head> for quicker IE8+ load times -->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="/js/html5shiv.min.js"></script>
+    <script src="/js/respond.min.js"></script>
+    <![endif]-->
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+  
+  <style>.col-md-8.col-md-offset-2.opening-statement img{display:none;}</style>
+</head>
+
+<!--
+<body class="post-template">
+-->
+<body id="index" class="lightnav animsition">
+
+      <!-- ============================ Off-canvas navigation =========================== -->
+
+    <div class="sb-slidebar sb-right sb-style-overlay sb-momentum-scrolling">
+        <div class="sb-close" aria-label="Close Menu" aria-hidden="true">
+            <img src="/img/close.png" alt="Close"/>
+        </div>
+        <!-- Lists in Slidebars -->
+        <ul class="sb-menu">
+            <li><a href="/" class="animsition-link" title="Home">Home</a></li>
+            <li><a href="/archives" class="animsition-link" title="archive">archives</a></li>
+            <!-- Dropdown Menu -->
+			 
+            <li>
+                <a class="sb-toggle-submenu">Works<span class="sb-caret"></span></a>
+                <ul class="sb-submenu">
+                    
+                        <li><a href="/" target="_BLANK" class="animsition-link">AAA</a></li>
+                    
+                        <li><a href="/atom.xml" target="_BLANK" class="animsition-link">BBB</a></li>
+                    
+                </ul>
+            </li>
+            
+            
+            
+            <li>
+                <a class="sb-toggle-submenu">Links<span class="sb-caret"></span></a>
+                <ul class="sb-submenu">
+                    
+                    <li><a href="http://go.kieran.top/" class="animsition-link">Kieran</a></li>
+                    
+                    <li><a href="http://domain.com/" class="animsition-link">Name</a></li>
+                    
+                </ul>
+            </li>
+            
+        </ul>
+        <!-- Lists in Slidebars -->
+        <ul class="sb-menu secondary">
+            <li><a href="/about.html" class="animsition-link" title="about">About</a></li>
+            <li><a href="/atom.xml" class="animsition-link" title="rss">RSS</a></li>
+        </ul>
+    </div>
+    
+    <!-- ============================ END Off-canvas navigation =========================== -->
+
+    <!-- ============================ #sb-site Main Page Wrapper =========================== -->
+
+    <div id="sb-site">
+        <!-- #sb-site - All page content should be contained within this id, except the off-canvas navigation itself -->
+
+        <!-- ============================ Header & Logo bar =========================== -->
+
+        <div id="navigation" class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <!-- Nav logo -->
+                    <div class="logo">
+                        <a href="/" title="Logo" class="animsition-link">
+                         <img src="/img/logo.png" alt="Logo" width="35px;"/> 
+                        </a>
+                    </div>
+                    <!-- // Nav logo -->
+                    <!-- Info-bar -->
+                    <nav>
+                        <ul class="nav">
+                            <li><a href="/" class="animsition-link">MADAO</a></li>
+                            <li class="nolink"><span>Always </span>Creative.</li>
+                            
+                            <li><a href="https://github.com/" title="Github" target="_blank"><i class="icon-github"></i></a></li>
+                            
+                            
+                            <li><a href="https://twitter.com/" title="Twitter" target="_blank"><i class="icon-twitter"></i></a></li>
+                            
+                            
+                            <li><a href="https://www.facebook.com/" title="Facebook" target="_blank"><i class="icon-facebook"></i></a></li>
+                            
+                            
+                            <li><a href="https://google.com/" title="Google-Plus" target="_blank"><i class="icon-google-plus"></i></a></li>
+                            
+                            
+                            <li><a href="http://weibo.com/" title="Sina-Weibo" target="_blank"><i class="icon-sina-weibo"></i></a></li>
+                            
+                            <li class="nolink"><span>Welcome!</span></li>
+                        </ul>
+                    </nav>
+                    <!--// Info-bar -->
+                </div>
+                <!-- // .container -->
+                <div class="learnmore sb-toggle-right">More</div>
+                <button type="button" class="navbar-toggle menu-icon sb-toggle-right" title="More">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar before"></span>
+                <span class="icon-bar main"></span>
+                <span class="icon-bar after"></span>
+                </button>
+            </div>
+            <!-- // .navbar-inner -->
+        </div>
+
+        <!-- ============================ Header & Logo bar =========================== -->
+
+        <!-- ============================ Hero Image =========================== -->
+
+        <section id="hero" class="scrollme">
+            <div class="container-fluid element-img" style="background: url(/img/bg_img.jpg) no-repeat center center fixed;background-size: cover">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 vertical-align cover boost text-center">
+                        <div class="center-me animateme" data-when="exit" data-from="0" data-to="0.6" data-opacity="0" data-translatey="100">
+                            <div>
+                            	
+                                <h2>YOU'VE MADE A <span>BRAVE</span> DECISION, WELCOME.</h2>
+                                <p></p>
+				    			
+                                <h2></h2>
+                                <p>每一个不曾起舞的日子都是对生命的辜负。</p>
+				    			
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- // .col-md-12 -->
+                </div>
+                <div class="herofade beige-dk"></div>
+            </div>
+        </section>
+
+        <!-- Height spacing helper -->
+        <div class="heightblock"></div>
+        <!-- // End height spacing helper -->
+
+        <!-- ============================ END Hero Image =========================== -->
+      
+<section id="intro">
+    <div class="container">
+        <div class="row col-md-offset-2">
+            <div class="col-md-8">
+    			<span class="post-meta">
+      <time datetime="2016-04-28T03:46:56.000Z" itemprop="datePublished">
+          2016-04-28
+      </time>
+    
+</span>
+                <h1>高效编写代码的方法（六）：判断对象相等</h1>
+            </div>
+        </div>
+        <div class="col-md-8 col-md-offset-2">
+      		<p>####isEqual<br>比较对象是否相等，在OC中目前有两种方式：<br><strong>==</strong> 和 <strong>isEqual：</strong>方法。<br>对于==方法，对于指针类对象的判断，其实挺鸡肋的，系统只是简单的进行指针地址的对比。当我们想更“深入”地对比对象的时候，显然<strong>==</strong>是不能满足要求的。<br>对于我们在框架中常用的类型对象，比如NSString，NSArray类等，系统对于这些类，已经实现了一个isEqual方法可以帮助我们去对对象做比较。对于NSString类，还有一个特性的方法：<br><figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="pp">- <span class="params">(<span class="variable">BOOL</span>)</span>isEqualToString:<span class="params">(<span class="variable">NSString</span> *)</span>aString;</span></span><br></pre></td></tr></table></figure></p>
+<p>由此增加这个相等方法对于类型的判断。提高对比效率，我们在自己实现isEqualTo方法是也要加强类型判断。</p>
+<p>下面两个方法是比较对象时最为关键的两个方法：<br><figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="pp">- <span class="params">(<span class="variable">BOOL</span>)</span>isEqual:<span class="params">(id)</span>object;</span><br><span class="line">- <span class="params">(<span class="variable">NSUInteger</span>)</span>hash;</span></span><br></pre></td></tr></table></figure></p>
+<p>默认的isEqual实现与==类似，都是直接比较指针指向地址是否相同。<br>我们在自己重写isEqual时也应该重写hash方法，由此保证，相同的两个对象返回的hash是一样的。但是有相同hash的对象，却又不一定的相等的。</p>
+<p>下面是一个重写isEqual的例子：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="built_in">BOOL</span>)isEqual:(<span class="keyword">id</span>)object</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">self</span> == object) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">YES</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> ([<span class="keyword">self</span> class] != [object class]) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NO</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    Teacher *anotherTeacher = (Teacher *)object;</span><br><span class="line">    <span class="keyword">if</span> (![<span class="keyword">self</span><span class="variable">.name</span> isEqualToString:anotherTeacher<span class="variable">.name</span>]) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NO</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (![<span class="keyword">self</span><span class="variable">.workNumber</span> isEqualToString:anotherTeacher<span class="variable">.workNumber</span>]) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NO</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">YES</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>以上是一个Teacher类的对比方法，首先对比指针，如果self 和object相同，那么必定相等。然后我们在做类型判断，如果两者类型都不相等，那么必定不相等。但是如果有一个类叫JohnTeacher，固定name为john，是Teacher的子类，此时如果一个Teacher的name属性为john，那么两者是可能相等的，此时在isEqual方法实现中，就要对类型的判断做更加细致的判断，建议使用isKindOfClass进行判断。最后就是进行对象的各属性是否相等的判断了，如果属性都相等，即可认为两个对象相等。</p>
+<p>为保证相同对象都有相同的hash值这样一个规定，重写hash也是必须的。<br>比如可以这样：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-(NSUInteger)<span class="built_in">hash</span>&#123;</span><br><span class="line">    <span class="built_in">return</span> <span class="number">1337</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这样来说，相同的类的对象都有同一个Hash。</p>
+<p>但是在一个集合使用的场景下，比如向一个NSSet(不允许对象重复)中添加对象。那个这个set在添加对象的时候，就会先去对比Hash值，发现hash相同，那么会再去调用isEqual去进一步判断对象是否相等，如果添加的对象过多，那么每一次都会调用isEqual，造成执行效率低。</p>
+<p>另一种hash的实现方法如下:<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-(<span class="built_in">NSUInteger</span>)hash&#123;</span><br><span class="line">    <span class="built_in">NSString</span> *stringToHash = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"%@:%@"</span>,_name,_workNumber];</span><br><span class="line">    <span class="keyword">return</span> [stringToHash hash];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>对由对象属性拼接而成的字符串进行一次hash计算，最后返回这个值，由此可以确保相同对象，hash值一定是一样的。但是这种方法肯定不如返回规定值来的快。</p>
+<p>最后总结一个最合适的方法：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-(NSUInteger)<span class="built_in">hash</span>&#123;</span><br><span class="line">    NSUInteger nameHash = [_name <span class="built_in">hash</span>];</span><br><span class="line">    NSUInteger workNumberHash = [_workNumber <span class="built_in">hash</span>];</span><br><span class="line">    <span class="built_in">return</span> nameHash ^ workNumberHash;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>以上是一种相对折中的方法，hash值不会单一，执行量也不算太大。</p>
+<p>####规定类型的判断方法<br>对于NSString来说，isEqualToString肯定要比isEqual方法来的更易读，类型的规定也更加的明确。<br>所以我们也可以实现自己的强类型判断的方法：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="built_in">BOOL</span>)isEqualToTeacher:(Teacher *)anotherTeacher</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">self</span> == anotherTeacher) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">YES</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (![<span class="keyword">self</span><span class="variable">.name</span> isEqualToString:anotherTeacher<span class="variable">.name</span>]) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NO</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (![<span class="keyword">self</span><span class="variable">.workNumber</span> isEqualToString:anotherTeacher<span class="variable">.workNumber</span>]) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NO</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">YES</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>如此，在isEqual方法中，我们也可以写的更简单一点：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="type">BOOL</span>)isEqual:(id)<span class="class"><span class="keyword">object</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> ([self <span class="class"><span class="keyword">class</span>] <span class="title">==</span> [</span><span class="class"><span class="keyword">object</span> <span class="title">class</span>]) &#123;</span></span><br><span class="line">        <span class="keyword">return</span> [self isEqualToTeacher:<span class="class"><span class="keyword">object</span>];</span></span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> [<span class="keyword">super</span> isEqual:<span class="class"><span class="keyword">object</span>];</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>####深相等与浅相等<br>以上isEqual中我们都对比了对象的每一个属性是否相等，这样的一种详尽的对比方式可以称为“深相等”</p>
+<p>但是某些时候，比如Teacher，我们可以给他分配一个标识属性，比如identifier。这个identifier对外只读，并且每个对象identifier不相同，由此我们可以直接对比identifier即可，该方法为“浅相等”。</p>
+<p>####可变对象的对比<br>下面这个例子，中文有点难以描述，大致意思是可变对象的hash会随对象的改变而改变，将对象加入一个集合中时可能会引发问题。直接上代码：<br><figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"> <span class="constant">NSMutableSet</span> *set = [[<span class="constant">NSMutableSet</span> alloc] init];</span><br><span class="line">    <span class="constant">NSMutableArray</span> *arrayA = [<span class="annotation">@[<span class="variable">@1</span>,<span class="variable">@2</span>]</span>  mutableCopy];</span><br><span class="line">    [set <span class="symbol">addObject:</span>arrayA];</span><br><span class="line">    <span class="constant">NSLog</span>(@<span class="string">"1: set = %@"</span>, set);</span><br><span class="line">    </span><br><span class="line">    <span class="constant">NSMutableArray</span> *arrayB = [<span class="annotation">@[<span class="variable">@1</span>,<span class="variable">@2</span>]</span>  mutableCopy];</span><br><span class="line">    [set <span class="symbol">addObject:</span>arrayB];</span><br><span class="line">    <span class="constant">NSLog</span>(@<span class="string">"2: set = %@"</span>, set);</span><br><span class="line">    </span><br><span class="line">    <span class="constant">NSMutableArray</span> *arrayC = [<span class="annotation">@[<span class="variable">@1</span>]</span>  mutableCopy];</span><br><span class="line">    [set <span class="symbol">addObject:</span>arrayC];</span><br><span class="line">    <span class="constant">NSLog</span>(@<span class="string">"3: set = %@"</span>,set);</span><br><span class="line">    [arrayC <span class="symbol">addObject:</span><span class="variable">@2</span>];</span><br><span class="line">    <span class="constant">NSLog</span>(@<span class="string">"4: set = %@"</span>,set);</span><br><span class="line">    </span><br><span class="line">    <span class="constant">NSSet</span> *setB = [set copy];</span><br><span class="line">    <span class="constant">NSLog</span>(@<span class="string">"5: setB = %@"</span>,setB);</span><br></pre></td></tr></table></figure></p>
+<p>整理后的打印结果：<br><img src="http://i2.piimg.com/e5b7a508370d36a1.png" alt="LogResult"></p>
+<p>可以观察到第四个输出结果set = {（1，2），（1，2）}，显然与Set的定义相违背（不能有相同对象），而且更奇怪的是setB 拷贝了set后变成了{（1，2）}<br>所以我们在遇到这样的情况时，不要修改被加入集合后的对象，否则导致像以上代码那样的混乱。</p>
+<p>####总结</p>
+<ul>
+<li>1 如果想自定义对比对象的方法，重写isEqual和hash方法。</li>
+<li>2 相同对象，hash必须相同，但拥有相同hash的对象不一定本身相同。</li>
+<li>3 有选择的对比对象属性，而不是全部对比（针对有特殊标识属性的对象）</li>
+<li>4 hash方法要可读并高效</li>
+</ul>
+
+            <div class="clearfix"></div>
+            <hr class="nogutter">
+        </div>
+        <nav class="pagination" role="pagination">
+    
+    
+    <a class="pull-right" href="/2016/04/24/高效编写代码的方法（四）：属性/">
+        高效编写代码的方法（四）：属性 →
+    </a>
+    
+</nav>
+
+        <div class="duoshuo">
+<div class="ds-thread" data-thread-key="2016/04/28/高效编写代码的方法（六）：判断对象相等/" data-title="高效编写代码的方法（六）：判断对象相等" data-url="http://yoursite.com/2016/04/28/高效编写代码的方法（六）：判断对象相等/"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"duoshuo_name"};
+(function() {
+	var ds = document.createElement('script');
+	ds.type = 'text/javascript';ds.async = true;
+	ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+	ds.charset = 'UTF-8';
+	(document.getElementsByTagName('head')[0] 
+	 || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+</script>
+</div>
+    </div>
+</section>
+
+
+      
+<!-- ============================ Footer =========================== -->
+
+<footer>
+    <div class="container">
+            <div class="copy">
+                <p>
+                    &copy; 2014<script>new Date().getFullYear()>2010&&document.write("-"+new Date().getFullYear());</script>, Content By MADAO. All Rights Reserved.
+                </p>
+                <p>Theme By <a href="//go.kieran.top" style="color: #767D84">Kieran</a></p>
+            </div>
+            <div class="social">
+                <ul>
+                    
+                    <li><a href="https://github.com/" title="Github" target="_blank"><i class="icon-github"></i></a>&nbsp;</li>
+                    
+                    
+                    <li><a href="https://twitter.com/" title="Twitter" target="_blank"><i class="icon-twitter"></i></a>&nbsp;</li>
+                    
+                    
+                    <li><a href="https://www.facebook.com/" title="Facebook" target="_blank"><i class="icon-facebook"></i></a>&nbsp;</li>
+                    
+                    
+                    <li><a href="https://google.com/" title="Google-Plus" target="_blank"><i class="icon-google-plus"></i></a>&nbsp;</li>
+                    
+                    
+                    <li><a href="http://weibo.com/" title="Sina-Weibo" target="_blank"><i class="icon-sina-weibo"></i></a>&nbsp;</li>
+                    
+                </ul>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+</footer>
+
+<!-- ============================ END Footer =========================== -->
+      <!-- Load our scripts -->
+        
+<!-- Resizable 'on-demand' full-height hero -->
+<script type="text/javascript">
+    
+    var resizeHero = function () {
+        var hero = $(".cover,.heightblock"),
+            window1 = $(window);
+        hero.css({
+            "height": window1.height()
+        });
+    };
+    
+    resizeHero();
+    
+    $(window).resize(function () {
+        resizeHero();
+    });
+</script>
+<script src="/js/plugins.min.js"></script><!-- Bootstrap core and concatenated plugins always load here -->
+<script src="/js/jquery.flexslider-min.js"></script><!-- Flexslider plugin -->
+<script src="/js/scripts.js"></script><!-- Theme scripts -->
+
+<!-- Initiate flexslider plugin -->
+<script type="text/javascript">
+    $(document).ready(function($) {
+      $('.flexslider').flexslider({
+        animation: "fade",
+        prevText: "",
+        nextText: "",
+        directionNav: true
+      });
+    });
+</script>
+
+</body>
+</html>
