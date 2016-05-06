@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<!--[if lte IE 8 ]>
+<html class="ie" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+<![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<!--
+***************  *      *     *
+      8          *    *       *
+      8          *  *         *
+      8          **           *
+      8          *  *         *
+      8          *    *       *
+      8          *      *     *
+      8          *        *   ***********    -----Theme By Kieran(http://go.kieran.top)
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+<!--<![endif]-->
+
+<head>
+  <title>iOS下SearchBar的使用 | MADAO</title>
+  <!-- Meta data -->
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content="MADAO">
+    <meta name="author" content="MADAO">
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+
+    <!-- Favicon, (keep icon in root folder) -->
+    <link rel="Shortcut Icon" href="/img/favicon.ico" type="image/ico">
+
+    <link rel="alternate" href="/atom.xml" title="MADAO" type="application/atom+xml">
+    <link rel="stylesheet" href="/css/all.css" media="screen" type="text/css">
+	
+    <link rel="stylesheet" href="/highlightjs/vs.css" type="text/css">
+    
+    
+
+    <!-- Custom stylesheet, (add custom styles here, always load last) -->
+    <!-- Load our stylesheet for IE8 -->
+    <!--[if IE 8]>
+    <link rel="stylesheet" type="text/css" href="/css/ie8.css" />
+    <![endif]-->
+
+    <!-- Google Webfonts (Monserrat 400/700, Open Sans 400/600) -->
+    <link href='//fonts.useso.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <link href='//fonts.useso.com/css?family=Open+Sans:400,600' rel='stylesheet' type='text/css'>
+
+    <!-- Load our fonts individually if IE8+, to avoid faux bold & italic rendering -->
+    <!--[if IE]>
+    <link href='http://fonts.useso.com/css?family=Montserrat:400' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.useso.com/css?family=Montserrat:700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.useso.com/css?family=Open+Sans:400' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.useso.com/css?family=Open+Sans:600' rel='stylesheet' type='text/css'>
+    <![endif]-->
+
+    <!-- jQuery | Load our jQuery, with an alternative source fallback to a local version if request is unavailable -->
+    <script src="/js/jquery-1.11.1.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/jquery-1.11.1.min.js"><\/script>')</script>
+
+    <!-- Load these in the <head> for quicker IE8+ load times -->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="/js/html5shiv.min.js"></script>
+    <script src="/js/respond.min.js"></script>
+    <![endif]-->
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+  
+  <style>.col-md-8.col-md-offset-2.opening-statement img{display:none;}</style>
+</head>
+
+<!--
+<body class="post-template">
+-->
+<body id="index" class="lightnav animsition">
+
+      <!-- ============================ Off-canvas navigation =========================== -->
+
+    <div class="sb-slidebar sb-right sb-style-overlay sb-momentum-scrolling">
+        <div class="sb-close" aria-label="Close Menu" aria-hidden="true">
+            <img src="/img/close.png" alt="Close"/>
+        </div>
+        <!-- Lists in Slidebars -->
+        <ul class="sb-menu">
+            <li><a href="/" class="animsition-link" title="Home">Home</a></li>
+            <li><a href="/archives" class="animsition-link" title="archive">archives</a></li>
+            <!-- Dropdown Menu -->
+			 
+            <li>
+                <a class="sb-toggle-submenu">Works<span class="sb-caret"></span></a>
+                <ul class="sb-submenu">
+                    
+                        <li><a href="/" target="_BLANK" class="animsition-link">AAA</a></li>
+                    
+                        <li><a href="/atom.xml" target="_BLANK" class="animsition-link">BBB</a></li>
+                    
+                </ul>
+            </li>
+            
+            
+            
+            <li>
+                <a class="sb-toggle-submenu">Links<span class="sb-caret"></span></a>
+                <ul class="sb-submenu">
+                    
+                    <li><a href="http://go.kieran.top/" class="animsition-link">Kieran</a></li>
+                    
+                    <li><a href="http://domain.com/" class="animsition-link">Name</a></li>
+                    
+                </ul>
+            </li>
+            
+        </ul>
+        <!-- Lists in Slidebars -->
+        <ul class="sb-menu secondary">
+            <li><a href="/about.html" class="animsition-link" title="about">About</a></li>
+            <li><a href="/atom.xml" class="animsition-link" title="rss">RSS</a></li>
+        </ul>
+    </div>
+    
+    <!-- ============================ END Off-canvas navigation =========================== -->
+
+    <!-- ============================ #sb-site Main Page Wrapper =========================== -->
+
+    <div id="sb-site">
+        <!-- #sb-site - All page content should be contained within this id, except the off-canvas navigation itself -->
+
+        <!-- ============================ Header & Logo bar =========================== -->
+
+        <div id="navigation" class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <!-- Nav logo -->
+                    <div class="logo">
+                        <a href="/" title="Logo" class="animsition-link">
+                         <img src="/img/logo.png" alt="Logo" width="35px;"/> 
+                        </a>
+                    </div>
+                    <!-- // Nav logo -->
+                    <!-- Info-bar -->
+                    <nav>
+                        <ul class="nav">
+                            <li><a href="/" class="animsition-link">MADAO</a></li>
+                            <li class="nolink"><span>Always </span>Creative.</li>
+                            
+                            <li><a href="https://github.com/" title="Github" target="_blank"><i class="icon-github"></i></a></li>
+                            
+                            
+                            <li><a href="https://twitter.com/" title="Twitter" target="_blank"><i class="icon-twitter"></i></a></li>
+                            
+                            
+                            <li><a href="https://www.facebook.com/" title="Facebook" target="_blank"><i class="icon-facebook"></i></a></li>
+                            
+                            
+                            <li><a href="https://google.com/" title="Google-Plus" target="_blank"><i class="icon-google-plus"></i></a></li>
+                            
+                            
+                            <li><a href="http://weibo.com/" title="Sina-Weibo" target="_blank"><i class="icon-sina-weibo"></i></a></li>
+                            
+                            <li class="nolink"><span>Welcome!</span></li>
+                        </ul>
+                    </nav>
+                    <!--// Info-bar -->
+                </div>
+                <!-- // .container -->
+                <div class="learnmore sb-toggle-right">More</div>
+                <button type="button" class="navbar-toggle menu-icon sb-toggle-right" title="More">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar before"></span>
+                <span class="icon-bar main"></span>
+                <span class="icon-bar after"></span>
+                </button>
+            </div>
+            <!-- // .navbar-inner -->
+        </div>
+
+        <!-- ============================ Header & Logo bar =========================== -->
+
+        <!-- ============================ Hero Image =========================== -->
+
+        <section id="hero" class="scrollme">
+            <div class="container-fluid element-img" style="background: url(/img/bg_img.jpg) no-repeat center center fixed;background-size: cover">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 vertical-align cover boost text-center">
+                        <div class="center-me animateme" data-when="exit" data-from="0" data-to="0.6" data-opacity="0" data-translatey="100">
+                            <div>
+                            	
+                                <h2>YOU'VE MADE A <span>BRAVE</span> DECISION, WELCOME.</h2>
+                                <p></p>
+				    			
+                                <h2></h2>
+                                <p>每一个不曾起舞的日子都是对生命的辜负。</p>
+				    			
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- // .col-md-12 -->
+                </div>
+                <div class="herofade beige-dk"></div>
+            </div>
+        </section>
+
+        <!-- Height spacing helper -->
+        <div class="heightblock"></div>
+        <!-- // End height spacing helper -->
+
+        <!-- ============================ END Hero Image =========================== -->
+      
+<section id="intro">
+    <div class="container">
+        <div class="row col-md-offset-2">
+            <div class="col-md-8">
+    			<span class="post-meta">
+      <time datetime="2016-05-06T08:06:43.000Z" itemprop="datePublished">
+          2016-05-06
+      </time>
+    
+</span>
+                <h1>iOS下SearchBar的使用</h1>
+            </div>
+        </div>
+        <div class="col-md-8 col-md-offset-2">
+      		<p><img src="http://upload-images.jianshu.io/upload_images/1683504-5206d1d5ba083c9c.gif?imageMogr2/auto-orient/strip" alt="一个普通的searchBar的使用"></p>
+<p>###写在前面<br>这两天想给app加一个搜索功能，打算采用系统自带的UISearch等一系列控件。<br>后来发现在iOS8前后，使用也是不一样的。<br>UISearchBar + UISearchDisplayController 是iOS8之前的常用写法。<br>而在iOS8之后，就开始采用UISearchController。<br>昨天和今天主要是在尝试iOS8之前那种方式时，始终出不来效果。直到今天才是解决了，还是写篇文章记录下，防止以后忘记了。</p>
+<p>###Before iOS8<br>在iOS8之前，搜索功能可以只用SearchBar，具体的Search功能实现就可以卸载SearchBar的代理中，具体实现就不多说了。</p>
+<p>但是我觉得通过UISearchBar + UISearchDisplayController 的一起使用，可以获得iOS系统上更原生的体验，如本文开头动图所示。</p>
+<p>####UISearchBar<br>UISearchBar通常就是我们看到的那个输入框，具体的其属性配置不多说了，可以查看<a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UISearchBar_Class/index.html#//apple_ref/doc/uid/TP40007529-CH3-SW1" target="_blank" rel="external">官方文档</a></p>
+<p>####UISearchDisplayController<br>UISearchDisplayController我觉得有点像一个UITableViewController，它也有Tableview（searchResultTableView），有dataSource（searchResultsDataSource）,也有delegate（searchResultsDelegate）。<br>而且它的dataSource是和我们展示所用的普通Tableview的dataSource是一样的。<br>所以说UISearchDisplayController其实就是一个单纯展示搜索结果的UITableViewController，只是苹果帮我们很好的封装了起来。</p>
+<p>官方的指南写法也是如此：</p>
+<figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">-<span class="function"> (</span>NSInteger<span class="function">)</span>tableView:(UITableView *<span class="function">)</span>tableView<span class="function"> numberOfRowsInSection:(</span>NSInteger<span class="function">)</span>section &#123;</span><br><span class="line">    //直接在dataSource中判断当前是哪个TableView</span><br><span class="line">   <span class="instruction"> if </span>(tableView == self.tableView<span class="function">)</span> &#123;</span><br><span class="line">       <span class="instruction"> return </span>...;</span><br><span class="line">    &#125;</span><br><span class="line">    // If necessary<span class="function"> (</span>if self is the data source for other table views<span class="function">)</span>,</span><br><span class="line">    //<span class="instruction"> check </span>whether tableView is searchController.searchResultsTableView.</span><br><span class="line">   <span class="instruction"> return </span>...;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>####demoBefore iOS8</p>
+<p>直接上完整代码：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#import <span class="title">"SearchVBefore8.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">SearchVBefore8</span> ()&lt;<span class="title">UISearchBarDelegate</span>,<span class="title">UISearchDisplayDelegate</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**数据源*/</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">NSArray</span> *dataArray;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**经过搜索之后的数据源*/</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">NSArray</span> *searchResultArray;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**我们的UISearchDisplayController*/</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">UISearchDisplayController</span> *displayer;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">SearchVBefore8</span></span></span><br><span class="line"></span><br><span class="line">- (<span class="built_in">NSArray</span> *)getDataArray</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">/**模拟一组数据*/</span></span><br><span class="line">    <span class="built_in">NSMutableArray</span> *resultArray = [[<span class="built_in">NSMutableArray</span> alloc] init];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i&lt; <span class="number">20</span>; i++) &#123;</span><br><span class="line">        <span class="built_in">NSString</span> *dataString = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"%d"</span>,i];</span><br><span class="line">        [resultArray addObject:dataString];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> resultArray;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</span><br><span class="line">    [<span class="keyword">super</span> viewDidLoad];</span><br><span class="line">    [<span class="keyword">self</span> setupSearchBar];</span><br><span class="line">    <span class="keyword">self</span><span class="variable">.dataArray</span> = [<span class="keyword">self</span> getDataArray];</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)setupSearchBar&#123;</span><br><span class="line">    <span class="comment">/**配置Search相关控件*/</span></span><br><span class="line">    <span class="built_in">UISearchBar</span> *searchBar = [[<span class="built_in">UISearchBar</span> alloc] initWithFrame:<span class="built_in">CGRectMake</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="keyword">self</span><span class="variable">.view</span><span class="variable">.frame</span><span class="variable">.size</span><span class="variable">.width</span>, <span class="number">44</span>)];</span><br><span class="line">    <span class="keyword">self</span><span class="variable">.tableView</span><span class="variable">.tableHeaderView</span> = searchBar;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">self</span><span class="variable">.displayer</span> = [[<span class="built_in">UISearchDisplayController</span> alloc] initWithSearchBar:searchBar contentsController:<span class="keyword">self</span>];</span><br><span class="line">    <span class="comment">/**searchBar的delegate看需求进行配置*/</span></span><br><span class="line">    searchBar<span class="variable">.delegate</span> = <span class="keyword">self</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/**以下都比较重要，建议都设置好代理*/</span></span><br><span class="line">    <span class="keyword">self</span><span class="variable">.displayer</span><span class="variable">.searchResultsDataSource</span> = <span class="keyword">self</span>;</span><br><span class="line">    <span class="keyword">self</span><span class="variable">.displayer</span><span class="variable">.searchResultsDelegate</span> = <span class="keyword">self</span>;</span><br><span class="line">    <span class="keyword">self</span><span class="variable">.displayer</span><span class="variable">.delegate</span> = <span class="keyword">self</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#pragma mark - Table view data source</span></span><br><span class="line"></span><br><span class="line">- (<span class="built_in">NSInteger</span>)numberOfSectionsInTableView:(<span class="built_in">UITableView</span> *)tableView &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="built_in">NSInteger</span>)tableView:(<span class="built_in">UITableView</span> *)tableView numberOfRowsInSection:(<span class="built_in">NSInteger</span>)section &#123;</span><br><span class="line">    <span class="comment">/**对TableView进行判断，如果是搜索结果展示视图，返回不同结果*/</span></span><br><span class="line">    <span class="keyword">if</span> (tableView == <span class="keyword">self</span><span class="variable">.displayer</span><span class="variable">.searchResultsTableView</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">self</span><span class="variable">.searchResultArray</span><span class="variable">.count</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">self</span><span class="variable">.dataArray</span><span class="variable">.count</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- (<span class="built_in">UITableViewCell</span> *)tableView:(<span class="built_in">UITableView</span> *)tableView cellForRowAtIndexPath:(<span class="built_in">NSIndexPath</span> *)indexPath &#123;</span><br><span class="line">    <span class="built_in">UITableViewCell</span> *cell = [tableView dequeueReusableCellWithIdentifier:<span class="string">@"mainCell"</span>];</span><br><span class="line">    <span class="keyword">if</span> (cell == <span class="literal">nil</span>) &#123;</span><br><span class="line">        cell = [[<span class="built_in">UITableViewCell</span> alloc] initWithStyle:<span class="built_in">UITableViewCellStyleDefault</span> reuseIdentifier:<span class="string">@"mainCell"</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/**对TableView进行判断，如果是搜索结果展示视图，返回不同数据源*/</span></span><br><span class="line">    <span class="keyword">if</span> (tableView == <span class="keyword">self</span><span class="variable">.displayer</span><span class="variable">.searchResultsTableView</span>) &#123;</span><br><span class="line">        cell<span class="variable">.textLabel</span><span class="variable">.text</span> = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"%@"</span>,<span class="keyword">self</span><span class="variable">.searchResultArray</span>[indexPath<span class="variable">.row</span>]];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        cell<span class="variable">.textLabel</span><span class="variable">.text</span> = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"%@"</span>,<span class="keyword">self</span><span class="variable">.dataArray</span>[indexPath<span class="variable">.row</span>]];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> cell;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="built_in">BOOL</span>)searchBarShouldBeginEditing:(<span class="built_in">UISearchBar</span> *)searchBar</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"begin"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">YES</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">-(<span class="built_in">BOOL</span>)searchBarShouldEndEditing:(<span class="built_in">UISearchBar</span> *)searchBar</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"end"</span>);</span><br><span class="line">    <span class="keyword">return</span>  <span class="literal">YES</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**UISearchDisplayController的代理实现*/</span></span><br><span class="line"></span><br><span class="line">- (<span class="built_in">BOOL</span>)searchDisplayController:(<span class="built_in">UISearchDisplayController</span> *)controller shouldReloadTableForSearchString:(<span class="built_in">NSString</span> *)searchString</span><br><span class="line">&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/**通过谓词修饰的方式来查找包含我们搜索关键字的数据*/</span></span><br><span class="line">    <span class="built_in">NSPredicate</span> *resultPredicate = [<span class="built_in">NSPredicate</span> predicateWithFormat:<span class="string">@"self contains[cd] %@"</span>,searchString];</span><br><span class="line">    <span class="keyword">self</span><span class="variable">.searchResultArray</span> = [<span class="keyword">self</span><span class="variable">.dataArray</span> filteredArrayUsingPredicate:resultPredicate];</span><br><span class="line">    <span class="keyword">return</span>  <span class="literal">YES</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>之前主要一直看不到结果是因为有self.searchDisplayController这个默认属性的存在，所以配置都是用在了self.searchDisplayController上。至今仍然很奇怪为什么，这是之前的代码：<br> <figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">UISearchDisplayController</span> *displayerControllr = [[<span class="built_in">UISearchDisplayController</span> alloc] initWithSearchBar:searchBar contentsController:<span class="keyword">self</span>];</span><br><span class="line">   displayerControllr<span class="variable">.searchResultsDataSource</span> = <span class="keyword">self</span>;</span><br><span class="line">   displayerControllr<span class="variable">.searchResultsDelegate</span> = <span class="keyword">self</span>;</span><br><span class="line">   displayerControllr<span class="variable">.delegate</span> = <span class="keyword">self</span>;</span><br><span class="line">   <span class="built_in">NSLog</span>(<span class="string">@"%@  和   %@"</span>,displayerControllr,<span class="keyword">self</span><span class="variable">.searchDisplayController</span>);</span><br></pre></td></tr></table></figure></p>
+<p>我们看后台打印：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2016</span>-<span class="number">05</span>-<span class="number">06</span> <span class="number">14</span>:<span class="number">49</span>:<span class="number">07.546</span> SearchBarDemo[<span class="number">26008</span>:<span class="number">3948409</span>] &lt;UISearchDisplayController: <span class="number">0x7fe3e3445870</span>&gt;  和   &lt;UISearchDisplayController: <span class="number">0x7fe3e3445870</span>&gt;</span><br></pre></td></tr></table></figure></p>
+<p>两者地址也是一样的，所以不明白为什么不起作用。当换回自己写的新属性self.displayer的时候就可以了，而且self.displayer和self.searchDisplayController的地址也是一样的。</p>
+<p>以上只是粗略demo，但是功能实现了。如果要美化或者添加功能的再自己丰富下吧。</p>
+<p>####UISearchController<br>它的init方法：<br><figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="pp">- <span class="params">(instancetype)</span>initWithSearchResultsController:<span class="params">(nullable <span class="variable">UIViewController</span> *)</span>searchResultsController;</span></span><br></pre></td></tr></table></figure></p>
+<p>它不用像iOS8之前那样我们还需要单独写一个UISearchBar，UISearchController在我们创建的时候会自己生成一个UISearchBar，而UISearchController本身更像是一个容器与胶水，它把我们当前的ViewController与结果展示的ViewController相连一起，相较之于之前的UISearchDisplayController相比来说，这样的方式可以让我们更能去高度定制我们所需要的结果展示ViewController。</p>
+<p>#####searchResultsUpdater<br>更新代理，负责通知searchResultsController进行更新。</p>
+<p>相比较来说，个人觉得iOS8之后的配置会显得更加容易方便一点。</p>
+<p>####demoAfteriOS8</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1683504-fcafc786b94b0fb2.gif?imageMogr2/auto-orient/strip" alt="效果图"></p>
+<p>在主界面实现文件中：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#import <span class="title">"MainTableViewController.h"</span></span></span><br><span class="line"><span class="preprocessor">#import <span class="title">"Product.h"</span></span></span><br><span class="line"><span class="preprocessor">#import <span class="title">"MySearchTableViewController.h"</span></span></span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">MainTableViewController</span> ()&lt;<span class="title">UISearchResultsUpdating</span>,<span class="title">UISearchBarDelegate</span>&gt;</span></span><br><span class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>,<span class="keyword">strong</span>)<span class="built_in">NSArray</span> *allProducts;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**搜索结果ViewController*/</span></span><br><span class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>,<span class="keyword">strong</span>)MySearchTableViewController *mySRTVC;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>,<span class="keyword">strong</span>)<span class="built_in">UISearchController</span> *svc;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">MainTableViewController</span></span></span><br><span class="line">-(<span class="built_in">NSArray</span> *)allProducts</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (!_allProducts) &#123;</span><br><span class="line">        _allProducts=[Product demoData];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> _allProducts;</span><br><span class="line">&#125;</span><br><span class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</span><br><span class="line">    [<span class="keyword">super</span> viewDidLoad];</span><br><span class="line">    </span><br><span class="line">    [<span class="keyword">self</span><span class="variable">.tableView</span> registerClass:[<span class="built_in">UITableViewCell</span> class] forCellReuseIdentifier:<span class="string">@"cell"</span>];</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//创建两个属性实例</span></span><br><span class="line">    <span class="keyword">self</span><span class="variable">.mySRTVC</span>=[[MySearchTableViewController  alloc]init];</span><br><span class="line">    <span class="keyword">self</span><span class="variable">.svc</span>=[[<span class="built_in">UISearchController</span> alloc]initWithSearchResultsController:<span class="keyword">self</span><span class="variable">.mySRTVC</span>];</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//设置与界面有关的样式</span></span><br><span class="line">    [<span class="keyword">self</span><span class="variable">.svc</span><span class="variable">.searchBar</span> sizeToFit];   <span class="comment">//大小调整</span></span><br><span class="line">    <span class="keyword">self</span><span class="variable">.tableView</span><span class="variable">.tableHeaderView</span>=<span class="keyword">self</span><span class="variable">.svc</span><span class="variable">.searchBar</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//设置搜索控制器的结果更新代理对象</span></span><br><span class="line">    <span class="keyword">self</span><span class="variable">.svc</span><span class="variable">.searchResultsUpdater</span>=<span class="keyword">self</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//Scope:就是效果图中那个分类选择器</span></span><br><span class="line">    <span class="keyword">self</span><span class="variable">.svc</span><span class="variable">.searchBar</span><span class="variable">.scopeButtonTitles</span>=@[<span class="string">@"设备"</span>,<span class="string">@"软件"</span>,<span class="string">@"其他"</span>];</span><br><span class="line">    <span class="comment">//为了响应scope改变时候，对选中的scope进行处理 需要设置search代理</span></span><br><span class="line">    <span class="keyword">self</span><span class="variable">.svc</span><span class="variable">.searchBar</span><span class="variable">.delegate</span>=<span class="keyword">self</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">self</span><span class="variable">.definesPresentationContext</span>=<span class="literal">YES</span>;   <span class="comment">//迷之属性，打开后搜索结果页界面显示会比较好。</span></span><br><span class="line">    <span class="comment">//看文档貌似是页面转换模式为UIModalPresentationCurrentContext，如果该选项打开，那么就会使用当前ViewController的一个presentContenxt</span></span><br><span class="line">    <span class="comment">//否则就向父类中进行寻找并使用。</span></span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/**普通的tableview展示实现。*/</span></span><br><span class="line">- (<span class="built_in">NSInteger</span>)numberOfSectionsInTableView:(<span class="built_in">UITableView</span> *)tableView &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line">- (<span class="built_in">NSInteger</span>)tableView:(<span class="built_in">UITableView</span> *)tableView numberOfRowsInSection:(<span class="built_in">NSInteger</span>)section &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">self</span><span class="variable">.allProducts</span><span class="variable">.count</span>;</span><br><span class="line">&#125;</span><br><span class="line">- (<span class="built_in">UITableViewCell</span> *)tableView:(<span class="built_in">UITableView</span> *)tableView cellForRowAtIndexPath:(<span class="built_in">NSIndexPath</span> *)indexPath &#123;</span><br><span class="line">    <span class="built_in">UITableViewCell</span> *cell = [tableView dequeueReusableCellWithIdentifier:<span class="string">@"cell"</span> forIndexPath:indexPath];</span><br><span class="line">    Product *p=<span class="keyword">self</span><span class="variable">.allProducts</span>[indexPath<span class="variable">.row</span>];</span><br><span class="line">    cell<span class="variable">.textLabel</span><span class="variable">.text</span>=p<span class="variable">.name</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> cell;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#pragma mark - UISearchResultsUpdating</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**实现更新代理*/</span></span><br><span class="line">-(<span class="keyword">void</span>)updateSearchResultsForSearchController:(<span class="built_in">UISearchController</span> *)searchController</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//获取scope被选中的下标</span></span><br><span class="line">    <span class="built_in">NSInteger</span> selectedType=searchController<span class="variable">.searchBar</span><span class="variable">.selectedScopeButtonIndex</span>;</span><br><span class="line">    <span class="comment">//获取到用户输入的数据</span></span><br><span class="line">    <span class="built_in">NSString</span> *searchText=searchController<span class="variable">.searchBar</span><span class="variable">.text</span>;</span><br><span class="line">    <span class="built_in">NSMutableArray</span> *searchResult=[[<span class="built_in">NSMutableArray</span> alloc]init];</span><br><span class="line">    <span class="keyword">for</span> (Product *p <span class="keyword">in</span> <span class="keyword">self</span><span class="variable">.allProducts</span>) &#123;</span><br><span class="line">        <span class="built_in">NSRange</span> range=[p<span class="variable">.name</span> rangeOfString:searchText];</span><br><span class="line">        <span class="keyword">if</span> (range<span class="variable">.length</span>&gt;<span class="number">0</span>&amp;&amp;p<span class="variable">.type</span>==selectedType) &#123;</span><br><span class="line">            [searchResult addObject:p];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">self</span><span class="variable">.mySRTVC</span><span class="variable">.searchProducts</span>=searchResult;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/**通知结果ViewController进行更新*/</span></span><br><span class="line">    [<span class="keyword">self</span><span class="variable">.mySRTVC</span><span class="variable">.tableView</span> reloadData];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#pragma mark - UISearchBarDelegate</span></span><br><span class="line"><span class="comment">/**点击按钮后，进行搜索页更新*/</span></span><br><span class="line">-(<span class="keyword">void</span>)searchBar:(<span class="built_in">UISearchBar</span> *)searchBar selectedScopeButtonIndexDidChange:(<span class="built_in">NSInteger</span>)selectedScope</span><br><span class="line">&#123;</span><br><span class="line">    [<span class="keyword">self</span> updateSearchResultsForSearchController:<span class="keyword">self</span><span class="variable">.svc</span>];</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure></p>
+<p>在搜索结果页面中(就是一个普通Tableview的展示)：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#import <span class="title">"MySearchTableViewController.h"</span></span></span><br><span class="line"><span class="preprocessor">#import <span class="title">"Product.h"</span></span></span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">MySearchTableViewController</span> ()</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">MySearchTableViewController</span></span></span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</span><br><span class="line">    [<span class="keyword">super</span> viewDidLoad];</span><br><span class="line">    [<span class="keyword">self</span><span class="variable">.tableView</span> registerClass:[<span class="built_in">UITableViewCell</span> class] forCellReuseIdentifier:<span class="string">@"mycell"</span>];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)didReceiveMemoryWarning &#123;</span><br><span class="line">    [<span class="keyword">super</span> didReceiveMemoryWarning];</span><br><span class="line">    <span class="comment">// Dispose of any resources that can be recreated.</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#pragma mark - Table view data source</span></span><br><span class="line"></span><br><span class="line">- (<span class="built_in">NSInteger</span>)numberOfSectionsInTableView:(<span class="built_in">UITableView</span> *)tableView &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="built_in">NSInteger</span>)tableView:(<span class="built_in">UITableView</span> *)tableView numberOfRowsInSection:(<span class="built_in">NSInteger</span>)section &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">self</span><span class="variable">.searchProducts</span><span class="variable">.count</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- (<span class="built_in">UITableViewCell</span> *)tableView:(<span class="built_in">UITableView</span> *)tableView cellForRowAtIndexPath:(<span class="built_in">NSIndexPath</span> *)indexPath &#123;</span><br><span class="line">    <span class="built_in">UITableViewCell</span> *cell = [tableView dequeueReusableCellWithIdentifier:<span class="string">@"mycell"</span> forIndexPath:indexPath];</span><br><span class="line">    Product *p=<span class="keyword">self</span><span class="variable">.searchProducts</span>[indexPath<span class="variable">.row</span>];</span><br><span class="line">    cell<span class="variable">.textLabel</span><span class="variable">.text</span>=p<span class="variable">.name</span>;</span><br><span class="line">    <span class="keyword">return</span> cell;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure></p>
+
+            <div class="clearfix"></div>
+            <hr class="nogutter">
+        </div>
+        <nav class="pagination" role="pagination">
+    
+    
+    <a class="pull-right" href="/2016/05/06/高效编写代码的方法（十）-消息转发机制/">
+        高效编写代码的方法（十）:消息转发机制 →
+    </a>
+    
+</nav>
+
+        <div class="duoshuo">
+<div class="ds-thread" data-thread-key="2016/05/06/iOS下SearchBar的使用/" data-title="iOS下SearchBar的使用" data-url="http://yoursite.com/2016/05/06/iOS下SearchBar的使用/"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"duoshuo_name"};
+(function() {
+	var ds = document.createElement('script');
+	ds.type = 'text/javascript';ds.async = true;
+	ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+	ds.charset = 'UTF-8';
+	(document.getElementsByTagName('head')[0] 
+	 || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+</script>
+</div>
+    </div>
+</section>
+
+
+      
+<!-- ============================ Footer =========================== -->
+
+<footer>
+    <div class="container">
+            <div class="copy">
+                <p>
+                    &copy; 2014<script>new Date().getFullYear()>2010&&document.write("-"+new Date().getFullYear());</script>, Content By MADAO. All Rights Reserved.
+                </p>
+                <p>Theme By <a href="//go.kieran.top" style="color: #767D84">Kieran</a></p>
+            </div>
+            <div class="social">
+                <ul>
+                    
+                    <li><a href="https://github.com/" title="Github" target="_blank"><i class="icon-github"></i></a>&nbsp;</li>
+                    
+                    
+                    <li><a href="https://twitter.com/" title="Twitter" target="_blank"><i class="icon-twitter"></i></a>&nbsp;</li>
+                    
+                    
+                    <li><a href="https://www.facebook.com/" title="Facebook" target="_blank"><i class="icon-facebook"></i></a>&nbsp;</li>
+                    
+                    
+                    <li><a href="https://google.com/" title="Google-Plus" target="_blank"><i class="icon-google-plus"></i></a>&nbsp;</li>
+                    
+                    
+                    <li><a href="http://weibo.com/" title="Sina-Weibo" target="_blank"><i class="icon-sina-weibo"></i></a>&nbsp;</li>
+                    
+                </ul>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+</footer>
+
+<!-- ============================ END Footer =========================== -->
+      <!-- Load our scripts -->
+        
+<!-- Resizable 'on-demand' full-height hero -->
+<script type="text/javascript">
+    
+    var resizeHero = function () {
+        var hero = $(".cover,.heightblock"),
+            window1 = $(window);
+        hero.css({
+            "height": window1.height()
+        });
+    };
+    
+    resizeHero();
+    
+    $(window).resize(function () {
+        resizeHero();
+    });
+</script>
+<script src="/js/plugins.min.js"></script><!-- Bootstrap core and concatenated plugins always load here -->
+<script src="/js/jquery.flexslider-min.js"></script><!-- Flexslider plugin -->
+<script src="/js/scripts.js"></script><!-- Theme scripts -->
+
+<!-- Initiate flexslider plugin -->
+<script type="text/javascript">
+    $(document).ready(function($) {
+      $('.flexslider').flexslider({
+        animation: "fade",
+        prevText: "",
+        nextText: "",
+        directionNav: true
+      });
+    });
+</script>
+
+</body>
+</html>
