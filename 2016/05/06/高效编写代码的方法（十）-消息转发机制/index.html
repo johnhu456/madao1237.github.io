@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<!--[if lte IE 8 ]>
+<html class="ie" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+<![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<!--
+***************  *      *     *
+      8          *    *       *
+      8          *  *         *
+      8          **           *
+      8          *  *         *
+      8          *    *       *
+      8          *      *     *
+      8          *        *   ***********    -----Theme By Kieran(http://go.kieran.top)
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+<!--<![endif]-->
+
+<head>
+  <title>高效编写代码的方法（十）:消息转发机制 | MADAO</title>
+  <!-- Meta data -->
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content="MADAO">
+    <meta name="author" content="MADAO">
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+
+    <!-- Favicon, (keep icon in root folder) -->
+    <link rel="Shortcut Icon" href="/img/favicon.ico" type="image/ico">
+
+    <link rel="alternate" href="/atom.xml" title="MADAO" type="application/atom+xml">
+    <link rel="stylesheet" href="/css/all.css" media="screen" type="text/css">
+	
+    <link rel="stylesheet" href="/highlightjs/vs.css" type="text/css">
+    
+    
+
+    <!-- Custom stylesheet, (add custom styles here, always load last) -->
+    <!-- Load our stylesheet for IE8 -->
+    <!--[if IE 8]>
+    <link rel="stylesheet" type="text/css" href="/css/ie8.css" />
+    <![endif]-->
+
+    <!-- Google Webfonts (Monserrat 400/700, Open Sans 400/600) -->
+    <link href='//fonts.useso.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <link href='//fonts.useso.com/css?family=Open+Sans:400,600' rel='stylesheet' type='text/css'>
+
+    <!-- Load our fonts individually if IE8+, to avoid faux bold & italic rendering -->
+    <!--[if IE]>
+    <link href='http://fonts.useso.com/css?family=Montserrat:400' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.useso.com/css?family=Montserrat:700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.useso.com/css?family=Open+Sans:400' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.useso.com/css?family=Open+Sans:600' rel='stylesheet' type='text/css'>
+    <![endif]-->
+
+    <!-- jQuery | Load our jQuery, with an alternative source fallback to a local version if request is unavailable -->
+    <script src="/js/jquery-1.11.1.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/jquery-1.11.1.min.js"><\/script>')</script>
+
+    <!-- Load these in the <head> for quicker IE8+ load times -->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="/js/html5shiv.min.js"></script>
+    <script src="/js/respond.min.js"></script>
+    <![endif]-->
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+  
+  <style>.col-md-8.col-md-offset-2.opening-statement img{display:none;}</style>
+</head>
+
+<!--
+<body class="post-template">
+-->
+<body id="index" class="lightnav animsition">
+
+      <!-- ============================ Off-canvas navigation =========================== -->
+
+    <div class="sb-slidebar sb-right sb-style-overlay sb-momentum-scrolling">
+        <div class="sb-close" aria-label="Close Menu" aria-hidden="true">
+            <img src="/img/close.png" alt="Close"/>
+        </div>
+        <!-- Lists in Slidebars -->
+        <ul class="sb-menu">
+            <li><a href="/" class="animsition-link" title="Home">Home</a></li>
+            <li><a href="/archives" class="animsition-link" title="archive">archives</a></li>
+            <!-- Dropdown Menu -->
+			 
+            <li>
+                <a class="sb-toggle-submenu">Works<span class="sb-caret"></span></a>
+                <ul class="sb-submenu">
+                    
+                        <li><a href="/" target="_BLANK" class="animsition-link">AAA</a></li>
+                    
+                        <li><a href="/atom.xml" target="_BLANK" class="animsition-link">BBB</a></li>
+                    
+                </ul>
+            </li>
+            
+            
+            
+            <li>
+                <a class="sb-toggle-submenu">Links<span class="sb-caret"></span></a>
+                <ul class="sb-submenu">
+                    
+                    <li><a href="http://go.kieran.top/" class="animsition-link">Kieran</a></li>
+                    
+                    <li><a href="http://domain.com/" class="animsition-link">Name</a></li>
+                    
+                </ul>
+            </li>
+            
+        </ul>
+        <!-- Lists in Slidebars -->
+        <ul class="sb-menu secondary">
+            <li><a href="/about.html" class="animsition-link" title="about">About</a></li>
+            <li><a href="/atom.xml" class="animsition-link" title="rss">RSS</a></li>
+        </ul>
+    </div>
+    
+    <!-- ============================ END Off-canvas navigation =========================== -->
+
+    <!-- ============================ #sb-site Main Page Wrapper =========================== -->
+
+    <div id="sb-site">
+        <!-- #sb-site - All page content should be contained within this id, except the off-canvas navigation itself -->
+
+        <!-- ============================ Header & Logo bar =========================== -->
+
+        <div id="navigation" class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <!-- Nav logo -->
+                    <div class="logo">
+                        <a href="/" title="Logo" class="animsition-link">
+                         <img src="/img/logo.png" alt="Logo" width="35px;"/> 
+                        </a>
+                    </div>
+                    <!-- // Nav logo -->
+                    <!-- Info-bar -->
+                    <nav>
+                        <ul class="nav">
+                            <li><a href="/" class="animsition-link">MADAO</a></li>
+                            <li class="nolink"><span>Always </span>Creative.</li>
+                            
+                            <li><a href="https://github.com/" title="Github" target="_blank"><i class="icon-github"></i></a></li>
+                            
+                            
+                            <li><a href="https://twitter.com/" title="Twitter" target="_blank"><i class="icon-twitter"></i></a></li>
+                            
+                            
+                            <li><a href="https://www.facebook.com/" title="Facebook" target="_blank"><i class="icon-facebook"></i></a></li>
+                            
+                            
+                            <li><a href="https://google.com/" title="Google-Plus" target="_blank"><i class="icon-google-plus"></i></a></li>
+                            
+                            
+                            <li><a href="http://weibo.com/" title="Sina-Weibo" target="_blank"><i class="icon-sina-weibo"></i></a></li>
+                            
+                            <li class="nolink"><span>Welcome!</span></li>
+                        </ul>
+                    </nav>
+                    <!--// Info-bar -->
+                </div>
+                <!-- // .container -->
+                <div class="learnmore sb-toggle-right">More</div>
+                <button type="button" class="navbar-toggle menu-icon sb-toggle-right" title="More">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar before"></span>
+                <span class="icon-bar main"></span>
+                <span class="icon-bar after"></span>
+                </button>
+            </div>
+            <!-- // .navbar-inner -->
+        </div>
+
+        <!-- ============================ Header & Logo bar =========================== -->
+
+        <!-- ============================ Hero Image =========================== -->
+
+        <section id="hero" class="scrollme">
+            <div class="container-fluid element-img" style="background: url(/img/bg_img.jpg) no-repeat center center fixed;background-size: cover">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 vertical-align cover boost text-center">
+                        <div class="center-me animateme" data-when="exit" data-from="0" data-to="0.6" data-opacity="0" data-translatey="100">
+                            <div>
+                            	
+                                <h2>YOU'VE MADE A <span>BRAVE</span> DECISION, WELCOME.</h2>
+                                <p></p>
+				    			
+                                <h2></h2>
+                                <p>每一个不曾起舞的日子都是对生命的辜负。</p>
+				    			
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- // .col-md-12 -->
+                </div>
+                <div class="herofade beige-dk"></div>
+            </div>
+        </section>
+
+        <!-- Height spacing helper -->
+        <div class="heightblock"></div>
+        <!-- // End height spacing helper -->
+
+        <!-- ============================ END Hero Image =========================== -->
+      
+<section id="intro">
+    <div class="container">
+        <div class="row col-md-offset-2">
+            <div class="col-md-8">
+    			<span class="post-meta">
+      <time datetime="2016-05-06T03:03:41.000Z" itemprop="datePublished">
+          2016-05-06
+      </time>
+    
+</span>
+                <h1>高效编写代码的方法（十）:消息转发机制</h1>
+            </div>
+        </div>
+        <div class="col-md-8 col-md-offset-2">
+      		<p>####unrecognized selector</p>
+<p>在（九）中，我们已经了解到了runtime的消息发送机制，某个函数实现方法的查找是依靠在运行期间不停的遍历类中的“方法列表”来查找的。具体还是看（九）。<br>但是当我们找不到方法的实现时，程序就会崩溃。比如执行以下代码：<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">NSString *testStr = @<span class="string">"test"</span>;</span><br><span class="line">[testStr <span class="string">performSelector:</span><span class="annotation">@selector</span>(<span class="string">addObject:</span>) <span class="string">withObject:</span>@<span class="string">"1"</span>];</span><br></pre></td></tr></table></figure></p>
+<p>testStr不存在addObject：方法，所以程序抛出以下异常：<br><figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2016-05-05 17:37:22.827 RunTimePlayGround<span class="keyword">[</span>23405:3123461] -<span class="keyword">[</span>__NSCFConstantString addObject:]: unrecognized selector sent to<span class="instruction"> instance </span>0x101e14150</span><br></pre></td></tr></table></figure></p>
+<p>在抛出这个异常之前，还是来看一下这个消息都经过了什么：</p>
+<ul>
+<li>1 尝试动态给目标类（比如这个例子为NSString）添加一个方法来实现这个未知的selector。</li>
+<li>2 尝试寻找另一个能够识别selector的receiver。</li>
+<li>3 对消息使用NSInvocation对象进行重新包装，给receiver最后一次识别机会。</li>
+</ul>
+<p>以上就是一个完整的消息转发机制。</p>
+<p>####消息转发机制</p>
+<p><img src="http://s6.51cto.com/wyfs02/M02/22/A4/wKiom1MikTKhEVWwAABhPDOKlCY834.jpg" alt="示意图"></p>
+<p>上图是一个消息转发机制的流程。下面详解。</p>
+<h5 id="resolveInstanceMethod"><a href="#resolveInstanceMethod" class="headerlink" title="resolveInstanceMethod"></a>resolveInstanceMethod</h5><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">+ (<span class="tag">BOOL</span>)<span class="tag">resolveInstanceMethod</span><span class="pseudo">:(SEL)selector</span></span><br></pre></td></tr></table></figure>
+<p>该方法的参数就是未被找到的selector，在这个方法里，我们可以给目标的类动态添加方法。<br>类似的<br><figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">+ <span class="comment">(BOOL)</span>resolveClassMethod:<span class="comment">(SEL)</span>selector</span><br></pre></td></tr></table></figure></p>
+<p>用来动态添加类方法。<br>两个方法具体实现下文会做介绍。</p>
+<p>####forwardingTarget<br><figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="pp">- <span class="params">(id)</span>forwardingTargetForSelector:<span class="params">(<span class="variable">SEL</span>)</span>selector</span></span><br></pre></td></tr></table></figure></p>
+<p>以上方法可以将消息转发给另外一个接受者。</p>
+<p>####forwardInvocation<br><figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="pp">- <span class="params">(void)</span>forwardInvocation:<span class="params">(<span class="variable">NSInvocation</span>*)</span>invocation</span></span><br></pre></td></tr></table></figure></p>
+<p>这是消息转发机制的最后一步，如果转发机制已经来到这一步的话，那我们就需要把尚未处理的消息的全部信息进行重新包装秤一个NSInvocation对象，NSInvocation包含了selector及target参数。触发NSInvocation，消息派发中心会把消息派给NSInvocation中指定的target。<br>如果到这一步，消息任然无法找到实现，那么就会抛出文章开头所提到的unrecognized selector 错误。</p>
+<p>####Demo<br>下面展示一个通过消息转发机制中的resolveInstanceMethod方法来动态添加set和get方法的例子。</p>
+<p>在Teacher.h中声明两个属性：<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@interface</span> <span class="attribute">Teacher </span>: NSObject</span><br><span class="line"></span><br><span class="line"><span class="variable">@property</span> (nonatomic, strong) NSString *name;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="variable">@property</span> (nonatomic, strong) NSString *workNumber;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="variable">@end</span></span><br></pre></td></tr></table></figure></p>
+<p>.m文件中：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#import <span class="title">"Teacher.h"</span></span></span><br><span class="line"><span class="preprocessor">#import <span class="title">&lt;objc/runtime.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Teacher</span>()</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">NSMutableDictionary</span> *propertyDictionary;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">Teacher</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">@dynamic</span> name,workNumber;</span><br><span class="line"></span><br><span class="line">- (instancetype)init</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">self</span> = [<span class="keyword">super</span> init]) &#123;</span><br><span class="line">        _propertyDictionary = [[<span class="built_in">NSMutableDictionary</span> alloc] init];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><p>1  propertyDictionary属性的设置是因为没有了原声的Setter和Getter时，我们需要另外一个空间去存储我们的name和workNumber值，最好的方式就是通过字典型变量。</p>
+</li>
+<li><p>2 dynamic 关键字，表示不需要系统自动生成Setter和Getter，从而可以方便我们进行后面的消息转发。</p>
+</li>
+</ul>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">+ (<span class="keyword">BOOL)resolveInstanceMethod:(SEL)sel</span><br><span class="line"></span>&#123;</span><br><span class="line">    NSString *<span class="keyword">selectorName </span>= NSStringFromSelector(<span class="keyword">sel);</span><br><span class="line"></span>    <span class="preprocessor">if</span> ([<span class="keyword">selectorName </span>hasPrefix:<span class="comment">@"set"]) &#123;</span></span><br><span class="line">        //是Set方法</span><br><span class="line">        class_addMethod(<span class="keyword">self, </span><span class="keyword">sel, </span>(IMP)dynmaicSetMethod, <span class="string">"v@:@"</span>)<span class="comment">;</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="preprocessor">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        //是<span class="preprocessor">get</span>方法</span><br><span class="line">        class_addMethod(<span class="keyword">self, </span><span class="keyword">sel, </span>(IMP)dynmaicGetMethod, <span class="string">"@:@"</span>)<span class="comment">;</span></span><br><span class="line">    &#125;</span><br><span class="line">    return [super resolveInstanceMethod:<span class="keyword">sel];</span><br><span class="line"></span>&#125;</span><br></pre></td></tr></table></figure>
+<p>以上方法就是具体对resolveInstanceMethod方法的实现。首先用判断语句来判断selector的名称是否包含set，从而判断它是不是一个Setter方法。剩下情况就为Getter方法（实际在方法很多的情况下可能更为复杂）。<br>方法结尾还是需要调用父类的resolveInstanceMethod方法。</p>
+<p>#####class_addMethod方法</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">class_addMethod(<span class="tag">&lt;<span class="title">#__unsafe_unretained</span> <span class="attribute">Class</span> <span class="attribute">cls</span>#&gt;</span>, <span class="tag">&lt;<span class="title">#SEL</span> <span class="attribute">name</span>#&gt;</span>, <span class="tag">&lt;<span class="title">#IMP</span> <span class="attribute">imp</span>#&gt;</span>, <span class="tag">&lt;<span class="title">#const</span> <span class="attribute">char</span> *<span class="attribute">types</span>#&gt;</span>)</span><br></pre></td></tr></table></figure>
+<p>第一个参数为当前需要添加方法的类，基本都写self，第二个为selector，第三个即为你动态添加的方法的具体实现，可能需要加（IMP）进行转换。<br>最后一个则为函数的类型，用的是C类型的字符串进行描述的（Type Encoding），比如</p>
+<p>types参数为”v@:@“，按顺序分别表示：</p>
+<p>i：返回值类型为void</p>
+<p>@：参数id(self)</p>
+<p>:：SEL(_cmd)</p>
+<p>@：id(str)</p>
+<p>具体可以参照<a href="https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html" target="_blank" rel="external">官方文档</a></p>
+<p>最后是我们两个Setter和Getter的具体实现：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> dynmaicSetMethod(<span class="keyword">id</span> <span class="keyword">self</span>,SEL _cmd,<span class="keyword">id</span> value)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">NSString</span> *selectorName = <span class="built_in">NSStringFromSelector</span>(_cmd);</span><br><span class="line">    <span class="built_in">NSMutableString</span> *key = [selectorName mutableCopy];</span><br><span class="line">    [key deleteCharactersInRange:<span class="built_in">NSMakeRange</span>(key<span class="variable">.length</span> - <span class="number">1</span>, <span class="number">1</span>)];</span><br><span class="line">    [key deleteCharactersInRange:<span class="built_in">NSMakeRange</span>(<span class="number">0</span>, <span class="number">3</span>)];</span><br><span class="line">    <span class="built_in">NSString</span> *firstCharacter = [[key substringToIndex:<span class="number">1</span>] lowercaseString];</span><br><span class="line">    [key replaceCharactersInRange:<span class="built_in">NSMakeRange</span>(<span class="number">0</span>, <span class="number">1</span>) withString:firstCharacter];</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>,key);</span><br><span class="line">    <span class="comment">//处理字符串，比如吧setName:处理为name</span></span><br><span class="line">    Teacher *selfTeacher = (Teacher *)<span class="keyword">self</span>;</span><br><span class="line">    <span class="keyword">if</span> (value) &#123;</span><br><span class="line">        [selfTeacher<span class="variable">.propertyDictionary</span> setValue:value forKey:key];</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        [selfTeacher<span class="variable">.propertyDictionary</span> removeObjectForKey:key];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">id</span> dynmaicGetMethod(<span class="keyword">id</span> <span class="keyword">self</span>,SEL _cmd)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">NSString</span> *key = <span class="built_in">NSStringFromSelector</span>(_cmd);</span><br><span class="line">   Teacher *selfTeacher = (Teacher *)<span class="keyword">self</span>;</span><br><span class="line">    <span class="keyword">return</span> [selfTeacher<span class="variable">.propertyDictionary</span> objectForKey:key];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>具体看代码实现就行。</p>
+<p>如果采用这样的写法：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">id</span>)dynmaicGetMethod&#123;</span><br><span class="line">    <span class="built_in">NSString</span> *key = <span class="built_in">NSStringFromSelector</span>(_cmd);</span><br><span class="line">   Teacher *selfTeacher = (Teacher *)<span class="keyword">self</span>;</span><br><span class="line">    <span class="keyword">return</span> [selfTeacher<span class="variable">.propertyDictionary</span> objectForKey:key];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>那么在class_addMethod可以写成这样<br><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">class_addMethod<span class="list">(<span class="keyword">self</span>, sel, class_getMethodImplementation<span class="list">(<span class="keyword">self</span>, @selector<span class="list">(<span class="keyword">dynmaicGetMethod</span>)</span>)</span>, <span class="string">"@:@"</span>)</span><span class="comment">;</span></span><br></pre></td></tr></table></figure></p>
+<p>以上就是添加动态方法的实现。</p>
+<p>测试：<br><figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Teacher *newTeacher = [[Teacher alloc] init]<span class="comment">;</span></span><br><span class="line">newTeacher.name = @"hahaha"<span class="comment">;</span></span><br><span class="line">newTeacher.workNumber = @"<span class="number">1232435</span>"<span class="comment">;</span></span><br><span class="line">NSLog(@"%@",newTeacher.name)<span class="comment">;</span></span><br><span class="line">NSLog(@"%@",newTeacher.workNumber)<span class="comment">;</span></span><br></pre></td></tr></table></figure></p>
+<p>set和get都可以正常使用。</p>
+<p>#####forwardingTarget<br>以下举个例子，具体实现还是看具体情况<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">- (id)<span class="string">forwardingTargetForSelector:</span>(SEL)aSelector  </span><br><span class="line">&#123;  </span><br><span class="line">    <span class="keyword">if</span> (aSelector == <span class="annotation">@selector</span>(<span class="string">setName:</span>)) &#123;  </span><br><span class="line">        <span class="keyword">return</span> [Teacher <span class="keyword">new</span>];  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="keyword">return</span> nil;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>####forwardInvocation<br>一个简单的实现可以如下：<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="typename">void</span>)<span class="string">forwardInvocation:</span>(NSInvocation *)anInvocation</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> ([someOtherObject <span class="string">respondsToSelector:</span></span><br><span class="line"></span><br><span class="line">            [anInvocation selector]])</span><br><span class="line"></span><br><span class="line">        [anInvocation <span class="string">invokeWithTarget:</span>someOtherObject];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line"></span><br><span class="line">        [<span class="keyword">super</span> <span class="string">forwardInvocation:</span>anInvocation];</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>将消息转发给其他对象，但是如果仅仅做一个转发，那么在第二步的forwardTarget就可以做到。<br>forwardInvocation更像是一个未识别消息的回收和转发站，它可以将消息重新发送给别的对象，也可以简单的吞掉，不做任何处理。</p>
+<p>当需要消息重定向的时候，还需要重写methodSignatureForSelector方法。<br>以下是一个例子：<br>.h中<br> <figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">TargetProxy</span> : <span class="title">NSProxy</span> </span>&#123;    </span><br><span class="line">    <span class="keyword">id</span> realObject1;    </span><br><span class="line">    <span class="keyword">id</span> realObject2;    </span><br><span class="line">&#125;    </span><br><span class="line">     </span><br><span class="line">- (<span class="keyword">id</span>)initWithTarget1:(<span class="keyword">id</span>)t1 target2:(<span class="keyword">id</span>)t2;    </span><br><span class="line">     </span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure></p>
+<p>.m中：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">TargetProxy</span>    </span></span><br><span class="line">     </span><br><span class="line">- (<span class="keyword">id</span>)initWithTarget1:(<span class="keyword">id</span>)t1 target2:(<span class="keyword">id</span>)t2 &#123;    </span><br><span class="line">    realObject1 = [t1 retain];    </span><br><span class="line">    realObject2 = [t2 retain];    </span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;    </span><br><span class="line">&#125;    </span><br><span class="line">     </span><br><span class="line">- (<span class="keyword">void</span>)dealloc &#123;    </span><br><span class="line">    [realObject1 release];    </span><br><span class="line">    [realObject2 release];    </span><br><span class="line">    [<span class="keyword">super</span> dealloc];    </span><br><span class="line">&#125;    </span><br><span class="line">     </span><br><span class="line"><span class="comment">// The compiler knows the types at the call site but unfortunately doesn't    </span></span><br><span class="line"><span class="comment">// leave them around for us to use, so we must poke around and find the types    </span></span><br><span class="line"><span class="comment">// so that the invocation can be initialized from the stack frame.    </span></span><br><span class="line">     </span><br><span class="line"><span class="comment">// Here, we ask the two real objects, realObject1 first, for their method    </span></span><br><span class="line"><span class="comment">// signatures, since we'll be forwarding the message to one or the other    </span></span><br><span class="line"><span class="comment">// of them in -forwardInvocation:.  If realObject1 returns a non-nil    </span></span><br><span class="line"><span class="comment">// method signature, we use that, so in effect it has priority.    </span></span><br><span class="line">- (<span class="built_in">NSMethodSignature</span> *)methodSignatureForSelector:(SEL)aSelector &#123;    </span><br><span class="line">    <span class="built_in">NSMethodSignature</span> *sig;    </span><br><span class="line">    sig = [realObject1 methodSignatureForSelector:aSelector];    </span><br><span class="line">    <span class="keyword">if</span> (sig) <span class="keyword">return</span> sig;    </span><br><span class="line">    sig = [realObject2 methodSignatureForSelector:aSelector];    </span><br><span class="line">    <span class="keyword">return</span> sig;    </span><br><span class="line">&#125;    </span><br><span class="line">     </span><br><span class="line"><span class="comment">// Invoke the invocation on whichever real object had a signature for it.    </span></span><br><span class="line">- (<span class="keyword">void</span>)forwardInvocation:(<span class="built_in">NSInvocation</span> *)invocation &#123;    </span><br><span class="line">    <span class="keyword">id</span> target = [realObject1 methodSignatureForSelector:[invocation selector]] ? realObject1 : realObject2;    </span><br><span class="line">    [invocation invokeWithTarget:target];    </span><br><span class="line">&#125;    </span><br><span class="line">     </span><br><span class="line"><span class="comment">// Override some of NSProxy's implementations to forward them...    </span></span><br><span class="line">- (<span class="built_in">BOOL</span>)respondsToSelector:(SEL)aSelector &#123;    </span><br><span class="line">    <span class="keyword">if</span> ([realObject1 respondsToSelector:aSelector]) <span class="keyword">return</span> <span class="literal">YES</span>;    </span><br><span class="line">    <span class="keyword">if</span> ([realObject2 respondsToSelector:aSelector]) <span class="keyword">return</span> <span class="literal">YES</span>;    </span><br><span class="line">    <span class="keyword">return</span> <span class="literal">NO</span>;    </span><br><span class="line">&#125;    </span><br><span class="line">     </span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure></p>
+<p>测试代码：<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">id proxy = [[TargetProxy alloc] <span class="string">initWithTarget1:</span>string <span class="string">target2:</span>array];    </span><br><span class="line">   </span><br><span class="line">  <span class="comment">// Note that we can't use appendFormat:, because vararg methods    </span></span><br><span class="line">  <span class="comment">// cannot be forwarded!    </span></span><br><span class="line">  [proxy <span class="string">appendString:</span>@<span class="string">"This "</span>];    </span><br><span class="line">  [proxy <span class="string">appendString:</span>@<span class="string">"is "</span>];    </span><br><span class="line">  [proxy <span class="string">addObject:</span>string];    </span><br><span class="line">  [proxy <span class="string">appendString:</span>@<span class="string">"a "</span>];    </span><br><span class="line">  [proxy <span class="string">appendString:</span>@<span class="string">"test!"</span>];    </span><br><span class="line">   </span><br><span class="line">  NSLog(@<span class="string">"count should be 1, it is: %d"</span>, [proxy count]);    </span><br><span class="line">      </span><br><span class="line">  <span class="keyword">if</span> ([[proxy <span class="string">objectAtIndex:</span><span class="number">0</span>] <span class="string">isEqualToString:</span>@<span class="string">"This is a test!"</span>]) &#123;    </span><br><span class="line">      NSLog(@<span class="string">"Appending successful."</span>);    </span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;    </span><br><span class="line">      NSLog(@<span class="string">"Appending failed, got: '%@'"</span>, proxy);    </span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></p>
+<p>运行的结果是：</p>
+<p>count should be 1, it is:  1<br>Appending successful.</p>
+<p> TargetProxy声明中是没有appendString与addObject消息的，在这儿却可以正常发送，不crash，原因就是发送消息的时候，如果原本类没有这个消息响应的时候，转向询问methodSignatureForSelector，接着在forwardInvocation将消息重定向。 </p>
+<p>####总结</p>
+<ul>
+<li><p>1 若对象无法响应某个选择子，则进入消息转发流程。</p>
+</li>
+<li><p>2通过运行期的动态方法解析功能，我们可以在需要用到某个方法时再将其加入类中。</p>
+</li>
+<li><p>3 对象可以把其无法解读的某些选择子转交给其他对象来处理。</p>
+</li>
+<li><p>4 如果上述步骤仍然无法处理消息，则对消息的目标，selector进行重新包装转发。</p>
+</li>
+</ul>
+
+            <div class="clearfix"></div>
+            <hr class="nogutter">
+        </div>
+        <nav class="pagination" role="pagination">
+    
+    
+    <a class="pull-right" href="/2016/05/04/高效编写代码的方法（九）：了解objc-msgSend/">
+        高效编写代码的方法（九）：了解objc_msgSend →
+    </a>
+    
+</nav>
+
+        <div class="duoshuo">
+<div class="ds-thread" data-thread-key="2016/05/06/高效编写代码的方法（十）-消息转发机制/" data-title="高效编写代码的方法（十）:消息转发机制" data-url="http://yoursite.com/2016/05/06/高效编写代码的方法（十）-消息转发机制/"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"duoshuo_name"};
+(function() {
+	var ds = document.createElement('script');
+	ds.type = 'text/javascript';ds.async = true;
+	ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+	ds.charset = 'UTF-8';
+	(document.getElementsByTagName('head')[0] 
+	 || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+</script>
+</div>
+    </div>
+</section>
+
+
+      
+<!-- ============================ Footer =========================== -->
+
+<footer>
+    <div class="container">
+            <div class="copy">
+                <p>
+                    &copy; 2014<script>new Date().getFullYear()>2010&&document.write("-"+new Date().getFullYear());</script>, Content By MADAO. All Rights Reserved.
+                </p>
+                <p>Theme By <a href="//go.kieran.top" style="color: #767D84">Kieran</a></p>
+            </div>
+            <div class="social">
+                <ul>
+                    
+                    <li><a href="https://github.com/" title="Github" target="_blank"><i class="icon-github"></i></a>&nbsp;</li>
+                    
+                    
+                    <li><a href="https://twitter.com/" title="Twitter" target="_blank"><i class="icon-twitter"></i></a>&nbsp;</li>
+                    
+                    
+                    <li><a href="https://www.facebook.com/" title="Facebook" target="_blank"><i class="icon-facebook"></i></a>&nbsp;</li>
+                    
+                    
+                    <li><a href="https://google.com/" title="Google-Plus" target="_blank"><i class="icon-google-plus"></i></a>&nbsp;</li>
+                    
+                    
+                    <li><a href="http://weibo.com/" title="Sina-Weibo" target="_blank"><i class="icon-sina-weibo"></i></a>&nbsp;</li>
+                    
+                </ul>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+</footer>
+
+<!-- ============================ END Footer =========================== -->
+      <!-- Load our scripts -->
+        
+<!-- Resizable 'on-demand' full-height hero -->
+<script type="text/javascript">
+    
+    var resizeHero = function () {
+        var hero = $(".cover,.heightblock"),
+            window1 = $(window);
+        hero.css({
+            "height": window1.height()
+        });
+    };
+    
+    resizeHero();
+    
+    $(window).resize(function () {
+        resizeHero();
+    });
+</script>
+<script src="/js/plugins.min.js"></script><!-- Bootstrap core and concatenated plugins always load here -->
+<script src="/js/jquery.flexslider-min.js"></script><!-- Flexslider plugin -->
+<script src="/js/scripts.js"></script><!-- Theme scripts -->
+
+<!-- Initiate flexslider plugin -->
+<script type="text/javascript">
+    $(document).ready(function($) {
+      $('.flexslider').flexslider({
+        animation: "fade",
+        prevText: "",
+        nextText: "",
+        directionNav: true
+      });
+    });
+</script>
+
+</body>
+</html>
