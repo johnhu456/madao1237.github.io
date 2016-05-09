@@ -17,7 +17,7 @@
 <!--<![endif]-->
 
 <head>
-  <title>Archives | MADAO</title>
+  <title>高效编写代码的方法（十一）：Method Swizzling Debug | MADAO</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -84,7 +84,7 @@
 </head>
 
 <!--
-<body class="home-template">
+<body class="post-template">
 -->
 <body id="index" class="lightnav animsition">
 
@@ -221,46 +221,71 @@
 
         <!-- ============================ END Hero Image =========================== -->
       
-
-
-<section id="services">
+<section id="intro">
     <div class="container">
-        <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-                <div class="row boxes">
-                    
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2015/12/17/CFBridge/">CFBridge和UUID</a></h4>
-                            
-                            <p><time datetime="2015-12-17T07:24:35.000Z"><a href="/2015/12/17/CFBridge/">2015-12-17</a></time></p>
-                        </div>
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2015/12/17/hello-world/">Hello World</a></h4>
-                            
-                            <p><time datetime="2015-12-17T07:06:28.000Z"><a href="/2015/12/17/hello-world/">2015-12-17</a></time></p>
-                        </div>
-                    
-                </div>
-            </div>    
+        <div class="row col-md-offset-2">
+            <div class="col-md-8">
+    			<span class="post-meta">
+      <time datetime="2016-05-09T09:33:53.000Z" itemprop="datePublished">
+          2016-05-09
+      </time>
+    
+</span>
+                <h1>高效编写代码的方法（十一）：Method Swizzling Debug</h1>
+            </div>
         </div>
-    </div>
-</section> 
+        <div class="col-md-8 col-md-offset-2">
+      		<p>####前言<br>通过OC这个“调方法” = “向对象发消息”的机制，我们了解到方法在类中都是一张类似于字典的表。<br>selector即为字典的Key，IMP则为字典的值。通常发消息，都会在这张表中现寻找selector，然后再获取相应的具体实现（IMP）。<br>比如一个NSString类，其中的表大概如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1683504-1478a6c4ef5ebf27.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="NSString类中的方法表"></p>
+<p>####Method Swizzling<br>Method Swizzling是runtime中的一个概念，指一个类的方法中，我们可以将selector相互对应的IMP进行调换。<br>比如我们将NSString类中的lowercaseString的实现方法与uppercaseString的实现方法做一个调换，结果如下：<br><img src="http://upload-images.jianshu.io/upload_images/1683504-596cc75ffd4bbc5b.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="调换后的NSString方法"></p>
+<p>以下用代码进行实现：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Method uppercaseMethod = class_getInstanceMethod([<span class="built_in">NSString</span> class], <span class="keyword">@selector</span>(uppercaseString));</span><br><span class="line">  Method lowercaseMethod = class_getInstanceMethod([<span class="built_in">NSString</span> class], <span class="keyword">@selector</span>(lowercaseString));</span><br><span class="line">  <span class="comment">//class_getInstanceMethod方法主要是根据selector来获取方法的具体实现</span></span><br><span class="line">  </span><br><span class="line">  method_exchangeImplementations(uppercaseMethod, lowercaseMethod);</span><br><span class="line">  <span class="comment">//方法调换的主要方法，参数为方法的实现。</span></span><br><span class="line">  </span><br><span class="line">  <span class="built_in">NSString</span> *exampleString = <span class="string">@"AaBbCcDd"</span>;</span><br><span class="line">  <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>,[exampleString uppercaseString]);</span><br><span class="line">  <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>,[exampleString lowercaseString]);</span><br></pre></td></tr></table></figure></p>
+<p>后台输出如下：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2016</span>-<span class="number">05</span>-<span class="number">09</span> <span class="number">17</span>:<span class="number">06</span>:<span class="number">01.792</span> RunTimePlayGround[<span class="number">37295</span>:<span class="number">5698418</span>] aabbccdd</span><br><span class="line"><span class="number">2016</span>-<span class="number">05</span>-<span class="number">09</span> <span class="number">17</span>:<span class="number">06</span>:<span class="number">01.795</span> RunTimePlayGround[<span class="number">37295</span>:<span class="number">5698418</span>] AABBCCDD</span><br></pre></td></tr></table></figure></p>
+<p>可以从两个打印看到，两个方法的实现已经跟selector完全相反了，这就是Method Swizzling的作用。</p>
+<p>####Debug<br>但是实际上，我们不应该随便的使用Method Swizzling，因为实在没有必要去交换两个方法的实现，这种情况少之又少。<br>不过我们可以利用Method Swizzling进行一些Debug操作。</p>
+<p>打个比方，如果我们想在每次调用uppercaseString时候，后台都进行一次Log输出。<br>那我们第一个想到的方法可能是新建分类再重写一个方法或者单独写一个方法来专门进行Debug。<br>这样在实际运用之前我们可以这样做，但是当项目进行到一半，工程中已经有很多uppercaseString调用时，我们显然不希望再去大量修改import的类或者方法名的修改。</p>
+<p>此时Method Swizzling就派上了用场。<br>我们可以写一个分类，准备一个用来与原声uppercaseString进行交换的方法。</p>
+<p>比如在NSString+MethodSwizzling.h中<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#import <span class="title">&lt;Foundation/Foundation.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">NSString</span> (<span class="title">MethodSwizzling</span>)</span></span><br><span class="line"></span><br><span class="line">- (<span class="built_in">NSString</span> *)logUppercaseString;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure></p>
+<p>声明一个方法用于外部访问获取IMP。</p>
+<p>在NSString+MethodSwizzling.m中：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#import <span class="title">"NSString+MethodSwizzling.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">NSString</span> (<span class="title">MethodSwizzling</span>)</span></span><br><span class="line"></span><br><span class="line">-(<span class="built_in">NSString</span> *)logUppercaseString&#123;</span><br><span class="line">    <span class="built_in">NSString</span> *uppercaseString = [<span class="keyword">self</span> logUppercaseString];</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"used uppercaseString Method"</span>);</span><br><span class="line">    <span class="keyword">return</span> uppercaseString;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure></p>
+<p>对声明方法进行实现。<br>以上方法看似是一个递归，但是等到实际运行我们实现过Method Swizzling后， 这里的<strong>NSString *uppercaseString = [self logUppercaseString];</strong><br>实际执行的是<strong>[self uppercaseString];</strong></p>
+<p>测试代码(记得引入一次分类的头文件)：<br><figure class="highlight ceylon"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Method uppercaseMethod = <span class="keyword">class</span><span class="number">_</span>getInstanceMethod([NSString <span class="keyword">class</span>], <span class="annotation">@selector</span>(uppercaseString));</span><br><span class="line">   Method lowercaseMethod = <span class="keyword">class</span><span class="number">_</span>getInstanceMethod([NSString <span class="keyword">class</span>], <span class="annotation">@selector</span>(logUppercaseString));</span><br><span class="line">   <span class="comment">//class_getInstanceMethod方法主要是根据selector来获取方法的具体实现</span></span><br><span class="line">   </span><br><span class="line">   method<span class="number">_</span>exchangeImplementations(uppercaseMethod, lowercaseMethod);</span><br><span class="line">   <span class="comment">//方法调换的主要方法，参数为方法的实现。</span></span><br><span class="line">   </span><br><span class="line">   NSString *exampleString = @<span class="string">"AaBbCcDd"</span>;</span><br><span class="line">   NSLog(@<span class="string">"%@"</span>,[exampleString uppercaseString]);</span><br></pre></td></tr></table></figure></p>
+<p>打印输出：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2016</span>-<span class="number">05</span>-<span class="number">09</span> <span class="number">17</span>:<span class="number">24</span>:<span class="number">24.189</span> RunTimePlayGround[<span class="number">37383</span>:<span class="number">5732256</span>] used uppercaseString Method</span><br><span class="line"><span class="number">2016</span>-<span class="number">05</span>-<span class="number">09</span> <span class="number">17</span>:<span class="number">24</span>:<span class="number">24.189</span> RunTimePlayGround[<span class="number">37383</span>:<span class="number">5732256</span>] AABBCCDD</span><br></pre></td></tr></table></figure></p>
+<p>成功实现了我们之前所需要的Debug功能。</p>
+<p>####总结</p>
+<ul>
+<li>1 谨慎善用Method Swizzling，不要再没有必要的地方引入，否则带来代码混乱，难读</li>
+</ul>
 
-<section id="statement">
-    <div class="container text-center wow fadeInUp" data-wow-delay="0.5s">
-        <div class="row">
-            <p>轻松的路是给下坡的人走的。</p>
+            <div class="clearfix"></div>
+            <hr class="nogutter">
         </div>
+        <nav class="pagination" role="pagination">
+    
+    
+    <a class="pull-right" href="/2016/05/06/iOS下SearchBar的使用/">
+        iOS下SearchBar的使用 →
+    </a>
+    
+</nav>
+
+        <div class="duoshuo">
+<div class="ds-thread" data-thread-key="2016/05/09/高效编写代码的方法（十一）：Method-Swizzling-Debug/" data-title="高效编写代码的方法（十一）：Method Swizzling Debug" data-url="http://yoursite.com/2016/05/09/高效编写代码的方法（十一）：Method-Swizzling-Debug/"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"duoshuo_name"};
+(function() {
+	var ds = document.createElement('script');
+	ds.type = 'text/javascript';ds.async = true;
+	ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+	ds.charset = 'UTF-8';
+	(document.getElementsByTagName('head')[0] 
+	 || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+</script>
+</div>
     </div>
 </section>
+
+
       
 <!-- ============================ Footer =========================== -->
 
