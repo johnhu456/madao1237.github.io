@@ -17,7 +17,7 @@
 <!--<![endif]-->
 
 <head>
-  <title>Archives: 2016/5 | MADAO</title>
+  <title>高效编写代码的方法(十二)：类的内省 | MADAO</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -84,7 +84,7 @@
 </head>
 
 <!--
-<body class="home-template">
+<body class="post-template">
 -->
 <body id="index" class="lightnav animsition">
 
@@ -221,85 +221,65 @@
 
         <!-- ============================ END Hero Image =========================== -->
       
-
-
-<section id="services">
+<section id="intro">
     <div class="container">
-        <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-                <div class="row boxes">
-                    
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2016/05/16/高效编写代码的方法-十二-：类的内省/">高效编写代码的方法(十二)：类的内省</a></h4>
-                            
-                            <p><time datetime="2016-05-16T10:18:04.000Z"><a href="/2016/05/16/高效编写代码的方法-十二-：类的内省/">2016-05-16</a></time></p>
-                        </div>
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2016/05/09/高效编写代码的方法（十一）：Method-Swizzling-Debug/">高效编写代码的方法（十一）：Method Swizzling Debug</a></h4>
-                            
-                            <p><time datetime="2016-05-09T09:33:53.000Z"><a href="/2016/05/09/高效编写代码的方法（十一）：Method-Swizzling-Debug/">2016-05-09</a></time></p>
-                        </div>
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2016/05/06/iOS下SearchBar的使用/">iOS下SearchBar的使用</a></h4>
-                            
-                            <p><time datetime="2016-05-06T08:06:43.000Z"><a href="/2016/05/06/iOS下SearchBar的使用/">2016-05-06</a></time></p>
-                        </div>
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2016/05/06/高效编写代码的方法（十）-消息转发机制/">高效编写代码的方法（十）:消息转发机制</a></h4>
-                            
-                            <p><time datetime="2016-05-06T03:03:41.000Z"><a href="/2016/05/06/高效编写代码的方法（十）-消息转发机制/">2016-05-06</a></time></p>
-                        </div>
-                    
-                        
-                            </div><div class="row boxes">
-                            
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2016/05/04/高效编写代码的方法（九）：了解objc-msgSend/">高效编写代码的方法（九）：了解objc_msgSend</a></h4>
-                            
-                            <p><time datetime="2016-05-04T12:06:21.000Z"><a href="/2016/05/04/高效编写代码的方法（九）：了解objc-msgSend/">2016-05-04</a></time></p>
-                        </div>
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2016/05/01/高效编写代码的方法（八）：对象的关联/">高效编写代码的方法（八）：对象的关联</a></h4>
-                            
-                            <p><time datetime="2016-05-01T09:01:02.000Z"><a href="/2016/05/01/高效编写代码的方法（八）：对象的关联/">2016-05-01</a></time></p>
-                        </div>
-                    
-                </div>
-            </div>    
+        <div class="row col-md-offset-2">
+            <div class="col-md-8">
+    			<span class="post-meta">
+      <time datetime="2016-05-16T10:18:04.000Z" itemprop="datePublished">
+          2016-05-16
+      </time>
+    
+</span>
+                <h1>高效编写代码的方法(十二)：类的内省</h1>
+            </div>
         </div>
-    </div>
-</section> 
+        <div class="col-md-8 col-md-offset-2">
+      		<p>####前言<br>在之前几篇文章中，我们了解到了一个类的方法是怎么在类中进行存储的；当一个类的实现方法无法找到时，消息转发机制又是如何起作用的。所以，接下来我们要去了解 类 的本身，也就是消息的接收者（receiver）。<br>在运行时候，我们的程序是怎么知道该像哪一个类去寻找消息的实现呢？</p>
+<p>####内省<br>一般来说，如果我们像指定类的实例对象发送消息之后，编译器会检查该类是否有该消息方法的接口，如果没有则会抛出报错或警告。但是对于id这种特殊的类（id可以代表任何一个NSObject）,所以编译器会假设id可以对任何消息做出反应而不抛出报错或警告，但在实际运行时可能崩溃。<br>同时因为objc中类的方法是可以动态进行添加的，所以编译器的检查对于objc来说已经不足够了。</p>
+<p>runtime提供了一种类的内省机制，这其中包括了isKindOfClass等我们经常会使用到的方法，这些方法都是NSObject的protocol一部分，所以所有的对象都具有这一套内省方法。</p>
+<p>####结构<br>在runtime中，对象以结构构体保存，id类的对象的结构体如下：<br><figure class="highlight thrift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">objc_object</span> </span>&#123;  </span><br><span class="line">    Class isa;  </span><br><span class="line">&#125; *id;</span><br></pre></td></tr></table></figure></p>
+<p>由此可见，其中包含一个Class类的变量isa，isa指向该对象的类。<br>所以NSString *str ， str中的isa就指向NSString。</p>
+<p>Class对象在runtime中也有结构体定义：<br><figure class="highlight d"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> objc_class *Class;  </span><br><span class="line"><span class="keyword">struct</span> objc_class &#123;  </span><br><span class="line">    Class isa;  </span><br><span class="line">    Class super_class;  </span><br><span class="line">    <span class="keyword">const</span> <span class="built_in">char</span> *name;  </span><br><span class="line">    <span class="built_in">long</span> <span class="keyword">version</span>;  </span><br><span class="line">    <span class="built_in">long</span> info;  </span><br><span class="line">    <span class="built_in">long</span> instance_size;  </span><br><span class="line">    <span class="keyword">struct</span> objc_ivar_list *ivars;  </span><br><span class="line">    <span class="keyword">struct</span> objc_method_list **methodLists;  </span><br><span class="line">    <span class="keyword">struct</span> objc_cache *cache;  </span><br><span class="line">    <span class="keyword">struct</span> objc_protocol_list *protocols;  </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>此结构体的首个变量是isa指针，这说明Class本身也是一个Objective-C对象。结构体里还有个变量叫做super_class，它指向了该类的父类。类对象所属的类型（也就是isa指针所指向的类型）是另外一个类，叫做“元类”（metaclass）。<br>metaClass是用来描述这个类的数据的一个对象。<br><img src="http://s2.51cto.com/wyfs02/M02/22/A5/wKioL1MikweSjgEfAABnMp66OOM483.jpg" alt="类的关系图"></p>
+<p>isKindOfClass和isMemberOfClass的具体使用就不多说了，两个方法都是通过结构体内的isa指针和super_class指针来确定该类的继承关系。<br>猜想一下isMemberOfClass可能就是通过isa来判断，而isKindOfClass就主要是通过super_class来实现查找判断。</p>
+<p>####总结</p>
+<ul>
+<li>1  每个对象都有一个指向Class对象的指针，用来表明类型，而这些Class对象则构成了类的继承体系。</li>
+<li>2 如果对象类型无法在编译期确定，那么就应该使用内省方法来探知。</li>
+<li>3 尽量使用类型信息查询方法来确定对象类型，而不要直接比较类对象，因为某些对象可能实现了消息转发功能。</li>
+</ul>
 
-<section id="statement">
-    <div class="container text-center wow fadeInUp" data-wow-delay="0.5s">
-        <div class="row">
-            <p>轻松的路是给下坡的人走的。</p>
+            <div class="clearfix"></div>
+            <hr class="nogutter">
         </div>
+        <nav class="pagination" role="pagination">
+    
+    
+    <a class="pull-right" href="/2016/05/09/高效编写代码的方法（十一）：Method-Swizzling-Debug/">
+        高效编写代码的方法（十一）：Method Swizzling Debug →
+    </a>
+    
+</nav>
+
+        <div class="duoshuo">
+<div class="ds-thread" data-thread-key="2016/05/16/高效编写代码的方法-十二-：类的内省/" data-title="高效编写代码的方法(十二)：类的内省" data-url="http://yoursite.com/2016/05/16/高效编写代码的方法-十二-：类的内省/"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"duoshuo_name"};
+(function() {
+	var ds = document.createElement('script');
+	ds.type = 'text/javascript';ds.async = true;
+	ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+	ds.charset = 'UTF-8';
+	(document.getElementsByTagName('head')[0] 
+	 || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+</script>
+</div>
     </div>
 </section>
+
+
       
 <!-- ============================ Footer =========================== -->
 
