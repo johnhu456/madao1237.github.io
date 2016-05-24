@@ -17,7 +17,7 @@
 <!--<![endif]-->
 
 <head>
-  <title>Archives | MADAO</title>
+  <title>高效编写代码的方法(十四)：Description | MADAO</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -84,7 +84,7 @@
 </head>
 
 <!--
-<body class="home-template">
+<body class="post-template">
 -->
 <body id="index" class="lightnav animsition">
 
@@ -221,76 +221,65 @@
 
         <!-- ============================ END Hero Image =========================== -->
       
-
-
-<section id="services">
+<section id="intro">
     <div class="container">
-        <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-                <div class="row boxes">
-                    
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2016/01/04/MADAO-s-WorkNote201601/">MADAO&#39;s WorkNote（2016.01）</a></h4>
-                            
-                            <p><time datetime="2016-01-04T13:09:05.000Z"><a href="/2016/01/04/MADAO-s-WorkNote201601/">2016-01-04</a></time></p>
-                        </div>
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2015/12/30/YYKit-Learning/">YYKit Learning(一)</a></h4>
-                            
-                            <p><time datetime="2015-12-30T02:49:07.000Z"><a href="/2015/12/30/YYKit-Learning/">2015-12-30</a></time></p>
-                        </div>
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2015/12/29/MagicalRecord/">MagicalRecord</a></h4>
-                            
-                            <p><time datetime="2015-12-29T07:44:00.000Z"><a href="/2015/12/29/MagicalRecord/">2015-12-29</a></time></p>
-                        </div>
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2015/12/17/CFBridge/">CFBridge和UUID</a></h4>
-                            
-                            <p><time datetime="2015-12-17T07:24:35.000Z"><a href="/2015/12/17/CFBridge/">2015-12-17</a></time></p>
-                        </div>
-                    
-                        
-                            </div><div class="row boxes">
-                            
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2015/12/17/hello-world/">Hello World</a></h4>
-                            
-                            <p><time datetime="2015-12-17T07:06:28.000Z"><a href="/2015/12/17/hello-world/">2015-12-17</a></time></p>
-                        </div>
-                    
-                </div>
-            </div>    
+        <div class="row col-md-offset-2">
+            <div class="col-md-8">
+    			<span class="post-meta">
+      <time datetime="2016-05-24T10:13:44.000Z" itemprop="datePublished">
+          2016-05-24
+      </time>
+    
+</span>
+                <h1>高效编写代码的方法(十四)：Description</h1>
+            </div>
         </div>
-    </div>
-</section> 
+        <div class="col-md-8 col-md-offset-2">
+      		<p>####Description<br>关于<strong>- (NSString *)description;</strong>方法，应该使用的还是比较频繁的。<br>简单介绍一下：<br>这个方法在所有NSObject类会有一个默认的实现，具体表现在于每当我们使用<br>NSLog(@”%@”,someObject)来打印某个对象信息的时候（注意占位符一定是%@），后台的log内容就是我们description方法中返回的字符串。<br>比如：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSString</span> *exampleString = <span class="string">@"AaBbCcDd"</span>;</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"%@"</span>,exampleString);</span><br></pre></td></tr></table></figure></p>
+<p>后台打印如下：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2016</span>-<span class="number">05</span>-<span class="number">24</span> <span class="number">17</span>:<span class="number">45</span>:<span class="number">59.198</span> RunTimePlayGround[<span class="number">89500</span>:<span class="number">9545323</span>] AaBbCcDd</span><br></pre></td></tr></table></figure></p>
+<p>对于NSString、NSArray、NSDictionary等类来说，一般description都能返回我们所需要的字符串(如上文例子)，比如NSArray的就是所包含元素的description。对于通常一些不太好描述的类的description或者自定义类的description，那么默认的实现就是返回一个由类名和内存地址组成的字符串，比如：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"%@"</span>,<span class="keyword">self</span>);</span><br></pre></td></tr></table></figure></p>
+<p>后台打印如下：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2016</span>-<span class="number">05</span>-<span class="number">24</span> <span class="number">17</span>:<span class="number">49</span>:<span class="number">11.951</span> RunTimePlayGround[<span class="number">89523</span>:<span class="number">9555137</span>] &lt;ViewController: <span class="number">0x7fa30ac3d080</span>&gt;</span><br></pre></td></tr></table></figure></p>
+<p>综上来看，description方法是用来Debug使用的，用来打印我们需要的信息。<br>为了使我们能够更加清晰直观的看到打印信息，可以通过重写- (NSString *)description;方法来自定义对象的description。</p>
+<p>####DebugDescription<br>该方法其实和- (NSString *)description;是差不多的，只不过使用场景稍有不同。<br>description主要用于日志输出的时候会调用到。<br>而debugDescription在使用LLDB调试的时候会起到作用。<br>所以建议一般当我们需要内存地址等一些详尽信息时，可以写在debugDescription里方便LLDB调试用，而一般日志输出则按需要写。<br>比如在一个自定义Label中我们这么写：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">-(<span class="built_in">NSString</span> *)description</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"%@:%@"</span>,<span class="built_in">NSStringFromClass</span>([<span class="keyword">self</span> class]),<span class="keyword">self</span><span class="variable">.text</span>];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="built_in">NSString</span> *)debugDescription</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"%@,%p,%@"</span>,<span class="built_in">NSStringFromClass</span>([<span class="keyword">self</span> class]),<span class="keyword">self</span>,<span class="keyword">self</span><span class="variable">.text</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>测试代码：<br><img src="http://i2.buimg.com/fc9e0d2c15476486.png" alt="测试代码"><br>记得可以如图位置打上断点用LLDB调试。</p>
+<p>后台打印如下：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2016</span>-<span class="number">05</span>-<span class="number">24</span> <span class="number">18</span>:<span class="number">06</span>:<span class="number">03.191</span> RunTimePlayGround[<span class="number">89593</span>:<span class="number">9587129</span>] AaBbCcDd</span><br><span class="line"><span class="number">2016</span>-<span class="number">05</span>-<span class="number">24</span> <span class="number">18</span>:<span class="number">06</span>:<span class="number">03.192</span> RunTimePlayGround[<span class="number">89593</span>:<span class="number">9587129</span>] &lt;ViewController: <span class="number">0x7fa243595a40</span>&gt;</span><br><span class="line">(lldb) po testLabel</span><br><span class="line">TestLabel,<span class="number">0x7fa2434227b0</span>,sssss</span><br><span class="line"></span><br><span class="line">(lldb)</span><br></pre></td></tr></table></figure></p>
+<p>####总结<br>其实要点不多，简单来说还是以下两点。</p>
+<ul>
+<li>1 重写descpription方法来返回一个有意义，直观的字符串可以方便自己做日志调试。</li>
+<li>2 当description的信息已经不足够时，重写debugDescription来做补充。</li>
+<li>3 怎么更好使用这两种方法也需要按照场合，自己按需使用。</li>
+</ul>
 
-<section id="statement">
-    <div class="container text-center wow fadeInUp" data-wow-delay="0.5s">
-        <div class="row">
-            <p>轻松的路是给下坡的人走的。</p>
+            <div class="clearfix"></div>
+            <hr class="nogutter">
         </div>
+        <nav class="pagination" role="pagination">
+    
+    
+    <a class="pull-right" href="/2016/05/23/高效编写代码的方法（十三）：初始化方法/">
+        高效编写代码的方法（十三）：初始化方法 →
+    </a>
+    
+</nav>
+
+        <div class="duoshuo">
+<div class="ds-thread" data-thread-key="2016/05/24/高效编写代码的方法-十四-：Description/" data-title="高效编写代码的方法(十四)：Description" data-url="http://yoursite.com/2016/05/24/高效编写代码的方法-十四-：Description/"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"duoshuo_name"};
+(function() {
+	var ds = document.createElement('script');
+	ds.type = 'text/javascript';ds.async = true;
+	ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+	ds.charset = 'UTF-8';
+	(document.getElementsByTagName('head')[0] 
+	 || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+</script>
+</div>
     </div>
 </section>
+
+
       
 <!-- ============================ Footer =========================== -->
 
