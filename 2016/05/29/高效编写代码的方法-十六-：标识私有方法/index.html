@@ -17,7 +17,7 @@
 <!--<![endif]-->
 
 <head>
-  <title>Archives: 2016 | MADAO</title>
+  <title>高效编写代码的方法(十六)：标识私有方法 | MADAO</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -84,7 +84,7 @@
 </head>
 
 <!--
-<body class="home-template">
+<body class="post-template">
 -->
 <body id="index" class="lightnav animsition">
 
@@ -221,55 +221,66 @@
 
         <!-- ============================ END Hero Image =========================== -->
       
-
-
-<section id="services">
+<section id="intro">
     <div class="container">
-        <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-                <div class="row boxes">
-                    
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2016/01/12/Swift-Learning-1/">Swift Learning Note(1)</a></h4>
-                            
-                            <p><time datetime="2016-01-12T02:25:22.000Z"><a href="/2016/01/12/Swift-Learning-1/">2016-01-12</a></time></p>
-                        </div>
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2016/01/08/YYKit-Learning-二/">YYKit Learning(二)</a></h4>
-                            
-                            <p><time datetime="2016-01-08T09:21:27.000Z"><a href="/2016/01/08/YYKit-Learning-二/">2016-01-08</a></time></p>
-                        </div>
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2016/01/04/MADAO-s-WorkNote201601/">MADAO&#39;s WorkNote（2016.01）</a></h4>
-                            
-                            <p><time datetime="2016-01-04T13:09:05.000Z"><a href="/2016/01/04/MADAO-s-WorkNote201601/">2016-01-04</a></time></p>
-                        </div>
-                    
-                </div>
-            </div>    
+        <div class="row col-md-offset-2">
+            <div class="col-md-8">
+    			<span class="post-meta">
+      <time datetime="2016-05-29T14:12:00.000Z" itemprop="datePublished">
+          2016-05-29
+      </time>
+    
+</span>
+                <h1>高效编写代码的方法(十六)：标识私有方法</h1>
+            </div>
         </div>
-    </div>
-</section> 
+        <div class="col-md-8 col-md-offset-2">
+      		<p>在OC中，我们定义方法的时候，并没有像其他语言那样会有像：<br> private或者public的声明。<br>OC中，公开的方法写在.h文件中，而私有方法写在.m中。</p>
+<p>但对于方法的实现，都是写在.m中，这样带来一个问题就是：<br>在.m文件中混杂了很多方法的实现，包括了private和public的方法。<br>如果缺少一个对私有方法的标识，那么我们在开发过程中可能会无意中修改了公开方法，那么会造成一连串的修改。包括对于使用了这个方法的对象，都需要修改。<br>因此对于公开方法的设计与修改是需要谨慎的，我们可以标识出私有方法来尽量少修改公开方法。</p>
+<p>目前个人现在并没有进行很明确的方法名上标识，只是会在代码的位置上进行私有，公开方法的调整，用#prama mark 来进行划分。<br>这样其实也是一种方法：</p>
+<ul>
+<li>优点 不用刻意更改私有方法的方法名。</li>
+<li>缺点 代码位置不含有逻辑性，同一块逻辑的代码可能因为私有公开的关系被拆散，不太直观。</li>
+</ul>
+<p>####命名区分<br>用命名区分的方式是另外一种方法，使用什么样的前缀还是比较看个人喜好的。<br>比较好的方式是使用“p_”来做前缀，p代表private：<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="type">void</span>)p_privateMethod&#123;</span><br><span class="line">  //<span class="keyword">method</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>值得注意的是，苹果对于私有方法的定义，也是有一套自己的前缀命名方式。<br>Apple对于私有的属性或者方法，都是以“_”下划线作为前缀。<br>如果你的自定义类是Apple框架提供的子类，而且你也决定采用下划线来做前缀，那么你可能会不经意间覆盖了官方类的私有方法。<br>比如新建一个子类：MyViewController<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#import <span class="title">"MyViewController.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">MyViewController</span> ()</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">MyViewController</span></span></span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)_resetViewController&#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"reset"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</span><br><span class="line">    [<span class="keyword">super</span> viewDidLoad];</span><br><span class="line">    <span class="comment">// Do any additional setup after loading the view.</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)didReceiveMemoryWarning &#123;</span><br><span class="line">    [<span class="keyword">super</span> didReceiveMemoryWarning];</span><br><span class="line">    <span class="comment">// Dispose of any resources that can be recreated.</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>那么在使用MyViewController的对象时候，每当系统想调用到Apple写好的_resetViewController的时候，都会调用到我们重写的方法里去。</p>
+<p>####总结</p>
+<ul>
+<li>1 使用前缀去标识你的私有方法，这样可以提高区分度。</li>
+<li>2 避免使用“_”作为方法前缀。</li>
+</ul>
 
-<section id="statement">
-    <div class="container text-center wow fadeInUp" data-wow-delay="0.5s">
-        <div class="row">
-            <p>轻松的路是给下坡的人走的。</p>
+            <div class="clearfix"></div>
+            <hr class="nogutter">
         </div>
+        <nav class="pagination" role="pagination">
+    
+    
+    <a class="pull-right" href="/2016/05/25/高效编写代码的方法-十五-：不可变的对象/">
+        高效编写代码的方法(十五)：不可变的对象 →
+    </a>
+    
+</nav>
+
+        <div class="duoshuo">
+<div class="ds-thread" data-thread-key="2016/05/29/高效编写代码的方法-十六-：标识私有方法/" data-title="高效编写代码的方法(十六)：标识私有方法" data-url="http://yoursite.com/2016/05/29/高效编写代码的方法-十六-：标识私有方法/"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"duoshuo_name"};
+(function() {
+	var ds = document.createElement('script');
+	ds.type = 'text/javascript';ds.async = true;
+	ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+	ds.charset = 'UTF-8';
+	(document.getElementsByTagName('head')[0] 
+	 || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+</script>
+</div>
     </div>
 </section>
+
+
       
 <!-- ============================ Footer =========================== -->
 

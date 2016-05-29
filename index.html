@@ -228,6 +228,37 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
                 <div class="col-md-4">
+                    <h3><a href="/2016/05/29/高效编写代码的方法-十六-：标识私有方法/">高效编写代码的方法(十六)：标识私有方法</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2016-05-29T14:12:00.000Z" itemprop="datePublished">
+          2016-05-29
+      </time>
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        在OC中，我们定义方法的时候，并没有像其他语言那样会有像： private或者public的声明。OC中，公开的方法写在.h文件中，而私有方法写在.m中。
+但对于方法的实现，都是写在.m中，这样带来一个问题就是：在.m文件中混杂了很多方法的实现，包括了private和public的方法。如果缺少一个对私有方法的标识，那么我们在开发过程中可能会无意中修改了公开方法，那么会造成一连串的修改。包括对于使用了这个方法的对象，都需要修改。因此对于
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2016/05/29/高效编写代码的方法-十六-：标识私有方法/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
                     <h3><a href="/2016/05/25/高效编写代码的方法-十五-：不可变的对象/">高效编写代码的方法(十五)：不可变的对象</a></h3>
                     <span>
                         <span class="post-meta">
@@ -498,37 +529,6 @@
                     
                     <p class="pull-right readMore">
                         <a href="/2016/05/01/高效编写代码的方法（八）：对象的关联/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2016/04/28/高效编写代码的方法（七）：类簇/">高效编写代码的方法（七）：类簇</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2016-04-28T09:35:24.000Z" itemprop="datePublished">
-          2016-04-28
-      </time>
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        ####类簇模式举个例子，UIButton类的一个类方法：1+ (instancetype)buttonWithType:(UIButtonType)buttonType;
-这个方法可以帮助我们“生产”出不同样式的button。如果我们只有一个button类，要实现上面那个buttonWithType方法，可能就需要在drawRect方法中做一些判断：123456789- (void)drawRect:(CGRect)rect&#123
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2016/04/28/高效编写代码的方法（七）：类簇/">Read More...</a>
                     </p>
                     
                 </div>
