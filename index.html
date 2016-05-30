@@ -228,6 +228,37 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
                 <div class="col-md-4">
+                    <h3><a href="/2016/05/30/高效编写代码的方法-十七-：理解OC的错误模式/">高效编写代码的方法(十七)：理解OC的错误模式</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2016-05-30T10:26:17.000Z" itemprop="datePublished">
+          2016-05-30
+      </time>
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        ####前言许多现代化的语言，包括OC，都包含了断言。如果你对Java的这一套错误处理比较熟悉，那么可能在OC中需要重新学习一遍OC的错误处理。
+####Exception在ARC中，虽然我们把对象的内存管理都交给系统去处理，但是即使这样还是有可能会出现内存泄露的情况。其中一种对象不会释放的情况就是throw一个NSException的情况。防止这样的情况发生可以通过设置编译器来避免： -fobj-arc-exceptions 如此一来
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2016/05/30/高效编写代码的方法-十七-：理解OC的错误模式/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
                     <h3><a href="/2016/05/29/高效编写代码的方法-十六-：标识私有方法/">高效编写代码的方法(十六)：标识私有方法</a></h3>
                     <span>
                         <span class="post-meta">
@@ -497,38 +528,6 @@
                     
                     <p class="pull-right readMore">
                         <a href="/2016/05/04/高效编写代码的方法（九）：了解objc-msgSend/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2016/05/01/高效编写代码的方法（八）：对象的关联/">高效编写代码的方法（八）：对象的关联</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2016-05-01T09:01:02.000Z" itemprop="datePublished">
-          2016-05-01
-      </time>
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        我们想对一个已经存在的类增加属性的时候，有时候我们会选择写分类，但是既然类都给我们写好了，如果每次仅因为需要增加一个属性的时候而却写一个分类文件，未免就显得太麻烦了。
-这时候我们可以动用一点runtime的知识，去动态关联对象的属性。
-####主要方法：12345678objc_setAssociatedObject(&lt;id object&gt;, &lt;const void *key&gt;, &lt;id value&gt;
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2016/05/01/高效编写代码的方法（八）：对象的关联/">Read More...</a>
                     </p>
                     
                 </div>

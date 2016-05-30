@@ -17,7 +17,7 @@
 <!--<![endif]-->
 
 <head>
-  <title>MADAO</title>
+  <title>高效编写代码的方法(十七)：理解OC的错误模式 | MADAO</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -84,7 +84,7 @@
 </head>
 
 <!--
-<body class="home-template">
+<body class="post-template">
 -->
 <body id="index" class="lightnav animsition">
 
@@ -220,293 +220,75 @@
         <!-- // End height spacing helper -->
 
         <!-- ============================ END Hero Image =========================== -->
-      <!-- ============================ Content =========================== -->
-
+      
 <section id="intro">
     <div class="container">
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2016/02/01/MADAO-s-WorkNote-2016-02/">MADAO's WorkNote(2016.02)</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2016-02-01T02:04:58.000Z" itemprop="datePublished">
-          2016-02-01
+        <div class="row col-md-offset-2">
+            <div class="col-md-8">
+    			<span class="post-meta">
+      <time datetime="2016-05-30T10:26:17.000Z" itemprop="datePublished">
+          2016-05-30
       </time>
     
 </span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        ##2016-02-01
+                <h1>高效编写代码的方法(十七)：理解OC的错误模式</h1>
+            </div>
+        </div>
+        <div class="col-md-8 col-md-offset-2">
+      		<p>####前言<br>许多现代化的语言，包括OC，都包含了断言。如果你对Java的这一套错误处理比较熟悉，那么可能在OC中需要重新学习一遍OC的错误处理。</p>
+<p>####Exception<br>在ARC中，虽然我们把对象的内存管理都交给系统去处理，但是即使这样还是有可能会出现内存泄露的情况。<br>其中一种对象不会释放的情况就是throw一个NSException的情况。<br>防止这样的情况发生可以通过设置编译器来避免：<strong> -fobj-arc-exceptions </strong><br>如此一来，编译器会自动生成代码来释放exception。但是会引发的额外情况就是，对于没有throw一个exceptions时，编译器也会生成很多多余无用的代码。</p>
+<p>即使是在MRC中，当碰上exception时候，管理对象内存也会出现一点小问题。<br>比如下面这段代码：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">id</span> someObject = <span class="comment">/*...*/</span>;</span><br><span class="line"><span class="keyword">if</span> (<span class="comment">/**checkForError*/</span>) &#123;</span><br><span class="line">    <span class="keyword">@throw</span> [<span class="built_in">NSException</span> exceptionWithName:<span class="string">@"ExceptionName"</span> reason:<span class="string">@"Ops"</span> userInfo:<span class="literal">nil</span>];</span><br><span class="line">&#125;</span><br><span class="line">[someObject doSomething];</span><br><span class="line">[someObject release];</span><br></pre></td></tr></table></figure></p>
+<p>[someObject release]这句代码就根本不会执行。<br>不过估计现在也没有人使用MRC了，解决办法也很简单，就是把[someObject release]这句话放到throw前面。<br>不过一旦系统中抛出的错误多起来，情况复杂起来，很可能会忽视了这一点。</p>
+<p>关于NSException的使用，我们应该只在出现致命的错误时才使用它来抛出异常。<br>打个比方，在OC中，当我们想定义一个抽象类的时候，我们可以使用一些NSException。因为在OC中，并没有关于抽象类的定义，我们在创建新类的时候并不能通过某些关键字来使它成为一个抽象类。因此我们只能使用NSException来强制使用者来认为它是一个抽象类，比如我们强制使用者需要重写其子类中的方法的话：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)mustOverrideMethod&#123;</span><br><span class="line">    <span class="built_in">NSString</span> *reason = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"%@ must be overriden"</span>,<span class="built_in">NSStringFromSelector</span>(_cmd)];</span><br><span class="line">    <span class="keyword">@throw</span>  [<span class="built_in">NSException</span> exceptionWithName:<span class="built_in">NSInternalInconsistencyException</span> reason:reason userInfo:<span class="literal">nil</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>总而言之，NSException是用在致命错误上，终结App运行时候用的，并且最好能确保通过reason，开发者能够准确知道错误出现在了哪里。</p>
+<p>####NSError<br>NSError相对NSException来说，提供了更多关于错误的信息。因为它支持在运行中追踪查看NSError的详细信息。NSError包含了下面三个关键属性：</p>
+<ul>
+<li>1 Error domain(String类)<br>用来定义错误所属的域。通常是一个全局的String变量。比如处理URL的方法就会使用NSURLErrorDomain来作为这些错误的域。</li>
+<li>2 Error code(Integer类)<br>可以具体明确该错误的种类。最常见的就会网络状态错误码（200，404等等），可以用来表示某个明确错误。在OC中使用错误码时，建议使用枚举，提高可读性。</li>
+<li>3 User info<br>包含一些更加具体的错误信息。</li>
+</ul>
+<p>关于NSError，非常常见的一种使用是在protocol中，比如NSURLConnectionDelegate中的一个方法：<br><figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="pp">-  <span class="params">(void)</span>connection:<span class="params">(<span class="variable">NSURLConnection</span> *)</span>connection didFailWithError:<span class="params">(<span class="variable">NSError</span> *)</span>error</span></span><br></pre></td></tr></table></figure></p>
+<p>当一个网络连接发生异常，比如连接超时的时候，该方法就会被调用用来处理这些特殊的错误情况。</p>
+<p>另一个经常使用NSError的地方是NSError作为外部传入的参数的方法，比如：<br><figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="pp">-  <span class="params">(<span class="variable">BOOL</span>)</span>doSomeThing:<span class="params">(<span class="variable">NSError</span> **)</span>error</span></span><br></pre></td></tr></table></figure></p>
+<p>这个传入的error是一个指向error对象的指针。这样我们就能在方法外部去做一些error判断的工作，如下：<br><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">NSError *<span class="built_in">error</span> = <span class="keyword">nil</span>;</span><br><span class="line">BOOL ret = [self doSomeThing:&amp;<span class="built_in">error</span>];</span><br><span class="line"><span class="keyword">if</span> (<span class="built_in">error</span>) &#123;</span><br><span class="line">    /**<span class="keyword">do</span> someThing*/</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在ARC模式下，在方法签名过程中，编译器会把NSError<strong> 转换为NSError<em>__autoreleasing</em>。这意味着这个error对象在方法结束之后也会被释放。<br>关于-  (BOOL)doSomeThing:(NSError </strong>)error的内部实现可以如下：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- (<span class="built_in">BOOL</span>)doSomeThing:(<span class="built_in">NSError</span> **)error</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//Do something that may cayse an error</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="comment">/**there was an error*/</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (error) &#123;</span><br><span class="line">            <span class="comment">//Pass the 'error' through the out-parameter</span></span><br><span class="line">            *error = [<span class="built_in">NSError</span> errorWithDomain:domain code:code userInfo:userinfo];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NO</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">YES</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在真正创建error对象之前，我们需要判断以下传入的error参数是否为空。<br>如果不判断，直接对空指针操作会崩溃。</p>
+<p>前面也已经提到过，就是domain和code的使用。<br>domain最好采用全局的字符串常量，用来区分error域。而code尽量使用枚举，提高可读性。</p>
+<p>####总结</p>
+<ul>
+<li>1 用NSException来处理那些会崩溃整个App的致命错误。</li>
+<li>2 对于非致命错误，提供一个代理来让使用者处理错误，或者写一个外传错误参数的方法。</li>
+</ul>
 
-clipToBounds属性，可以控制子View是否可以超出自己的Bounds范围  
-
-##2016-02-02
-
-关于模拟网易有钱Tableview的表头效果的实现:思路：在self.view上先添加tableView，在添加想要的背景View，底部紧挨着tableview顶部，当滑动时，在Scrollviewdelegate中对背景View的Frame实现动态调整。例子(添加view)：    
-_ba
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2016/02/01/MADAO-s-WorkNote-2016-02/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
+            <div class="clearfix"></div>
+            <hr class="nogutter">
         </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2016/01/12/Swift-Learning-1/">Swift Learning Note(1)</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2016-01-12T02:25:22.000Z" itemprop="datePublished">
-          2016-01-12
-      </time>
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        类型变量let 定义为常量var 定义才为变量当类型不明确时，可以在变量名后+冒号+类型如下    
-var count:Double = 70 或者 var count:Double  
-Swift 不会做隐式转换，显式转换类型如    
-let width = 94
-let widthLabel = String(width)  
-针对数组，var声明的时候即生成一个可变数组，字典同样。声明指定元素类型的数组或字典，格式如下    
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2016/01/12/Swift-Learning-1/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2016/01/08/YYKit-Learning-二/">YYKit Learning(二)</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2016-01-08T09:21:27.000Z" itemprop="datePublished">
-          2016-01-08
-      </time>
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        YYCategoriesNSObject + YYAddForKVOKVO学习苹果官方提供的一种键值观察机制，对遵守KVC的对象有用。对于注册KVO的对象。当对象的键值发生改变时，系统自动发送通知，而作为Observer的对象可以接收到通知，执行用户指定方法。Key-Value Observing Programming Guide下面是一些KVO的基本应用（根据官方文档自己写的一点）  
-Registering as an Obser
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2016/01/08/YYKit-Learning-二/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2016/01/04/MADAO-s-WorkNote201601/">MADAO's WorkNote（2016.01）</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2016-01-04T13:09:05.000Z" itemprop="datePublished">
-          2016-01-04
-      </time>
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        2016-01-04
-对于单例的获取，最好不好通成[DataManager sharedInstance]来获取单例。可以在单独写一个get方法:   -(DataManager *)dataManager {  return [DataManager shareInstance];  
- }   
-对于利用NSTimer进行轮播的Banner，可以将视图控制器ViewWillAppear和ViewWillDisapper中进行定时器的
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2016/01/04/MADAO-s-WorkNote201601/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2015/12/30/YYKit-Learning/">YYKit Learning(一)</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2015-12-30T02:49:07.000Z" itemprop="datePublished">
-          2015-12-30
-      </time>
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        YYCategoriesNSObject + YYAdd- (id)performSelectorWithArgs:(SEL)sel, …;实现OC中的可变参数传递的方法  
-- (id)performSelectorWithArgs:(SEL)sel, ..
-{
-INIT_INV(sel, nil);
- [inv invoke];
- return [NSObject getReturnFromInv:inv withSig:sig];
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2015/12/30/YYKit-Learning/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2015/12/29/MagicalRecord/">MagicalRecord</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2015-12-29T07:44:00.000Z" itemprop="datePublished">
-          2015-12-29
-      </time>
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        MagicalRecordMegicalRecord是对苹果CoreData的二次封装，它大大简化了CoreData的使用代码。抽空写一个MagicalRecord的Demo，顺便学习学习CoreData和MagicalRecord。
-MagicalRecord
-
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2015/12/29/MagicalRecord/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2015/12/17/CFBridge/">CFBridge和UUID</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2015-12-17T07:24:35.000Z" itemprop="datePublished">
-          2015-12-17
-      </time>
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        + (NSString *)deviceUUID {
-     NSString *appInfoAccount = @&quot;key_app_info_account&quot;;
-    NSString *keyDeviceID = @&quot;key_device_uuid&quot;;
-
-    NSString *resultString = [SSKeychain passwordForService:keyDevi
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2015/12/17/CFBridge/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2015/12/17/hello-world/">Hello World</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2015-12-17T07:06:28.000Z" itemprop="datePublished">
-          2015-12-17
-      </time>
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick StartCreate a new p
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2015/12/17/hello-world/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
         <nav class="pagination" role="pagination">
-          <a class="pull-left" href="/page/2/">← Newer Posts</a>
-          
-        </nav>
+    
+    
+    <a class="pull-right" href="/2016/05/29/高效编写代码的方法-十六-：标识私有方法/">
+        高效编写代码的方法(十六)：标识私有方法 →
+    </a>
+    
+</nav>
+
+        <div class="duoshuo">
+<div class="ds-thread" data-thread-key="2016/05/30/高效编写代码的方法-十七-：理解OC的错误模式/" data-title="高效编写代码的方法(十七)：理解OC的错误模式" data-url="http://yoursite.com/2016/05/30/高效编写代码的方法-十七-：理解OC的错误模式/"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"duoshuo_name"};
+(function() {
+	var ds = document.createElement('script');
+	ds.type = 'text/javascript';ds.async = true;
+	ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+	ds.charset = 'UTF-8';
+	(document.getElementsByTagName('head')[0] 
+	 || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+</script>
+</div>
     </div>
 </section>
-<section id="statement">
-    <div class="container text-center wow fadeInUp" data-wow-delay="0.5s">
-        <div class="row">
-            <p>轻松的路是给下坡的人走的。</p>
-        </div>
-    </div>
-</section>
-<!-- ============================ END Content =========================== -->
+
 
       
 <!-- ============================ Footer =========================== -->
