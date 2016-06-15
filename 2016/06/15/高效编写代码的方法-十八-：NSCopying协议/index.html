@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<!--[if lte IE 8 ]>
+<html class="ie" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+<![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<!--
+***************  *      *     *
+      8          *    *       *
+      8          *  *         *
+      8          **           *
+      8          *  *         *
+      8          *    *       *
+      8          *      *     *
+      8          *        *   ***********    -----Theme By Kieran(http://go.kieran.top)
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+<!--<![endif]-->
+
+<head>
+  <title>高效编写代码的方法(十八)：NSCopying协议 | MADAO</title>
+  <!-- Meta data -->
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content="MADAO">
+    <meta name="author" content="MADAO">
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+
+    <!-- Favicon, (keep icon in root folder) -->
+    <link rel="Shortcut Icon" href="/img/favicon.ico" type="image/ico">
+
+    <link rel="alternate" href="/atom.xml" title="MADAO" type="application/atom+xml">
+    <link rel="stylesheet" href="/css/all.css" media="screen" type="text/css">
+	
+    <link rel="stylesheet" href="/highlightjs/vs.css" type="text/css">
+    
+    
+
+    <!-- Custom stylesheet, (add custom styles here, always load last) -->
+    <!-- Load our stylesheet for IE8 -->
+    <!--[if IE 8]>
+    <link rel="stylesheet" type="text/css" href="/css/ie8.css" />
+    <![endif]-->
+
+    <!-- Google Webfonts (Monserrat 400/700, Open Sans 400/600) -->
+    <link href='//fonts.useso.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <link href='//fonts.useso.com/css?family=Open+Sans:400,600' rel='stylesheet' type='text/css'>
+
+    <!-- Load our fonts individually if IE8+, to avoid faux bold & italic rendering -->
+    <!--[if IE]>
+    <link href='http://fonts.useso.com/css?family=Montserrat:400' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.useso.com/css?family=Montserrat:700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.useso.com/css?family=Open+Sans:400' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.useso.com/css?family=Open+Sans:600' rel='stylesheet' type='text/css'>
+    <![endif]-->
+
+    <!-- jQuery | Load our jQuery, with an alternative source fallback to a local version if request is unavailable -->
+    <script src="/js/jquery-1.11.1.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/jquery-1.11.1.min.js"><\/script>')</script>
+
+    <!-- Load these in the <head> for quicker IE8+ load times -->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="/js/html5shiv.min.js"></script>
+    <script src="/js/respond.min.js"></script>
+    <![endif]-->
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+  
+  <style>.col-md-8.col-md-offset-2.opening-statement img{display:none;}</style>
+</head>
+
+<!--
+<body class="post-template">
+-->
+<body id="index" class="lightnav animsition">
+
+      <!-- ============================ Off-canvas navigation =========================== -->
+
+    <div class="sb-slidebar sb-right sb-style-overlay sb-momentum-scrolling">
+        <div class="sb-close" aria-label="Close Menu" aria-hidden="true">
+            <img src="/img/close.png" alt="Close"/>
+        </div>
+        <!-- Lists in Slidebars -->
+        <ul class="sb-menu">
+            <li><a href="/" class="animsition-link" title="Home">Home</a></li>
+            <li><a href="/archives" class="animsition-link" title="archive">archives</a></li>
+            <!-- Dropdown Menu -->
+			 
+            <li>
+                <a class="sb-toggle-submenu">Works<span class="sb-caret"></span></a>
+                <ul class="sb-submenu">
+                    
+                        <li><a href="/" target="_BLANK" class="animsition-link">AAA</a></li>
+                    
+                        <li><a href="/atom.xml" target="_BLANK" class="animsition-link">BBB</a></li>
+                    
+                </ul>
+            </li>
+            
+            
+            
+            <li>
+                <a class="sb-toggle-submenu">Links<span class="sb-caret"></span></a>
+                <ul class="sb-submenu">
+                    
+                    <li><a href="http://go.kieran.top/" class="animsition-link">Kieran</a></li>
+                    
+                    <li><a href="http://domain.com/" class="animsition-link">Name</a></li>
+                    
+                </ul>
+            </li>
+            
+        </ul>
+        <!-- Lists in Slidebars -->
+        <ul class="sb-menu secondary">
+            <li><a href="/about.html" class="animsition-link" title="about">About</a></li>
+            <li><a href="/atom.xml" class="animsition-link" title="rss">RSS</a></li>
+        </ul>
+    </div>
+    
+    <!-- ============================ END Off-canvas navigation =========================== -->
+
+    <!-- ============================ #sb-site Main Page Wrapper =========================== -->
+
+    <div id="sb-site">
+        <!-- #sb-site - All page content should be contained within this id, except the off-canvas navigation itself -->
+
+        <!-- ============================ Header & Logo bar =========================== -->
+
+        <div id="navigation" class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <!-- Nav logo -->
+                    <div class="logo">
+                        <a href="/" title="Logo" class="animsition-link">
+                         <img src="/img/logo.png" alt="Logo" width="35px;"/> 
+                        </a>
+                    </div>
+                    <!-- // Nav logo -->
+                    <!-- Info-bar -->
+                    <nav>
+                        <ul class="nav">
+                            <li><a href="/" class="animsition-link">MADAO</a></li>
+                            <li class="nolink"><span>Always </span>Creative.</li>
+                            
+                            <li><a href="https://github.com/" title="Github" target="_blank"><i class="icon-github"></i></a></li>
+                            
+                            
+                            <li><a href="https://twitter.com/" title="Twitter" target="_blank"><i class="icon-twitter"></i></a></li>
+                            
+                            
+                            <li><a href="https://www.facebook.com/" title="Facebook" target="_blank"><i class="icon-facebook"></i></a></li>
+                            
+                            
+                            <li><a href="https://google.com/" title="Google-Plus" target="_blank"><i class="icon-google-plus"></i></a></li>
+                            
+                            
+                            <li><a href="http://weibo.com/" title="Sina-Weibo" target="_blank"><i class="icon-sina-weibo"></i></a></li>
+                            
+                            <li class="nolink"><span>Welcome!</span></li>
+                        </ul>
+                    </nav>
+                    <!--// Info-bar -->
+                </div>
+                <!-- // .container -->
+                <div class="learnmore sb-toggle-right">More</div>
+                <button type="button" class="navbar-toggle menu-icon sb-toggle-right" title="More">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar before"></span>
+                <span class="icon-bar main"></span>
+                <span class="icon-bar after"></span>
+                </button>
+            </div>
+            <!-- // .navbar-inner -->
+        </div>
+
+        <!-- ============================ Header & Logo bar =========================== -->
+
+        <!-- ============================ Hero Image =========================== -->
+
+        <section id="hero" class="scrollme">
+            <div class="container-fluid element-img" style="background: url(/img/bg_img.jpg) no-repeat center center fixed;background-size: cover">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 vertical-align cover boost text-center">
+                        <div class="center-me animateme" data-when="exit" data-from="0" data-to="0.6" data-opacity="0" data-translatey="100">
+                            <div>
+                            	
+                                <h2>YOU'VE MADE A <span>BRAVE</span> DECISION, WELCOME.</h2>
+                                <p></p>
+				    			
+                                <h2></h2>
+                                <p>每一个不曾起舞的日子都是对生命的辜负。</p>
+				    			
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- // .col-md-12 -->
+                </div>
+                <div class="herofade beige-dk"></div>
+            </div>
+        </section>
+
+        <!-- Height spacing helper -->
+        <div class="heightblock"></div>
+        <!-- // End height spacing helper -->
+
+        <!-- ============================ END Hero Image =========================== -->
+      
+<section id="intro">
+    <div class="container">
+        <div class="row col-md-offset-2">
+            <div class="col-md-8">
+    			<span class="post-meta">
+      <time datetime="2016-06-15T03:16:13.000Z" itemprop="datePublished">
+          2016-06-15
+      </time>
+    
+</span>
+                <h1>高效编写代码的方法(十八)：NSCopying协议</h1>
+            </div>
+        </div>
+        <div class="col-md-8 col-md-offset-2">
+      		<p>在编写程序的过程中，我们经常会想将某些对象进行复制用。在OC中，这样的复制通过copy方法实现，比如[someObject copy]。这样做的必要条件是该对象遵守NSCopying协议。</p>
+<p>对于我们自定义的类，当我们想调用copy进行复制的时候，就需要自己来实现NSCopying协议的方法：<br><figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="pp">- <span class="params">(id)</span>copyWithZone:<span class="params">(nullable <span class="variable">NSZone</span> *)</span>zone;</span></span><br></pre></td></tr></table></figure></p>
+<p>####NSZone<br>还是先理解下NSZone这个东西，在实际开发中我们几乎不会运用它。<br>目前我也只在2个方法中见过其作为参数存在：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">+ (<span class="keyword">id</span>)allocWithZone:(nullable <span class="built_in">NSZone</span> *)zone;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">id</span>)copyWithZone:(nullable <span class="built_in">NSZone</span> *)zone;</span><br></pre></td></tr></table></figure></p>
+<p>NSZone其实并不是一个对象，是一个C结构体，用来记录内存管理的一些信息。<br>我觉得可以理解为一片内存空间，在App运行的时候，系统默认分配一块Zone来管理我们这个App的所有内存中的对象，因此我们在开发中几乎不会去接触NSZone。<br>但是随着对象的不停alloc 和dealloc ，内存会变的碎片化，iOS为了解决这个问题，会将新对象分配到这些碎片的空隙中来进行内存填补，一般来说对象比较少的时候，这样也不会造成系统性能的亏损。但是对象一多，就不一定了。<br>由此引出一个问题，我们能不能专门创建一个空间，来保存一系列大量的对象，减少系统寻找“内存空隙”的时间来提高一些性能，答案是可以的。这时候NSZone就可以派上用场，把你的对象一起分配在一个自定的NSZone里面，手动管理起来就会方便很多。<br>NSZone的释放还不会用，估计还要切换成MRC，实在不会就不讲了。</p>
+<p>####让你的对象支持Copy<br>为了让你的对象支持Copy，只要两个步骤：</p>
+<ul>
+<li>1 声明对象遵守<nscopying> protocol</nscopying></li>
+<li>2 重写- (id)copyWithZone:(nullable NSZone *)zone;方法</li>
+</ul>
+<p>对于简单的情况，我们可以如下实现：<br><strong>Person.h ：</strong><br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#import <span class="title">&lt;Foundation/Foundation.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Person</span> : <span class="title">NSObject</span>&lt;<span class="title">NSCopying</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">copy</span>) <span class="built_in">NSString</span> *firstName;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">copy</span>) <span class="built_in">NSString</span> *lastName;</span><br><span class="line"></span><br><span class="line">- (instancetype)initWithFirstName:(<span class="built_in">NSString</span> *)firstName lastName:(<span class="built_in">NSString</span> *)lastName;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure></p>
+<p><strong>Person.m ：</strong><br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#import <span class="title">"Person.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">Person</span></span></span><br><span class="line"></span><br><span class="line">- (instancetype)initWithFirstName:(<span class="built_in">NSString</span> *)firstName lastName:(<span class="built_in">NSString</span> *)lastName</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">self</span> = [<span class="keyword">super</span> init]) &#123;</span><br><span class="line">        _firstName = [firstName <span class="keyword">copy</span>];</span><br><span class="line">        _lastName = [lastName <span class="keyword">copy</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">id</span>)copyWithZone:(<span class="built_in">NSZone</span> *)zone</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//直接调用init重新创建一个一模一样的对象</span></span><br><span class="line">    <span class="keyword">return</span> [[[<span class="keyword">self</span> class] alloc] initWithFirstName:_firstName lastName:_lastName];</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure></p>
+<p>当然以上部分只适用于简单对象的copy处理。对于复杂一点的，比如我们的person包含一个数组名为family的数组属性，这时候copyWithZone：方法又该如何重写呢？如下<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">id</span>)copyWithZone:(<span class="built_in">NSZone</span> *)zone</span><br><span class="line">&#123;</span><br><span class="line">    Person *selfCopy = [[[<span class="keyword">self</span> class] alloc] initWithFirstName:_firstName lastName:_lastName];</span><br><span class="line">    <span class="comment">//对特殊属性特殊Copy处理。</span></span><br><span class="line">    [selfCopy<span class="variable">.family</span> = <span class="keyword">self</span><span class="variable">.family</span> mutableCopy];</span><br><span class="line">    <span class="keyword">return</span> selfCopy;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>####OC中的拷贝</p>
+<p>#####mutableCopy和copy<br>举个例子好了：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[<span class="built_in">NSMutableArray</span> <span class="keyword">copy</span>] -&gt; <span class="built_in">NSArray</span></span><br><span class="line">[<span class="built_in">NSArray</span> mutableCopy] -&gt;<span class="built_in">NSMutableArray</span></span><br></pre></td></tr></table></figure></p>
+<p>#####深浅拷贝<br>网络上说明很多，简单来说就是是否是拷贝指针还是内存空间的重新分配。<br>区别在于，举个例子：如果浅拷贝，那么原本对象容器中的数据改变，那么虽然副本容器地址不会变，但是容器中的对象也随之改变了。深拷贝则不会改变。<br>所以具体使用哪种还是从实际情况出发。</p>
+<p>对于对象的深浅拷贝，还是总结一下：</p>
+<ul>
+<li>1非容器类（NSString,NSNumber）<br>直接放结论：<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">对象是不可变的对象：  mutableCopy -&gt;深拷贝 -&gt; 可变对象</span><br><span class="line">                            copy -&gt;浅拷贝 -&gt; 不可变对象</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">对象是可变对象： mutableCopy -&gt;深拷贝 -&gt; 可变对象</span><br><span class="line">                            copy -&gt;深拷贝 -&gt; 不可变对象</span><br></pre></td></tr></table></figure>
+<ul>
+<li>2 容器类（NSArray，NSDictionary）<br>对于容器类的本身，也就是对于NSArray对象来说，规则和上面的是一样的，关键是容器内的对象。<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSString</span> *str1 = <span class="string">@"string1"</span>;</span><br><span class="line"><span class="built_in">NSArray</span> *array = @[str1];</span><br><span class="line"><span class="built_in">NSArray</span> *copyArray = [array <span class="keyword">copy</span>];</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"===========\n array:%p,  copyArray:%p\n  str1:%p  copyArray[0]:%p"</span>,array,copyArray,str1,copyArray[<span class="number">0</span>]);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>输出如下:<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">===========</span><br><span class="line"> <span class="built_in">array</span>:<span class="number">0x7fa90b415ed0</span>,  copyArray:<span class="number">0x7fa90b415ed0</span>**</span><br><span class="line">  str1:<span class="number">0x10b5a1250</span>  copyArray[<span class="number">0</span>]:<span class="number">0x10b5a1250</span>**</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">NSString *str1 = @<span class="string">"string1"</span>;</span><br><span class="line">NSArray *<span class="built_in">array</span> = @[str1];</span><br><span class="line"><span class="comment">//注意下面这行代码的改变</span></span><br><span class="line">NSMutableArray *copyArray = [<span class="built_in">array</span> mutableCopy];</span><br><span class="line">  NSLog(@<span class="string">"===========\n array:%p,  copyArray:%p\n  str1:%p  copyArray[0]:%p"</span>,<span class="built_in">array</span>,copyArray,str1,copyArray[<span class="number">0</span>]);</span><br></pre></td></tr></table></figure>
+<p>输出如下：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">===========</span><br><span class="line"><span class="built_in">array</span>:<span class="number">0x7fa37b70ef00</span>,  copyArray:<span class="number">0x7fa37b758060</span>**</span><br><span class="line">str1:<span class="number">0x10834a250</span>  copyArray[<span class="number">0</span>]:<span class="number">0x10834a250</span>**</span><br></pre></td></tr></table></figure></p>
+<p>由此可见，对于容器中的对象，mutableCopy和copy都是浅复制(可变容器也一样)。</p>
+<p>如果涉及到容器中包含容器，那么还有深复制和完全深复制之说，完全深复制就是容器中每一层对象都是深复制，而深复制就是只复制一层的对象。如何使用都是看具体情况，不展开了。</p>
+<p>对于任何遵守NSCopying的对象来说，实现的都应该是浅复制，因为浅复制使用是最多的。</p>
+<p>####总结</p>
+<ul>
+<li>1 想让你的对象支持复制的话，遵守NSCopying协议并实现copyWithZone：方法。</li>
+<li>2 如果你的对象支持不可变和可变两种分类，那么需要实现mutableCopy和copy两种方法</li>
+<li>3 区分深浅拷贝并看情况使用</li>
+</ul>
+
+            <div class="clearfix"></div>
+            <hr class="nogutter">
+        </div>
+        <nav class="pagination" role="pagination">
+    
+    
+    <a class="pull-right" href="/2016/05/30/高效编写代码的方法-十七-：理解OC的错误模式/">
+        高效编写代码的方法(十七)：理解OC的错误模式 →
+    </a>
+    
+</nav>
+
+        <div class="duoshuo">
+<div class="ds-thread" data-thread-key="2016/06/15/高效编写代码的方法-十八-：NSCopying协议/" data-title="高效编写代码的方法(十八)：NSCopying协议" data-url="http://yoursite.com/2016/06/15/高效编写代码的方法-十八-：NSCopying协议/"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"duoshuo_name"};
+(function() {
+	var ds = document.createElement('script');
+	ds.type = 'text/javascript';ds.async = true;
+	ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+	ds.charset = 'UTF-8';
+	(document.getElementsByTagName('head')[0] 
+	 || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+</script>
+</div>
+    </div>
+</section>
+
+
+      
+<!-- ============================ Footer =========================== -->
+
+<footer>
+    <div class="container">
+            <div class="copy">
+                <p>
+                    &copy; 2014<script>new Date().getFullYear()>2010&&document.write("-"+new Date().getFullYear());</script>, Content By MADAO. All Rights Reserved.
+                </p>
+                <p>Theme By <a href="//go.kieran.top" style="color: #767D84">Kieran</a></p>
+            </div>
+            <div class="social">
+                <ul>
+                    
+                    <li><a href="https://github.com/" title="Github" target="_blank"><i class="icon-github"></i></a>&nbsp;</li>
+                    
+                    
+                    <li><a href="https://twitter.com/" title="Twitter" target="_blank"><i class="icon-twitter"></i></a>&nbsp;</li>
+                    
+                    
+                    <li><a href="https://www.facebook.com/" title="Facebook" target="_blank"><i class="icon-facebook"></i></a>&nbsp;</li>
+                    
+                    
+                    <li><a href="https://google.com/" title="Google-Plus" target="_blank"><i class="icon-google-plus"></i></a>&nbsp;</li>
+                    
+                    
+                    <li><a href="http://weibo.com/" title="Sina-Weibo" target="_blank"><i class="icon-sina-weibo"></i></a>&nbsp;</li>
+                    
+                </ul>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+</footer>
+
+<!-- ============================ END Footer =========================== -->
+      <!-- Load our scripts -->
+        
+<!-- Resizable 'on-demand' full-height hero -->
+<script type="text/javascript">
+    
+    var resizeHero = function () {
+        var hero = $(".cover,.heightblock"),
+            window1 = $(window);
+        hero.css({
+            "height": window1.height()
+        });
+    };
+    
+    resizeHero();
+    
+    $(window).resize(function () {
+        resizeHero();
+    });
+</script>
+<script src="/js/plugins.min.js"></script><!-- Bootstrap core and concatenated plugins always load here -->
+<script src="/js/jquery.flexslider-min.js"></script><!-- Flexslider plugin -->
+<script src="/js/scripts.js"></script><!-- Theme scripts -->
+
+<!-- Initiate flexslider plugin -->
+<script type="text/javascript">
+    $(document).ready(function($) {
+      $('.flexslider').flexslider({
+        animation: "fade",
+        prevText: "",
+        nextText: "",
+        directionNav: true
+      });
+    });
+</script>
+
+</body>
+</html>
