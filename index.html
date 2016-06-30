@@ -228,6 +228,37 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
                 <div class="col-md-4">
+                    <h3><a href="/2016/06/30/高效编写代码的方法-十九-：Delegate要点/">高效编写代码的方法(十九)：Delegate要点</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2016-06-30T01:58:41.000Z" itemprop="datePublished">
+          2016-06-30
+      </time>
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        在OC中有很多方式可以进行对象间的“通信”，其中一种方式就是通过设置代理。OC中使用代理的方式就不做过多介绍了。重点介绍下使用代理需要注意或者可以提高的地方。
+####引用循环可以参照官方的代理写法：12@property (nonatomic, weak, nullable) id &lt;UITableViewDataSource&gt; dataSource;@property (nonatomic, weak, nullable
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2016/06/30/高效编写代码的方法-十九-：Delegate要点/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
                     <h3><a href="/2016/06/15/高效编写代码的方法-十八-：NSCopying协议/">高效编写代码的方法(十八)：NSCopying协议</a></h3>
                     <span>
                         <span class="post-meta">
@@ -498,37 +529,6 @@
                     
                     <p class="pull-right readMore">
                         <a href="/2016/05/06/iOS下SearchBar的使用/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2016/05/06/高效编写代码的方法（十）-消息转发机制/">高效编写代码的方法（十）:消息转发机制</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2016-05-06T03:03:41.000Z" itemprop="datePublished">
-          2016-05-06
-      </time>
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        ####unrecognized selector
-在（九）中，我们已经了解到了runtime的消息发送机制，某个函数实现方法的查找是依靠在运行期间不停的遍历类中的“方法列表”来查找的。具体还是看（九）。但是当我们找不到方法的实现时，程序就会崩溃。比如执行以下代码：12NSString *testStr = @"test";[testStr performSelector:@selector(addObject:) withObject
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2016/05/06/高效编写代码的方法（十）-消息转发机制/">Read More...</a>
                     </p>
                     
                 </div>
