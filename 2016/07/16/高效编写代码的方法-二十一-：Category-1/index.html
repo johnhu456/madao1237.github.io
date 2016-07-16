@@ -17,7 +17,7 @@
 <!--<![endif]-->
 
 <head>
-  <title>Archives | MADAO</title>
+  <title>高效编写代码的方法(二十一)：Category(1) | MADAO</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -84,7 +84,7 @@
 </head>
 
 <!--
-<body class="home-template">
+<body class="post-template">
 -->
 <body id="index" class="lightnav animsition">
 
@@ -221,46 +221,67 @@
 
         <!-- ============================ END Hero Image =========================== -->
       
-
-
-<section id="services">
+<section id="intro">
     <div class="container">
-        <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-                <div class="row boxes">
-                    
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2015/12/17/CFBridge/">CFBridge和UUID</a></h4>
-                            
-                            <p><time datetime="2015-12-17T07:24:35.000Z"><a href="/2015/12/17/CFBridge/">2015-12-17</a></time></p>
-                        </div>
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2015/12/17/hello-world/">Hello World</a></h4>
-                            
-                            <p><time datetime="2015-12-17T07:06:28.000Z"><a href="/2015/12/17/hello-world/">2015-12-17</a></time></p>
-                        </div>
-                    
-                </div>
-            </div>    
+        <div class="row col-md-offset-2">
+            <div class="col-md-8">
+    			<span class="post-meta">
+      <time datetime="2016-07-16T10:43:05.000Z" itemprop="datePublished">
+          2016-07-16
+      </time>
+    
+</span>
+                <h1>高效编写代码的方法(二十一)：Category(1)</h1>
+            </div>
         </div>
-    </div>
-</section> 
+        <div class="col-md-8 col-md-offset-2">
+      		<h4 id="u907F_u514D_u5728Category_u4E2D_u51FA_u73B0_u5C5E_u6027"><a href="#u907F_u514D_u5728Category_u4E2D_u51FA_u73B0_u5C5E_u6027" class="headerlink" title="避免在Category中出现属性"></a>避免在Category中出现属性</h4><p>属性是一种数据的封装形式，理论上来说，你也可以在Category中声明属性，但是我们应该尽量避免这样做。<br>因为这样做，Category是不会生成任何实例变量的，当然也不能够由实例变量去合成一个属性变量的。<br>比如我们创建一个Friend的Person分类，用来处理Person类中关于“Friend”的逻辑内容，如果你像下面这样声明:<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#import <span class="title">"Person.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Person</span> (<span class="title">Friendship</span>)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">NSArray</span> *friends;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)addFriend:(Person *)aFreind;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure></p>
+<p>编译会得到这样的警告：<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Property</span> 'friends' requires <span class="keyword">method</span> 'setFriends:' to be defined - use @dynamic <span class="keyword">or</span> provide a <span class="keyword">method</span> implementation <span class="keyword">in</span> this category</span><br></pre></td></tr></table></figure></p>
+<p>这个有点“莫名其妙”的警告的意思是无法为这个属性生成实例变量，从而也不能合成一个属性变量。<br>如果你非要在分类中声明这个friends的数组属性，那么需要将friend声明为@dynamic或者自己为实例变量提供setter和getter方法。将属性声明为dynamic意思就是告诉编译器，自己会在runtime生成setter和getter方法，让编译器给我们放行通过：<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@implementation</span> Person (Friendship)</span><br><span class="line"><span class="variable">@dynamic</span> friends;</span><br><span class="line"></span><br><span class="line"><span class="variable">@end</span></span><br></pre></td></tr></table></figure></p>
+<p>另一种方法如下：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">char</span> *kFriendProperty = <span class="string">"friend"</span>;</span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">Person</span> (<span class="title">Friendship</span>)</span></span><br><span class="line"><span class="comment">//@dynamic friends;</span></span><br><span class="line">- (<span class="built_in">NSArray</span> *)friends</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> objc_getAssociatedObject(<span class="keyword">self</span>, kFriendProperty);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)setFriends:(<span class="built_in">NSArray</span> *)friends</span><br><span class="line">&#123;</span><br><span class="line">    objc_setAssociatedObject(<span class="keyword">self</span>, kFriendProperty, friends, OBJC_ASSO<span class="built_in">CIATION_RETAIN_NONATOMIC</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure></p>
+<p>虽然通过上面的方法我们可以理论上的实现为Category增加属性，但是这仍然是不推荐的，如果属性是像NSMutableArray那样可变的，那么处理起来就可能会更加麻烦。因此，最理想的方法还是将属性和数据的封装放到主类中。</p>
+<p>####使用类扩展来隐藏实现细节<br>其实类扩展，听着很高大上，只不过是下面代码中注释的部分。<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#import <span class="title">"Person+Friendship.h"</span></span></span><br><span class="line"><span class="preprocessor">#import <span class="title">&lt;objc/runtime.h&gt;</span></span></span><br><span class="line"><span class="comment">//@interface Person()</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//@end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">char</span> *kFriendProperty = <span class="string">"friend"</span>;</span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">Person</span> (<span class="title">Friendship</span>)</span></span><br><span class="line">- (<span class="built_in">NSArray</span> *)friends</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> objc_getAssociatedObject(<span class="keyword">self</span>, kFriendProperty);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这个学过iOS的应该都知道一点其用法，主要是用来声明一些隐藏的变量用的。<br>例子如下：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#import <span class="title">"Person+Friendship.h"</span></span></span><br><span class="line"><span class="preprocessor">#import <span class="title">&lt;objc/runtime.h&gt;</span></span></span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Person</span>()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">NSString</span> *_aString;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">char</span> *kFriendProperty = <span class="string">"friend"</span>;</span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">Person</span> (<span class="title">Friendship</span>)</span></span><br><span class="line"><span class="comment">//@dynamic friends;</span></span><br><span class="line">- (<span class="built_in">NSArray</span> *)friends</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> objc_getAssociatedObject(<span class="keyword">self</span>, kFriendProperty);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>此时aStirng就作为一个“隐藏”的实例变量而不用对外暴露。<br>多的不多做介绍，主要总结如下</p>
+<ul>
+<li><p>1 通过类扩展可以向类中新增实例变量。</p>
+</li>
+<li><p>2 如果某属性在主接口中声明为“readonly”，而类的内部又要用设置方法修改此属性，那么就在类扩展中将其扩展为“readwrite”。</p>
+</li>
+<li><p>3 如果想让类所遵循的协议不暴露在主接口，可以在类扩展中进行声明。</p>
+</li>
+</ul>
 
-<section id="statement">
-    <div class="container text-center wow fadeInUp" data-wow-delay="0.5s">
-        <div class="row">
-            <p>轻松的路是给下坡的人走的。</p>
+            <div class="clearfix"></div>
+            <hr class="nogutter">
         </div>
+        <nav class="pagination" role="pagination">
+    
+    
+    <a class="pull-right" href="/2016/07/06/高效编写代码的方法-二十-：Category-0/">
+        高效编写代码的方法(二十)：Category(0) →
+    </a>
+    
+</nav>
+
+        <div class="duoshuo">
+<div class="ds-thread" data-thread-key="2016/07/16/高效编写代码的方法-二十一-：Category-1/" data-title="高效编写代码的方法(二十一)：Category(1)" data-url="http://yoursite.com/2016/07/16/高效编写代码的方法-二十一-：Category-1/"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"duoshuo_name"};
+(function() {
+	var ds = document.createElement('script');
+	ds.type = 'text/javascript';ds.async = true;
+	ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+	ds.charset = 'UTF-8';
+	(document.getElementsByTagName('head')[0] 
+	 || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+</script>
+</div>
     </div>
 </section>
+
+
       
 <!-- ============================ Footer =========================== -->
 
