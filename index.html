@@ -228,6 +228,37 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
                 <div class="col-md-4">
+                    <h3><a href="/2016/07/23/PerformSelector-May-Cause-a-Leak/">PerformSelector May Cause a Leak</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2016-07-23T09:16:41.000Z" itemprop="datePublished">
+          2016-07-23
+      </time>
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        在开发过程中，遇到这样一个编译器警告:图片可能看不清，源代码如下：1    [self performSelector:NSSelectorFromString(item[@"kAction"])];
+这行代码会引出一个Warning：performSelector may cause a leak because its selector is unknown其实解决办法，百度一下就有很多，也确实能通过一些奇技淫巧来解决这个问题。问题
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2016/07/23/PerformSelector-May-Cause-a-Leak/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
                     <h3><a href="/2016/07/20/我不知道的KVC/">我不知道的KVC</a></h3>
                     <span>
                         <span class="post-meta">
@@ -495,37 +526,6 @@
                     
                     <p class="pull-right readMore">
                         <a href="/2016/05/24/高效编写代码的方法-十四-：Description/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2016/05/23/高效编写代码的方法（十三）：初始化方法/">高效编写代码的方法（十三）：初始化方法</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2016-05-23T10:20:55.000Z" itemprop="datePublished">
-          2016-05-23
-      </time>
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        对于init方法不在多做介绍。在OC中我们可以实现自己的init方法，通过使用initWithXXX作为方法名来进行调用。
-####统一的初始化对于部分类，init的方法也可以很多，比如NSDate：123456- (instancetype)init- (instancetype)initWithString- (instancetype)initWithTimeIntervalSinceReferenceDate:(NSTimeIn
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2016/05/23/高效编写代码的方法（十三）：初始化方法/">Read More...</a>
                     </p>
                     
                 </div>
