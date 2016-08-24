@@ -228,6 +228,36 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
                 <div class="col-md-4">
+                    <h3><a href="/2016/05/24/高效编写代码的方法-十四-：Description/">高效编写代码的方法(十四)：Description</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2016-05-24T10:13:44.000Z" itemprop="datePublished">
+          2016-05-24
+      </time>
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        ####Description关于- (NSString *)description;方法，应该使用的还是比较频繁的。简单介绍一下：这个方法在所有NSObject类会有一个默认的实现，具体表现在于每当我们使用NSLog(@”%@”,someObject)来打印某个对象信息的时候（注意占位符一定是%@），后台的log内容就是我们description方法中返回的字符串。比如：12NSString *exampleString = @"Aa
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2016/05/24/高效编写代码的方法-十四-：Description/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
                     <h3><a href="/2016/05/23/高效编写代码的方法（十三）：初始化方法/">高效编写代码的方法（十三）：初始化方法</a></h3>
                     <span>
                         <span class="post-meta">
@@ -498,38 +528,6 @@
                     
                     <p class="pull-right readMore">
                         <a href="/2016/04/28/高效编写代码的方法（六）：判断对象相等/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2016/04/24/高效编写代码的方法（四）：属性/">高效编写代码的方法（四）：属性</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2016-04-24T06:33:49.000Z" itemprop="datePublished">
-          2016-04-24
-      </time>
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        ####实例变量1234@interface Teacher : NSObject&#123;    NSString *name;    NSString *workNumber;&#125;
-定义实例变量的方法，说实话我在OC中用的不多，一般都是直接声明成一个属性。
-这种方式存在一个问题就是对象的定义是在编译阶段的，如果需要访问某个对象，结果都是编译器直接去内存区该对象存储的地方来进行访问。这样的方式看来没什么问题，但是但我想添加一
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2016/04/24/高效编写代码的方法（四）：属性/">Read More...</a>
                     </p>
                     
                 </div>

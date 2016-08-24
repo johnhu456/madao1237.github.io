@@ -228,6 +228,38 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
                 <div class="col-md-4">
+                    <h3><a href="/2016/08/24/iOS中的字体加载问题和下载/">iOS中的字体加载问题和下载</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2016-08-24T05:46:57.000Z" itemprop="datePublished">
+          2016-08-24
+      </time>
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        ####问题：如果项目中使用了xib来创建视图，并且xib中包含了一些iOS系统中不支持的字体，如图：那么在低系统版本中，这个视图的加载就会异常缓慢，使用iPhone4S iOS8.1.2测试结果显示单独加载这3个Label就需要大概3秒多钟的时间！但是第二次进入时间正常。
+####分析：
+#####iOS8当我们在xib中把字体改为system的时候，加载速度变得正常起来，那么有理由相信是字体导致了整个界面的加载变慢。使用Time P
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2016/08/24/iOS中的字体加载问题和下载/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
                     <h3><a href="/2016/07/23/PerformSelector-May-Cause-a-Leak/">PerformSelector May Cause a Leak</a></h3>
                     <span>
                         <span class="post-meta">
@@ -496,36 +528,6 @@
                     
                     <p class="pull-right readMore">
                         <a href="/2016/05/25/高效编写代码的方法-十五-：不可变的对象/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2016/05/24/高效编写代码的方法-十四-：Description/">高效编写代码的方法(十四)：Description</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2016-05-24T10:13:44.000Z" itemprop="datePublished">
-          2016-05-24
-      </time>
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        ####Description关于- (NSString *)description;方法，应该使用的还是比较频繁的。简单介绍一下：这个方法在所有NSObject类会有一个默认的实现，具体表现在于每当我们使用NSLog(@”%@”,someObject)来打印某个对象信息的时候（注意占位符一定是%@），后台的log内容就是我们description方法中返回的字符串。比如：12NSString *exampleString = @"Aa
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2016/05/24/高效编写代码的方法-十四-：Description/">Read More...</a>
                     </p>
                     
                 </div>
