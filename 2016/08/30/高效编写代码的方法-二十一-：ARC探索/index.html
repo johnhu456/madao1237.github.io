@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<!--[if lte IE 8 ]>
+<html class="ie" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+<![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<!--
+***************  *      *     *
+      8          *    *       *
+      8          *  *         *
+      8          **           *
+      8          *  *         *
+      8          *    *       *
+      8          *      *     *
+      8          *        *   ***********    -----Theme By Kieran(http://go.kieran.top)
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+<!--<![endif]-->
+
+<head>
+  <title>高效编写代码的方法(二十一)：ARC探索 | MADAO</title>
+  <!-- Meta data -->
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content="MADAO">
+    <meta name="author" content="MADAO">
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+
+    <!-- Favicon, (keep icon in root folder) -->
+    <link rel="Shortcut Icon" href="/img/favicon.ico" type="image/ico">
+
+    <link rel="alternate" href="/atom.xml" title="MADAO" type="application/atom+xml">
+    <link rel="stylesheet" href="/css/all.css" media="screen" type="text/css">
+	
+    <link rel="stylesheet" href="/highlightjs/vs.css" type="text/css">
+    
+    
+
+    <!-- Custom stylesheet, (add custom styles here, always load last) -->
+    <!-- Load our stylesheet for IE8 -->
+    <!--[if IE 8]>
+    <link rel="stylesheet" type="text/css" href="/css/ie8.css" />
+    <![endif]-->
+
+    <!-- Google Webfonts (Monserrat 400/700, Open Sans 400/600) -->
+    <link href='//fonts.useso.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <link href='//fonts.useso.com/css?family=Open+Sans:400,600' rel='stylesheet' type='text/css'>
+
+    <!-- Load our fonts individually if IE8+, to avoid faux bold & italic rendering -->
+    <!--[if IE]>
+    <link href='http://fonts.useso.com/css?family=Montserrat:400' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.useso.com/css?family=Montserrat:700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.useso.com/css?family=Open+Sans:400' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.useso.com/css?family=Open+Sans:600' rel='stylesheet' type='text/css'>
+    <![endif]-->
+
+    <!-- jQuery | Load our jQuery, with an alternative source fallback to a local version if request is unavailable -->
+    <script src="/js/jquery-1.11.1.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/jquery-1.11.1.min.js"><\/script>')</script>
+
+    <!-- Load these in the <head> for quicker IE8+ load times -->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="/js/html5shiv.min.js"></script>
+    <script src="/js/respond.min.js"></script>
+    <![endif]-->
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+  
+  <style>.col-md-8.col-md-offset-2.opening-statement img{display:none;}</style>
+</head>
+
+<!--
+<body class="post-template">
+-->
+<body id="index" class="lightnav animsition">
+
+      <!-- ============================ Off-canvas navigation =========================== -->
+
+    <div class="sb-slidebar sb-right sb-style-overlay sb-momentum-scrolling">
+        <div class="sb-close" aria-label="Close Menu" aria-hidden="true">
+            <img src="/img/close.png" alt="Close"/>
+        </div>
+        <!-- Lists in Slidebars -->
+        <ul class="sb-menu">
+            <li><a href="/" class="animsition-link" title="Home">Home</a></li>
+            <li><a href="/archives" class="animsition-link" title="archive">archives</a></li>
+            <!-- Dropdown Menu -->
+			 
+            <li>
+                <a class="sb-toggle-submenu">Works<span class="sb-caret"></span></a>
+                <ul class="sb-submenu">
+                    
+                        <li><a href="/" target="_BLANK" class="animsition-link">AAA</a></li>
+                    
+                        <li><a href="/atom.xml" target="_BLANK" class="animsition-link">BBB</a></li>
+                    
+                </ul>
+            </li>
+            
+            
+            
+            <li>
+                <a class="sb-toggle-submenu">Links<span class="sb-caret"></span></a>
+                <ul class="sb-submenu">
+                    
+                    <li><a href="http://go.kieran.top/" class="animsition-link">Kieran</a></li>
+                    
+                    <li><a href="http://domain.com/" class="animsition-link">Name</a></li>
+                    
+                </ul>
+            </li>
+            
+        </ul>
+        <!-- Lists in Slidebars -->
+        <ul class="sb-menu secondary">
+            <li><a href="/about.html" class="animsition-link" title="about">About</a></li>
+            <li><a href="/atom.xml" class="animsition-link" title="rss">RSS</a></li>
+        </ul>
+    </div>
+    
+    <!-- ============================ END Off-canvas navigation =========================== -->
+
+    <!-- ============================ #sb-site Main Page Wrapper =========================== -->
+
+    <div id="sb-site">
+        <!-- #sb-site - All page content should be contained within this id, except the off-canvas navigation itself -->
+
+        <!-- ============================ Header & Logo bar =========================== -->
+
+        <div id="navigation" class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <!-- Nav logo -->
+                    <div class="logo">
+                        <a href="/" title="Logo" class="animsition-link">
+                         <img src="/img/logo.png" alt="Logo" width="35px;"/> 
+                        </a>
+                    </div>
+                    <!-- // Nav logo -->
+                    <!-- Info-bar -->
+                    <nav>
+                        <ul class="nav">
+                            <li><a href="/" class="animsition-link">MADAO</a></li>
+                            <li class="nolink"><span>Always </span>Creative.</li>
+                            
+                            <li><a href="https://github.com/" title="Github" target="_blank"><i class="icon-github"></i></a></li>
+                            
+                            
+                            <li><a href="https://twitter.com/" title="Twitter" target="_blank"><i class="icon-twitter"></i></a></li>
+                            
+                            
+                            <li><a href="https://www.facebook.com/" title="Facebook" target="_blank"><i class="icon-facebook"></i></a></li>
+                            
+                            
+                            <li><a href="https://google.com/" title="Google-Plus" target="_blank"><i class="icon-google-plus"></i></a></li>
+                            
+                            
+                            <li><a href="http://weibo.com/" title="Sina-Weibo" target="_blank"><i class="icon-sina-weibo"></i></a></li>
+                            
+                            <li class="nolink"><span>Welcome!</span></li>
+                        </ul>
+                    </nav>
+                    <!--// Info-bar -->
+                </div>
+                <!-- // .container -->
+                <div class="learnmore sb-toggle-right">More</div>
+                <button type="button" class="navbar-toggle menu-icon sb-toggle-right" title="More">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar before"></span>
+                <span class="icon-bar main"></span>
+                <span class="icon-bar after"></span>
+                </button>
+            </div>
+            <!-- // .navbar-inner -->
+        </div>
+
+        <!-- ============================ Header & Logo bar =========================== -->
+
+        <!-- ============================ Hero Image =========================== -->
+
+        <section id="hero" class="scrollme">
+            <div class="container-fluid element-img" style="background: url(/img/bg_img.jpg) no-repeat center center fixed;background-size: cover">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 vertical-align cover boost text-center">
+                        <div class="center-me animateme" data-when="exit" data-from="0" data-to="0.6" data-opacity="0" data-translatey="100">
+                            <div>
+                            	
+                                <h2>YOU'VE MADE A <span>BRAVE</span> DECISION, WELCOME.</h2>
+                                <p></p>
+				    			
+                                <h2></h2>
+                                <p>每一个不曾起舞的日子都是对生命的辜负。</p>
+				    			
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- // .col-md-12 -->
+                </div>
+                <div class="herofade beige-dk"></div>
+            </div>
+        </section>
+
+        <!-- Height spacing helper -->
+        <div class="heightblock"></div>
+        <!-- // End height spacing helper -->
+
+        <!-- ============================ END Hero Image =========================== -->
+      
+<section id="intro">
+    <div class="container">
+        <div class="row col-md-offset-2">
+            <div class="col-md-8">
+    			<span class="post-meta">
+      <time datetime="2016-08-30T06:08:12.000Z" itemprop="datePublished">
+          2016-08-30
+      </time>
+    
+</span>
+                <h1>高效编写代码的方法(二十一)：ARC探索</h1>
+            </div>
+        </div>
+        <div class="col-md-8 col-md-offset-2">
+      		<p>####前言<br>简单来说，ARC就是基于MRC的<strong>自动</strong>实现，关于引用计数这些原理就不多说了，网上资料非常多。<br>昨天仔细看了下Effective Objective-C的第30节介绍ARC的内容，还是有一点收获。<br>所以专门写一下记录一下收获。</p>
+<p>####ARC与特殊方法名<br>在ARC中，方法名为下这些情况时，该方法返回值会被retain一次：</p>
+<ul>
+<li>alloc</li>
+<li>new</li>
+<li>copy</li>
+<li>mutableCopy<br>因为调用这些方法都意味着创建一个新的对象，所以对象自身要retain一次。<br>同时这些方法的调用者负责这个返回值的release。</li>
+</ul>
+<p>举一个直观的例子：<br><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">- (instancetype)newUser</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">User</span> <span class="title">*newUser</span> = [[<span class="keyword">User</span> <span class="title">alloc</span>] init];</span><br><span class="line">    return newUser;</span><br><span class="line">    /*</span><br><span class="line">     该方法名包含new，方法的返回值的引用计数应该+<span class="number">1</span>,并且因为newUser已经因为新创建，引用计数为+<span class="number">1</span>，</span><br><span class="line">     所以将newUser返回时，不需要做额外的引用计数操作。</span><br><span class="line">     */</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (instancetype)someUser</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">User</span> <span class="title">*newUser</span> = [[<span class="keyword">User</span> <span class="title">alloc</span>] init];</span><br><span class="line">    return newUser;</span><br><span class="line">    /*</span><br><span class="line">     方法名没有任何特殊性，不代表创建一个新的对象。因此在将newUser返回时，ARC会自动添加autorelease：</span><br><span class="line">     return [newUser autorelease];</span><br><span class="line">     */</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>调用时候:<br><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line">    <span class="keyword">User</span> <span class="title">*userOne</span> = [<span class="keyword">User</span> <span class="title">newUser</span>];</span><br><span class="line">    <span class="keyword">User</span> <span class="title">*userTwo</span> = [<span class="keyword">User</span> <span class="title">someUser</span>];</span><br><span class="line">    /**在MRC角度来看，这个代码块内，创建了userOne，该代码块持有了userOne，也要负责对其release</span><br><span class="line">       但是，没有持有userTwo，也不用对其引用计数负责。</span><br><span class="line">     所以在ARC会自动帮我们添加：</span><br><span class="line">     [userOne release]</span><br><span class="line">     */</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>####ARC优化<br>在实际中，ARC其实不仅仅是精确的控制对象的retain和release，同时也会在背后做一些优化。<br>比如以下这段代码：<br><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">@interface ViewController ()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">User</span> <span class="title">*_oneUser</span>;</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation ViewController</span><br><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line">    _oneUser = [<span class="keyword">User</span> <span class="title">userWithAge</span>:<span class="number">2</span>];</span><br><span class="line">    /**</span><br><span class="line">     因为方法名并不特殊，ARC会自动autorelease这个返回值，</span><br><span class="line">     但是鉴于马上又被_oneUser引用，所以又会被retain。</span><br><span class="line">     所以想象中执行起来如下：</span><br><span class="line">     *<span class="number">1</span>  + (instancetype)userWithAge:(NSInteger)age</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">User</span> <span class="title">*newUser</span> = [[<span class="keyword">User</span> <span class="title">alloc</span>] initWithAge:age];</span><br><span class="line">            return [newUser autorelease];</span><br><span class="line">        &#125;</span><br><span class="line">     </span><br><span class="line">     * <span class="number">2</span> 原语句变成:_oneUser = [[newUser autorelease] retain]</span><br><span class="line">     */</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>虽然这样实际使用起来，引用计数还是平衡的，但是ARC为了优化，就将autorelease和retain的步骤都移除了，怎么做到的呢？<br>runtime会改进这种情况的发生：<br>在返回值需要被autorelease时，不调用autorelease，调用objc_autoreleaseReturnValue。这个方法会去侦测这个返回值是否会被马上引用：</p>
+<ul>
+<li>1 如果马上有对象会引用该返回值，那么会在一个全局变量（依靠于处理器）中保存一个flag，然后不调用autorelease。</li>
+<li>2 如果没有对象引用改返回值，那么正常autorelease。</li>
+</ul>
+<p>同样的，对于调用者而言，如果调用的方法返回值可能是autorelease的，ARC不会直接retain这个返回值，而是调用objc_retainAutoReleasedReturnValue。这个方法会去检查之间所设的flag：</p>
+<ul>
+<li>1 如果有flag那么不retain，静默处理。</li>
+<li>2 没有flag，retain该返回值。</li>
+</ul>
+<p>总的来说，这样的流程会比每次都走release + retain这样的步骤要快一点，变量一多，优势也会比较明显。</p>
+<p>所以以上的代码在ARC中其实是这样的：<br><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">+ (instancetype)userWithAge:(NSInteger)age</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">User</span> <span class="title">*newUser</span> = [[<span class="keyword">User</span> <span class="title">alloc</span>] initWithAge:age];</span><br><span class="line">    return objc_autoreleaseReturnValue(newUser);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">User</span> <span class="title">*user</span> = [<span class="keyword">User</span> <span class="title">userWithAge</span>:<span class="number">2</span>];</span><br><span class="line"> _oneUser = objc_retainAutoreleasedReturnValue(user);</span><br></pre></td></tr></table></figure></p>
+<p>猜测一下objc_autoreleaseReturnValue 和 objc_retainAutoreleasedReturnValue的内部实现（伪代码）：<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">    id objc_autoreleaseReturnValue(id <span class="class"><span class="keyword">object</span>)&#123;</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="comment">/**调用者即将retain这个object*/</span>) &#123;</span><br><span class="line">            set_flag(<span class="class"><span class="keyword">object</span>);</span></span><br><span class="line">            <span class="keyword">return</span> <span class="class"><span class="keyword">object</span> <span class="title">//不进行autorelease</span></span><br><span class="line"></span>        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> [<span class="class"><span class="keyword">object</span> <span class="title">autorelease</span>];</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    id objc_retainAutoreleasedReturnValue(id <span class="class"><span class="keyword">object</span>)&#123;</span></span><br><span class="line">        <span class="keyword">if</span> (get_flag(<span class="class"><span class="keyword">object</span>))&#123;</span>   <span class="comment">//检查是否有flag表明即将被retain</span></span><br><span class="line">            clear_flag(<span class="class"><span class="keyword">object</span>);</span></span><br><span class="line">            <span class="keyword">return</span> <span class="class"><span class="keyword">object</span>;</span>       <span class="comment">//不做retain处理</span></span><br><span class="line">        &#125;<span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">return</span> [<span class="class"><span class="keyword">object</span> <span class="title">retain</span>];</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+
+            <div class="clearfix"></div>
+            <hr class="nogutter">
+        </div>
+        <nav class="pagination" role="pagination">
+    
+    
+    <a class="pull-right" href="/2016/08/24/iOS中的字体加载问题和下载/">
+        iOS中的字体加载问题和下载 →
+    </a>
+    
+</nav>
+
+        <div class="duoshuo">
+<div class="ds-thread" data-thread-key="2016/08/30/高效编写代码的方法-二十一-：ARC探索/" data-title="高效编写代码的方法(二十一)：ARC探索" data-url="http://yoursite.com/2016/08/30/高效编写代码的方法-二十一-：ARC探索/"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"duoshuo_name"};
+(function() {
+	var ds = document.createElement('script');
+	ds.type = 'text/javascript';ds.async = true;
+	ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+	ds.charset = 'UTF-8';
+	(document.getElementsByTagName('head')[0] 
+	 || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+</script>
+</div>
+    </div>
+</section>
+
+
+      
+<!-- ============================ Footer =========================== -->
+
+<footer>
+    <div class="container">
+            <div class="copy">
+                <p>
+                    &copy; 2014<script>new Date().getFullYear()>2010&&document.write("-"+new Date().getFullYear());</script>, Content By MADAO. All Rights Reserved.
+                </p>
+                <p>Theme By <a href="//go.kieran.top" style="color: #767D84">Kieran</a></p>
+            </div>
+            <div class="social">
+                <ul>
+                    
+                    <li><a href="https://github.com/" title="Github" target="_blank"><i class="icon-github"></i></a>&nbsp;</li>
+                    
+                    
+                    <li><a href="https://twitter.com/" title="Twitter" target="_blank"><i class="icon-twitter"></i></a>&nbsp;</li>
+                    
+                    
+                    <li><a href="https://www.facebook.com/" title="Facebook" target="_blank"><i class="icon-facebook"></i></a>&nbsp;</li>
+                    
+                    
+                    <li><a href="https://google.com/" title="Google-Plus" target="_blank"><i class="icon-google-plus"></i></a>&nbsp;</li>
+                    
+                    
+                    <li><a href="http://weibo.com/" title="Sina-Weibo" target="_blank"><i class="icon-sina-weibo"></i></a>&nbsp;</li>
+                    
+                </ul>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+</footer>
+
+<!-- ============================ END Footer =========================== -->
+      <!-- Load our scripts -->
+        
+<!-- Resizable 'on-demand' full-height hero -->
+<script type="text/javascript">
+    
+    var resizeHero = function () {
+        var hero = $(".cover,.heightblock"),
+            window1 = $(window);
+        hero.css({
+            "height": window1.height()
+        });
+    };
+    
+    resizeHero();
+    
+    $(window).resize(function () {
+        resizeHero();
+    });
+</script>
+<script src="/js/plugins.min.js"></script><!-- Bootstrap core and concatenated plugins always load here -->
+<script src="/js/jquery.flexslider-min.js"></script><!-- Flexslider plugin -->
+<script src="/js/scripts.js"></script><!-- Theme scripts -->
+
+<!-- Initiate flexslider plugin -->
+<script type="text/javascript">
+    $(document).ready(function($) {
+      $('.flexslider').flexslider({
+        animation: "fade",
+        prevText: "",
+        nextText: "",
+        directionNav: true
+      });
+    });
+</script>
+
+</body>
+</html>
