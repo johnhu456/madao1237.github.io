@@ -17,7 +17,7 @@
 <!--<![endif]-->
 
 <head>
-  <title>Archives: 2016 | MADAO</title>
+  <title>高效编写代码的方法(二十三)：dealloc | MADAO</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -84,7 +84,7 @@
 </head>
 
 <!--
-<body class="home-template">
+<body class="post-template">
 -->
 <body id="index" class="lightnav animsition">
 
@@ -221,55 +221,64 @@
 
         <!-- ============================ END Hero Image =========================== -->
       
-
-
-<section id="services">
+<section id="intro">
     <div class="container">
-        <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-                <div class="row boxes">
-                    
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2016/01/12/Swift-Learning-1/">Swift Learning Note(1)</a></h4>
-                            
-                            <p><time datetime="2016-01-12T02:25:22.000Z"><a href="/2016/01/12/Swift-Learning-1/">2016-01-12</a></time></p>
-                        </div>
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2016/01/08/YYKit-Learning-二/">YYKit Learning(二)</a></h4>
-                            
-                            <p><time datetime="2016-01-08T09:21:27.000Z"><a href="/2016/01/08/YYKit-Learning-二/">2016-01-08</a></time></p>
-                        </div>
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2016/01/04/MADAO-s-WorkNote201601/">MADAO&#39;s WorkNote（2016.01）</a></h4>
-                            
-                            <p><time datetime="2016-01-04T13:09:05.000Z"><a href="/2016/01/04/MADAO-s-WorkNote201601/">2016-01-04</a></time></p>
-                        </div>
-                    
-                </div>
-            </div>    
+        <div class="row col-md-offset-2">
+            <div class="col-md-8">
+    			<span class="post-meta">
+      <time datetime="2016-09-27T09:56:36.000Z" itemprop="datePublished">
+          2016-09-27
+      </time>
+    
+</span>
+                <h1>高效编写代码的方法(二十三)：dealloc</h1>
+            </div>
         </div>
-    </div>
-</section> 
+        <div class="col-md-8 col-md-offset-2">
+      		<p>####Dealloc<br>每一个OC对象最后应该都会调用dealloc方法，表示结束了生命周期，在内存中销毁，以引用计数来说就是引用数降为0的时候就会马上执行dealloc方法进行对象销毁。</p>
+<p>####不要主动调用dealloc<br>不要主动调用任何对象的dealloc方法，因为你不知道这个对象在什么时候还正在被使用，ARC会帮助我们妥善进行处理，实际编译器也会阻止我们这么做。</p>
+<p>####在dealloc中应该做的事</p>
+<ul>
+<li>1 不要调用[super dealloc]</li>
+<li>2 不用刻意释放该对象持有的其他对象，ARC会处理。</li>
+<li>3 使用CFRelease()去释放非OC类的对象（CF类），因为它们的纯C的，ARC管不着。</li>
+<li>4 释放观察行为(KVO,noticication)。可以防止向不存在的对象发送通知造成crash。</li>
+</ul>
+<p>结果大概这样：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)dealloc</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">CFRelease</span>(someCoreFoundationObjects);</span><br><span class="line">    [[<span class="built_in">NSNotificationCenter</span> defaultCenter] removeObserver:<span class="keyword">self</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>####其他</p>
+<p>######不是所有销毁都会调用dealloc<br>在程序terminate的时候，为了优化不会一一朝每一个对象发送dealloc，对象会跟着整个程序被销毁，因此不是所有对象销毁的时候都会调用dealloc。感觉这个知道就行，实际使用起来应该不会造成太大问题。</p>
+<p>######尽量不要在dealloc中调用一些方法<br>因为某些异步的操作会使得异步返回的结果是该对象还是在内存中的，而实际可能已经被销毁。</p>
 
-<section id="statement">
-    <div class="container text-center wow fadeInUp" data-wow-delay="0.5s">
-        <div class="row">
-            <p>轻松的路是给下坡的人走的。</p>
+            <div class="clearfix"></div>
+            <hr class="nogutter">
         </div>
+        <nav class="pagination" role="pagination">
+    
+    
+    <a class="pull-right" href="/2016/08/30/高效编写代码的方法-二十一-：ARC探索/">
+        高效编写代码的方法(二十一)：ARC探索 →
+    </a>
+    
+</nav>
+
+        <div class="duoshuo">
+<div class="ds-thread" data-thread-key="2016/09/27/高效编写代码的方法-二十三-：dealloc/" data-title="高效编写代码的方法(二十三)：dealloc" data-url="http://yoursite.com/2016/09/27/高效编写代码的方法-二十三-：dealloc/"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"duoshuo_name"};
+(function() {
+	var ds = document.createElement('script');
+	ds.type = 'text/javascript';ds.async = true;
+	ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+	ds.charset = 'UTF-8';
+	(document.getElementsByTagName('head')[0] 
+	 || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+</script>
+</div>
     </div>
 </section>
+
+
       
 <!-- ============================ Footer =========================== -->
 

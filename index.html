@@ -228,6 +228,40 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
                 <div class="col-md-4">
+                    <h3><a href="/2016/09/27/高效编写代码的方法-二十三-：dealloc/">高效编写代码的方法(二十三)：dealloc</a></h3>
+                    <span>
+                        <span class="post-meta">
+      <time datetime="2016-09-27T09:56:36.000Z" itemprop="datePublished">
+          2016-09-27
+      </time>
+    
+</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                      
+                        ####Dealloc每一个OC对象最后应该都会调用dealloc方法，表示结束了生命周期，在内存中销毁，以引用计数来说就是引用数降为0的时候就会马上执行dealloc方法进行对象销毁。
+####不要主动调用dealloc不要主动调用任何对象的dealloc方法，因为你不知道这个对象在什么时候还正在被使用，ARC会帮助我们妥善进行处理，实际编译器也会阻止我们这么做。
+####在dealloc中应该做的事
+
+1 不要调用[super de
+                      
+                    </p>
+                    
+                    <p class="pull-right readMore">
+                        <a href="/2016/09/27/高效编写代码的方法-二十三-：dealloc/">Read More...</a>
+                    </p>
+                    
+                </div>
+                <div class="clearfix"></div>
+                <hr class="nogutter">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 opening-statement">
+                <div class="col-md-4">
                     <h3><a href="/2016/08/30/高效编写代码的方法-二十一-：ARC探索/">高效编写代码的方法(二十一)：ARC探索</a></h3>
                     <span>
                         <span class="post-meta">
@@ -502,37 +536,6 @@ mutableCopy因为调用这些方法都意味着创建一个新的对象，所以
                     
                     <p class="pull-right readMore">
                         <a href="/2016/05/30/高效编写代码的方法-十七-：理解OC的错误模式/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2016/05/29/高效编写代码的方法-十六-：标识私有方法/">高效编写代码的方法(十六)：标识私有方法</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2016-05-29T14:12:00.000Z" itemprop="datePublished">
-          2016-05-29
-      </time>
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p>
-                      
-                        在OC中，我们定义方法的时候，并没有像其他语言那样会有像： private或者public的声明。OC中，公开的方法写在.h文件中，而私有方法写在.m中。
-但对于方法的实现，都是写在.m中，这样带来一个问题就是：在.m文件中混杂了很多方法的实现，包括了private和public的方法。如果缺少一个对私有方法的标识，那么我们在开发过程中可能会无意中修改了公开方法，那么会造成一连串的修改。包括对于使用了这个方法的对象，都需要修改。因此对于
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2016/05/29/高效编写代码的方法-十六-：标识私有方法/">Read More...</a>
                     </p>
                     
                 </div>
